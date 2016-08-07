@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import patterns, url, include
+from django.views.generic import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 
@@ -27,6 +28,7 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('article.views',
 	url(r'^$', 'home', name='index'),
-	url(r'^home/$', 'home', name='home'),
-	url(r'^articles/(?P<post_num>\d)/$', 'detail', name='detail'),
+	url(r'^home/$', 'article_list', name='home'),
+    url(r'^articles/$', RedirectView.as_view(url='/home/'), name='articles'),
+	url(r'^articles/(?P<post_num>\d)/$', 'article_list', name='article_list'),
 )
