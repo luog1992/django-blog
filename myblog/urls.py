@@ -27,8 +27,8 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('article.views',
-	url(r'^$', 'home', name='index'),
-	url(r'^home/$', 'article_list', name='home'),
-    url(r'^articles/$', RedirectView.as_view(url='/home/'), name='articles'),
-	url(r'^articles/(?P<post_num>\d)/$', 'article_list', name='article_list'),
+	url(r'^$', 'articles', name='index'),
+    url(r'^home/$', 'articles', name='home'),
+    url(r'^articles/$', 'articles', name='articles'),
+	url(r'^article/(?P<id>\d)/$', 'article', name='article'),
 )
