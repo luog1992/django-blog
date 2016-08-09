@@ -27,7 +27,7 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('article.views',
-	url(r'^$', 'articles', name='index'),
+	url(r'^$', RedirectView.as_view(url='/home/'), name='index'),
     url(r'^home/$', 'articles', name='home'),
     url(r'^articles/$', 'articles', name='articles'),
 	url(r'^article/(?P<id>\d)/$', 'article', name='article'),
