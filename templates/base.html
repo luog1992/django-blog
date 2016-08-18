@@ -1,17 +1,21 @@
 <!--base.html-->
 <!doctype html>
 <html lang="en">
-
+{% load staticfiles %}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
     <title>Blog Of Salted Fish</title>
+    {# pure css #}
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
     <link rel="stylesheet" href="http://picturebag.qiniudn.com/blog.css">
+    {# markdown css #}
+    <script src="/static/highlight/highlight.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/highlight/styles/monokai.css">
 </head>
-
+<script>hljs.initHighlightingOnLoad();</script>
 <body>
     <div id="layout" class="pure-g">
         <div class="sidebar pure-u-1 pure-u-md-1-4">
@@ -33,9 +37,6 @@
                             <a class="pure-button" href="https://github.com/Andrew-liu/my_blog_tutorial">Github</a>
                         </li>
                         <li class="nav-item">
-                            <a class="button-error pure-button" href="https://facebook.com">Facebook</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="button-success pure-button" href="/">About Me</a>
                         </li>
                     </ul>
@@ -44,13 +45,14 @@
         </div>
         <div class="content pure-u-1 pure-u-md-3-4">
             <div>
-                {% block content %} {% endblock %}
+                {% block content %} 
+                {% endblock %}
                 <div class="footer">
                     <div class="pure-menu pure-menu-horizontal pure-menu-open">
                         <ul>
-                            <li><a href="http://andrewliu.tk/about/">About Me</a></li>
-                            <li><a href="http://twitter.com/yuilibrary/">Twitter</a></li>
-                            <li><a href="http://github.com/yahoo/pure/">GitHub</a></li>
+                            <li><a href="https://baidu.com">About Me</a></li>
+                            <li><a href="https://facebook.com">Facebook</a></li>
+                            <li><a href="https://github.com">GitHub</a></li>
                         </ul>
                     </div>
                 </div>

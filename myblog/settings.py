@@ -57,13 +57,18 @@ MIDDLEWARE_CLASSES = (
 
 
 ROOT_URLCONF = 'myblog.urls'
+STATIC_URL = '/static/highlight'
+STATIC_ROOT = '/static/highlight'
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
-        ],
+        'DIRS': [BASE_DIR + '/templates',],
+        # 'DIRS': [
+        #     os.path.join(BASE_DIR, 'templates'),
+        #     os.path.join(BASE_DIR, 'static/highlight'),
+        # ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
