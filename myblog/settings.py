@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     # use bootstrap_admin to beautify the admin platform.
     'django_admin_bootstrapped',
+    'pagedown',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,8 +58,8 @@ MIDDLEWARE_CLASSES = (
 
 
 ROOT_URLCONF = 'myblog.urls'
-STATIC_URL = '/static/highlight'
-STATIC_ROOT = '/static/highlight'
+STATIC_URL = '/static/'
+# STATIC_ROOT = '/static/highlight'
 
 
 TEMPLATES = [

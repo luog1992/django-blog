@@ -3,9 +3,9 @@ from django.http import Http404
 from article.models import Article
 
 
-def articles(request):
+def home(request):
 	post_list = Article.objects.all()
-	return render_to_response('article_list.html', {'post_list': post_list})
+	return render_to_response('home.html', {'post_list': post_list})
 
 def article(request, id):
 	try:

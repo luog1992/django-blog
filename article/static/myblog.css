@@ -1,0 +1,12 @@
+.sidebar {
+	/*border: 2px solid green;*/
+	background: #2E2E2E;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	box-shadow: 10px 10px 10px #D1D1D1;
+}
+
+.post-description {
+	font-family: Helvetica, Arial, sans-serif;
+}
