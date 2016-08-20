@@ -4,10 +4,10 @@
 {% load staticfiles %}
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
     <title>Blog Of Salted Fish</title>
     {# pure css #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
     <link rel="stylesheet" href="http://picturebag.qiniudn.com/blog.css">
@@ -16,14 +16,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'highlight/styles/github.css' %}">
     {# mycss #}
     <link rel="stylesheet" type="text/css" href="{% static 'myblog.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
 </head>
 <script>hljs.initHighlightingOnLoad();</script>
 <body>
     <div id="layout" class="pure-g">
-        <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="sidebar pure-u-1 pure-u-lg-6-24">
+            <div class="portrait"><img class="pure-img" src="{% static 'img/xianyu.png' %}" alt="xianyu"></div>
             <div class="header">
-                <h1 class="brand-title"><a href="{% url 'home' %}">Blog Of Salted Fish</a></h1>
-                <h2 class="brand-tagline">Haidian | Beijing | China</h2>
+                <h1 class="brand-title"><a href="{% url 'home' %}">Salted Fish</a></h1>
                 <nav class="nav">
                     <ul class="nav-list">
                         <li class="nav-item">
@@ -43,9 +44,10 @@
                         </li>
                     </ul>
                 </nav>
+                <h2 class="brand-tagline">Stay Foolish Stay Young</h2>
             </div>
         </div>
-        <div class="content pure-u-1 pure-u-md-3-4">
+        <div class="content pure-u-1 pure-u-lg-16-24">
             <div>
                 {% block content %} 
                 {% endblock %}
