@@ -5,7 +5,7 @@
 
 a {
 	text-decoration: none;
-	color: #56ADEA;
+	color: #2522DC;
 }
 
 
@@ -17,6 +17,7 @@ a {
 
 .menu {
 	height: 50px;
+	background: white;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -25,63 +26,73 @@ a {
 
 .blank {
 	height: 100%;
-	/*background-color: red;*/
 }
 
 .menu-recommend {
-	background: green;
 	border-bottom: 1.5px solid gray;
 	height: 100%;
-	top: 50%;
 }
 
-.find-more,
-.collections {
-	position: relative;
-	top: 30%;
+.recommend-list {
+	list-style: none;
+}
+
+.recommend-item {
 	display: inline;
-	background: red;
+	margin-right: 2%;
+}
+
+.recommend-item a {
+	color: #767676;
+	font-weight: 700;
+}
+
+.recommend-item a:hover,
+.recommend-item a:focus {
+	text-decoration: underline;
 }
 
 .menu-search {
-	/*background: yellow;*/
 	border-bottom: 1.5px solid gray;
 	height: 100%;
 }
 
-.search {
-	display: inline;
+.search-form {
 	position: relative;
-	top: 20%;
+	top: 15%;
+	float: right;
 }
 
+.search-form i {
+	position: relative;
+	left: -12%;
+}
+
+
 /*------------------------------------*/
-.user {
+.menu-user {
 	height: 100%;
-	padding: 0;
+	border-bottom: 1.5px solid gray;
 }
 
 .user-items {
-	/*top: 50%;*/
 	list-style: none;
-	text-align: center;
+	text-align: right;
+	padding-right: 1%;
 }
 
-.login,
-.register {
-	/*margin-right: 0.5em;*/
+.user-item {
 	display: inline;
 }
 
-.user-items i {
-	margin-right: 2%;
-	color: #E46F6F;
+.user-item i {
+	color: #EB7575;
 }
 
-.user-items a {
-	color: #434343;
-	font-weight: 500;
-	margin-right: 5%;
+.user-item a {
+	margin-right: 3%;
+	color: #767676;
+	font-weight: 600;
 }
 
 
@@ -122,7 +133,6 @@ a {
 
 /*------------------------------------*/
 .sidebar {
-	/*background: transparent;*/
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -149,12 +159,19 @@ a {
 
 .write-blog {
 	background: #737171;
-	/*border: 2px solid #CFAAAA;*/
 	border-radius: 5px;
 	padding: 0.3em 0.7em;
 	color: #E2E2E2;
 }
 
+.write-blog i {
+	margin-right: 0.5em;
+}
+
+.write-blog:hover,
+.write-blog:focus {
+	background: #419713;
+}
 
 /*------------------------------------*/
 .main {
@@ -166,43 +183,121 @@ a {
 	height: 1500px;
 	margin-left: 25%;
 	margin-top: 50px;
-	padding-top: 0px;
-	border: 2px solid red;
+	padding: 1%;
+	background: #EEEEEE;
 }
 
+
+/*------------------------------------*/
 .labels {
-	background: green;
-	height: 50px;
-	padding-top: 0;
+	padding: 0;
+	/*background: #E4E4E4;*/
 }
 
-.label-list{
-	position: relative;
-	top: 30%;
+.label-list {
 	list-style: none;
-	/*background: green;*/
 }
 
 .label-item {
 	display: inline;
-	position: relative;
-	top: 10%;
-	margin-right: 2%;
-	border: 1px solid black;
+	margin-right: 1%;
 }
 
-.label {
+.label{
+	padding: 0.5% 0.8%;
+	color: #767676;
+	border-radius: 10%;
+	border: 1px solid #767676;	
+}
+
+.label-item a:hover,
+.label-item a:focus {
+	border-radius: 10%;
+	border: 1.5px solid #EB7575;	
+	background: #EB7575;
+	color: white;
+	font-weight: 600;
+	padding: 0.5%;
+}
+
+
+/*------------------------------------*/
+.blogs {
+	/*background: #EEEEEE;*/
+	padding: 1em;
+}
+
+.blog {
+	background: white;
+	margin-bottom: 4em;
+}
+
+.blog-shadow {
+  -webkit-box-shadow: 0 8px 6px -6px black;
+     -moz-box-shadow: 0 8px 6px -6px black;
+          box-shadow: 0 8px 6px -6px black;
+}
+
+.blog-logo {
+	font-size: 150%;
+	text-align: right;
+	width: 100%;
+	padding-top: 1%;
+}
+
+.blog-body {
+	/*background: #CFCFCF;*/
+	margin-left: 1em;
+	padding: 0 1em;
+}
+
+.blog-title {
+	font-family: Helvetica, Arial, Sans-serif;
+	font-size: 200%;
+	font-weight: 600;
+	margin: 0.2em 0 0.5em 0;
+}
+
+.blog-meta {
+}
+
+.blog-meta i {
+	color: #454545;
+	margin-right: 0.3em;
+}
+
+.blog-author,
+.blog-date {
+	margin-right: 1em;
+	display: inline;
+}
+
+.blog-content {
+	font-family: Helvetica, Arial, sans-serif;
+	text-align: justify;
+	line-height: 150%;
+	font-size: 1.2em;
+}
+
+
+.blog-footer {
+	padding: 0.5em 0;
+	border-top: 1.5px solid gray;
+}
+
+.read-more {
+	padding: 1em 0;
 	color: #5F5F5F;
-	font-weight: 700;
-	padding: 0.8% 1%;
-	border-radius: 25%;
-	border: 1.5px solid #5F5F5F;
-	font-size: 90%;
+	font-size: 1em;
+	font-weight: 600;
 }
 
-.label:hover,
-.label:focus {
-	border: 2px solid #EA6262;
-	color: #EA6262;
-
+.read-more:hover,
+.read-more:focus {
+	color: #EB7575;
 }
+
+.read-more i {
+	margin-right: 1em;
+}
+
