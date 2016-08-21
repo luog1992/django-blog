@@ -1,0 +1,277 @@
+
+<!-- saved from url=(0223)http://120.132.63.203/pjk/mdk/custore.php?winwidth=1473&utime=11457-60308-AH006849-14716611639907&b=AH006849&m=aHR0cDovL3N0YXRpYy5hbnF1YW4ub3JnL3N0YXRpYy9vdXRlci9qcy9hcV9hdXRoLmpzP19mcDI4PTAuMDI4NTcwODE1NzExMjc3NjI=&other=0 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+*{margin:0px; padding:0px; font-size:12px;}
+</style>
+</head><body>
+<script>
+var png         = "http://123.59.78.229/public/files/ad/images/cus.png?winwidth=1473&utime=11457-60308-AH006849-14716611639907&b=AH006849&m=aHR0cDovL3N0YXRpYy5hbnF1YW4ub3JnL3N0YXRpYy9vdXRlci9qcy9hcV9hdXRoLmpzP19mcDI4PTAuMDI4NTcwODE1NzExMjc3NjI=&uid=5657b7c46c03d8b";
+</script>
+<script>
+    
+    try{
+        var isStorage = window.localStorage?true:false;
+    }catch(e)
+    {
+        var isStorage = false;
+    }
+    
+    var localData = {
+        hname:location.hostname?location.hostname:'localStatus',
+        isLocalStorage:isStorage,
+        dataDom:null,
+        initDom:function(){ //初始化userData
+            if(!this.dataDom){
+                try{
+                        this.dataDom = document.createElement('input');
+                        this.dataDom.type = 'hidden';
+                        this.dataDom.style.display = "none";
+                        this.dataDom.addBehavior('#default#userData');
+                        document.body.appendChild(this.dataDom);
+                        var exDate = new Date();
+                        exDate.setTime(exDate.getTime() + 86400*30*48*1000);
+                        this.dataDom.expires = exDate.toUTCString();	
+
+                }catch(ex){			 
+                        return false;
+                }
+            }
+            return true;
+        },
+        set:function(key,value){
+                if(this.isLocalStorage){
+                    window.localStorage.setItem(key,value);
+                }else{
+                    if(this.initDom()){
+                            this.dataDom.load(this.hname);
+                            this.dataDom.setAttribute(key,value);
+                            this.dataDom.save(this.hname)
+                    }
+                }
+        },
+        get:function(key){
+                if(this.isLocalStorage){
+                    return window.localStorage.getItem(key);
+                }else{
+                    if(this.initDom()){
+                        this.dataDom.load(this.hname);
+                        return this.dataDom.getAttribute(key);
+                    }
+                }
+        },
+        remove:function(key){
+                if(this.isLocalStorage){
+                    localStorage.removeItem(key);
+                }else{
+                    if(this.initDom()){
+                        this.dataDom.load(this.hname);
+                        this.dataDom.removeAttribute(key);
+                        this.dataDom.save(this.hname)
+                    }
+                }
+        }
+    };
+
+    (function(win,doc,nav){
+        win.wincommonsz_pc = {
+            getBrowserType : function()
+            {
+                if( nav.userAgent.indexOf("MSIE") != -1) 
+                { 
+                    return 'ie';
+                }  
+                else if(nav.userAgent.indexOf("Chrome") != -1) 
+                { 
+                    return 'Chrome';
+                }
+                else if(nav.userAgent.indexOf("Firefox") != -1) 
+                { 
+                    return 'Firefox';
+                }
+                else if( nav.userAgent.indexOf("Opera") != -1) 
+                { 
+                    return 'Opera';
+                }
+                else if(nav.userAgent.indexOf("Netscape") != -1)
+                { 
+                    return 'Netscape';
+                } 
+                else if(nav.userAgent.indexOf("Safari") != -1) 
+                { 
+                    return 'Safari';
+                } 
+                else{ 
+                    return '';
+                } 
+            },
+            getBrowserInfoStr : function()
+            {
+                function getPluginName()
+                {
+                    var info = "";
+                    var plugins = nav.plugins;
+                    if (plugins.length>0) {
+                        for (i=0; i < nav.plugins.length; i++ ) {
+                            info += nav.plugins[i].name+";";
+                        }
+                    } 
+                    return info;
+                }
+                var appName = nav.appName;
+                var appVersion = nav.appVersion; 
+                var cookieEnabled =  nav.cookieEnabled;
+                var cpuClass =  nav.cpuClass;
+                var mimeType =  nav.mimeTypes;
+                var platform =  nav.platform;
+                var plugins =  nav.plugins;
+                var userLanguage = nav.userLanguage;
+                var userAgent = nav.userAgent;
+                var systemLanguage = nav.systemLanguage;
+
+                pStr = "isiframe="+this.isf()+"&type="+this.getBrowserType()+"&userAgent="+userAgent+"&appName="+appName+"&appVersion="+appVersion+"&cookieEnabled="+cookieEnabled+"&cpuClass="+cpuClass+"&mimeType_length="+mimeType.length+"&platform="+platform+"&plugins_length="+plugins.length+"&allPluginName="+getPluginName()+"&window_screen_width="+win.screen.width+"&window_screen_height="+win.screen.height+"&window_screen_colorDepth="+win.screen.colorDepth+"&window_screen_deviceXDPI="+win.screen.deviceXDPI;
+
+                return pStr;
+            },
+            isf : function(){
+                 if(win.self != win.top){
+                    return 1;
+                }
+                return 0;
+            },
+            setCookieRaw : function( key, value ) {
+                    var expireDate = new Date();
+                    expireDate.setTime(expireDate.getTime() + 86400*30*48*1000);
+                    var options = {
+                       path:"/",
+                       expires:expireDate
+                    };
+
+                    var expires = options.expires;
+                    if ("number" == typeof options.expires) {
+                            expires = new Date();
+                            expires.setTime(expires.getTime() + options.expires);
+                    }
+                    document.cookie = key + "=" + value + (options.path ? "; path=" + options.path :"") + (expires ? "; expires=" + expires.toGMTString() :"") + (options.domain ? "; domain=" + options.domain :"") + (options.secure ? "; secure" :"");
+            }
+        };
+
+    })(window,document,navigator);
+    
+    
+    (function(){
+        
+        var ckey        = 'HA1W41SDAS12DAHWSTOR';
+        var storekey    = 'TsMkTZHWTsySTOR';
+        var cookie      = '985779396d70bd2';
+        var is_new      = 0;
+        var uidstr      = '';
+        var storstr     = '';
+        var uid         = '5657b7c46c03d8b';
+        
+        
+        function setcs()
+        {
+            wincommonsz_pc.setCookieRaw( ckey, uid );
+            
+            is_new = 1; 
+            uidstr = uid;
+            localData.set( storekey , uid );
+            return 'localstorage='+uid+'&is_newuser=1';
+        }
+        
+        function exists_cookie()
+        {
+            if( cookie )
+            {
+                if( cookie.length == 15 )
+                {
+                    localData.set( storekey , cookie );
+                    storstr = 'localstorage=0';
+                    uidstr = cookie;
+                }else
+                {
+                    storstr = setcs();
+                }
+            }
+            else
+            {
+                storstr = setcs();
+            }
+        }
+        
+        var storevalue = '';
+        
+        try{
+            storevalue = localData.get( storekey );
+            
+            if( storevalue )
+            {
+                if( typeof(storevalue) === 'string' )
+                {
+                    storevalue = storevalue.replace(/\"/g,"");
+                    
+                    if( storevalue.length == 15 )
+                    {
+                        wincommonsz_pc.setCookieRaw( ckey, storevalue );   
+                        storstr = 'localstorage=' + storevalue;
+                        uidstr = storevalue;
+                    }
+                    else
+                    {
+                        exists_cookie();
+                    }
+                }
+                else
+                {
+                    exists_cookie();
+                }
+            }
+            else
+            {
+               exists_cookie();
+            }
+            
+        }catch(e)
+        {
+            if( !cookie )
+            {
+                wincommonsz_pc.setCookieRaw( ckey, uid );
+            }
+            storstr = 'localstorage=-1';
+        }
+        
+        if( document.referrer )
+        {
+            png      +=  '&'+storstr + '&refer='+document.referrer;
+        }
+        else
+        {
+            png      +=  '&'+storstr + '&refer=0';
+        }
+   
+        png += '&'+wincommonsz_pc.getBrowserInfoStr();
+        
+       
+        if( window.postMessage )
+        {
+            if( is_new == 1 )
+            {
+                top.postMessage( 'is_new=1&uidstr='+uidstr, '*' );
+            }
+            else
+            {
+                top.postMessage( 'uidstr='+uidstr, '*' );
+            }
+        }
+    })();
+</script>
+<script>
+        var img = new Image();
+        img.src = png + '&t='+Math.random()+"&cookie=PIDIEPFMLSAASFPSOTAX=e0915788b5c043bfa243dce4ae1b44dd&HA1W41SDAS12DAHWSTOR=985779396d70bd2";
+
+                        var kt_img = new Image();
+                kt_img.src = 'http://123.59.78.229/public/files/ad/images/kt.png?kt=1&type=0&winwidth=1473&utime=11457-60308-AH006849-14716611639907&b=AH006849&m=aHR0cDovL3N0YXRpYy5hbnF1YW4ub3JnL3N0YXRpYy9vdXRlci9qcy9hcV9hdXRoLmpzP19mcDI4PTAuMDI4NTcwODE1NzExMjc3NjI=&t=' + Math.random() + "&cookie=PIDIEPFMLSAASFPSOTAX=e0915788b5c043bfa243dce4ae1b44dd&HA1W41SDAS12DAHWSTOR=985779396d70bd2";
+        </script>
+
+</body></html>
