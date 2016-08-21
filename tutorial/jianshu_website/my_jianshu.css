@@ -15,7 +15,7 @@ a {
 	padding: 0;
 }
 
-.top {
+.menu {
 	height: 50px;
 	position: fixed;
 	left: 0;
@@ -28,54 +28,32 @@ a {
 	/*background-color: red;*/
 }
 
-.recommend {
-	/*background-color: green;*/
+.menu-recommend {
+	background: green;
 	border-bottom: 1.5px solid gray;
-	background: white;
-	padding: 0;
 	height: 100%;
-}
-
-.recommend-list {
-	list-style: none;
-	margin: 0;
-	/*background: red;*/
-	height: 100%;
-	padding-top: 1%;
-}
-
-.find-more,
-.collections,
-.search-form {
-	display: inline-block;
 	top: 50%;
 }
 
 .find-more,
 .collections {
-	/*border-radius: 5px;*/
-	/*border: 1.5px solid #5F5F5F;*/
-	background: transparent;
-	/*padding: 0 0.5em;*/
-	margin-right: 0.5em;
+	position: relative;
+	top: 30%;
+	display: inline;
+	background: red;
 }
 
-.find-more a,
-.collections a {
-	color: #5F5F5F;
-	font-weight: 700;
-	font-size: 90%;
+.menu-search {
+	/*background: yellow;*/
+	border-bottom: 1.5px solid gray;
+	height: 100%;
 }
 
-.search-form {
-	float: right;
+.search {
+	display: inline;
+	position: relative;
+	top: 20%;
 }
-
-.pure-form {
-	font-size: 80%;
-	margin-right: 2em;
-}
-
 
 /*------------------------------------*/
 .user {
@@ -188,23 +166,27 @@ a {
 	height: 1500px;
 	margin-left: 25%;
 	margin-top: 50px;
-	padding: 0;
+	padding-top: 0px;
 	border: 2px solid red;
 }
 
 .labels {
-	background: red;
+	background: green;
 	height: 50px;
-	/*padding-top: 0.2em;*/
+	padding-top: 0;
 }
 
 .label-list{
+	position: relative;
+	top: 30%;
 	list-style: none;
 	/*background: green;*/
 }
 
 .label-item {
 	display: inline;
+	position: relative;
+	top: 10%;
 	margin-right: 2%;
 	border: 1px solid black;
 }

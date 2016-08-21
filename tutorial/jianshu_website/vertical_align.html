@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	.floater {
+		height: 300px;
+		background: gray;
+	}
+	.content {
+		position: relative;
+		height: 50%;
+		top: 25%;
+		background: green;
+	}
+	.item {
+		position: relative;
+		top:50%;
+		display: inline;
+		/*padding: 1em;*/
+		/*margin: 1em;*/
+		background: yellow;
+	}
+	.left {
+		display: inline;
+	}
+	.right {
+		float: right;
+		/*margin-left: 80%;*/
+	}
+</style>
+<body>
+<div class="floater">
+	<div class="content">
+		<div class="item">
+			<div class="left">Python</div>
+			<div class="left">Django</div>
+		</div>
+		<div class="item right">Flask</div>
+	</div>
+</div>
+</body>
+</html>
