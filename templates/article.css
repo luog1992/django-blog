@@ -1,0 +1,39 @@
+* {
+	margin: 0;
+	padding: 0
+}
+
+.layout {
+	background: #F4F0F0;
+}
+
+.pure-menu {
+	background: transparent;
+	text-align: center;
+	height: 100px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	padding-bottom: 150px;
+}
+
+.menu-items {
+	background: #F4AAAA;
+}
+
+#main {
+	background: #AEAEAE;
+	height: 500px;
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 150px;
+}
+
+#content {
+	background: green;
+}
+
+#sidebar {
+	background: yellow;
+}

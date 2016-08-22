@@ -58,7 +58,7 @@ MIDDLEWARE_CLASSES = (
 
 
 ROOT_URLCONF = 'myblog.urls'
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 TEMPLATES = [
     {
@@ -66,6 +66,7 @@ TEMPLATES = [
         # 'DIRS': [BASE_DIR + '/templates',],
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates/article'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
