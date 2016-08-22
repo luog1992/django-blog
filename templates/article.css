@@ -4,36 +4,160 @@
 }
 
 .layout {
-	background: #F4F0F0;
+	background: #E5E2E2;
 }
 
-.pure-menu {
-	background: transparent;
-	text-align: center;
+#top {
+	background: blue;
+	/*text-align: center;*/
 	height: 100px;
 	position: fixed;
 	top: 0;
 	right: 0;
 	left: 0;
-	padding-bottom: 150px;
 }
 
-.menu-items {
-	background: #F4AAAA;
+#signature,
+#menu,
+#follow-me {
+	height: 50%;
+	position: relative;
+	top: 45%;
 }
 
-#main {
-	background: #AEAEAE;
-	height: 500px;
-	width: 70%;
-	margin: 0 auto;
-	margin-top: 150px;
+#signature {
+	background: red;
 }
 
-#content {
+#signature img {
+	height: 100%;
+	float: right;
+}
+
+#menu {
 	background: green;
 }
 
+/*#menu-wrapper {
+	background: red;
+	height: 100%;
+	text-align: center;
+}
+
+#menu-items {
+	background: orange;
+	height: 100%;
+}
+
+#menu-items li {
+	font-size: 200%;
+	color: green;
+	font-weight: 900;
+}*/
+
+#follow-me {
+	background: #E85B5B;
+}
+
+#follow-me li {
+	display: inline;
+}
+
+
+/*---------------------------------*/
+#main {
+	background: #CEC8C8;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+
+/*---------------------------------*/
 #sidebar {
 	background: yellow;
+}
+
+.wrapper {
+	background: #CDCDCD;
+}
+
+#portrait-box {
+	background: blue;
+}
+
+#search {
+	background: orange;
+}
+
+#tags {
+	background: red;
+}
+
+/*---------------------------------*/
+#content {
+	background: #89F05D;
+	padding: 0 1em;
+}
+
+.wrapper {
+	background: yellow;
+	padding: 1em;
+}
+
+.blog {
+	background: orange;
+	padding: 0 1em 2em 1em;
+}
+
+.blog-logo {
+	background: blue;
+	font-size: 200%;
+}
+
+.blog-body {
+	background: gray;
+}
+
+.blog-title {
+	background: green;
+	font-size: 200%;
+	font-family: Helvetica, Arial, Sans-serif;
+}
+
+.blog-meta {
+	background: red;
+}
+
+.blog-meta ul {
+	padding: 0;
+}
+
+.blog-meta li {
+	display: inline;
+}
+
+.blog-meta i {
+	margin-right: 0.5em;
+}
+
+.blog-date {
+	margin-right: 1em;
+}
+
+.blog-content {
+	background: yellow;
+	font-weight: normal;
+	font-family: Helvetica, Arial, Sans-serif;
+	line-height: 150%;
+	text-align: justify;
+}
+
+.blog-footer {
+	background: blue;
+	border-top: 1px solid red;
+	padding: 0.5em 0;
+}
+
+.blog-footer i {
+	margin-right: 0.5em;
 }
