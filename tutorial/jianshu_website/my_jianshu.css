@@ -35,6 +35,8 @@ a {
 
 .recommend-list {
 	list-style: none;
+	padding: 0;
+	margin-left: 12%;
 }
 
 .recommend-item {
@@ -78,7 +80,7 @@ a {
 .user-items {
 	list-style: none;
 	text-align: right;
-	padding-right: 1%;
+	padding: 0;
 }
 
 .user-item {
@@ -180,11 +182,11 @@ a {
 }
 
 .articles {
-	height: 1500px;
+	/*height: 1500px;*/
 	margin-left: 25%;
 	margin-top: 50px;
-	padding: 1%;
-	background: #EEEEEE;
+	padding: 1% 2%;
+	background: #F4F4F4;
 }
 
 
@@ -196,6 +198,8 @@ a {
 
 .label-list {
 	list-style: none;
+	padding: 0;
+	margin-left: 3%;
 }
 
 .label-item {
@@ -213,7 +217,7 @@ a {
 .label-item a:hover,
 .label-item a:focus {
 	border-radius: 10%;
-	border: 1.5px solid #EB7575;	
+	border: 1px solid #EB7575;	
 	background: #EB7575;
 	color: white;
 	font-weight: 600;
@@ -230,6 +234,7 @@ a {
 .blog {
 	background: white;
 	margin-bottom: 4em;
+	padding: 1em 0 1em 0;
 }
 
 .blog-shadow {
@@ -253,9 +258,10 @@ a {
 
 .blog-title {
 	font-family: Helvetica, Arial, Sans-serif;
-	font-size: 200%;
+	font-size: 180%;
 	font-weight: 600;
-	margin: 0.2em 0 0.5em 0;
+	color: #3E3E3E;
+	margin: 0.2em 0 0.8em 0;
 }
 
 .blog-meta {
@@ -276,20 +282,21 @@ a {
 	font-family: Helvetica, Arial, sans-serif;
 	text-align: justify;
 	line-height: 150%;
-	font-size: 1.2em;
+	font-size: 1em;
+	padding-right: 1em;
 }
 
 
 .blog-footer {
-	padding: 0.5em 0;
+	padding: 0.5em 0 1em 0;
 	border-top: 1.5px solid gray;
 }
 
 .read-more {
-	padding: 1em 0;
+	/*padding: 0 0 1em 0;*/
 	color: #5F5F5F;
 	font-size: 1em;
-	font-weight: 600;
+	/*font-weight: 600;*/
 }
 
 .read-more:hover,
