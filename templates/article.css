@@ -9,17 +9,31 @@ a {
 }
 
 body {
-	background: #F4F4F4;
+	/*background: #F4F4F4;*/
 }
 
 .layout {
 	/*background: #C7D4AD;*/
 }
 
+.layout:after {
+   	content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-image: url(wp8.jpg); 
+    width: 100%;
+    height: 100%;
+    opacity : 0.1;
+    z-index: -1;
+}
+
 
 /*---------------------------------*/
 #top {
-	/*background: #C923EE;*/
+	background: #F4F4F4;
 	height: 10%;
 	position: fixed;
 	top: 0;
@@ -74,7 +88,7 @@ body {
 	/*background: white;*/
 	margin-top: 50%;
 	font-size: 1.2vmax;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .menu-item a:hover,
@@ -249,6 +263,7 @@ body {
 .blog-footer a:hover,
 .blog-footer a:focus {
 	color: #4182EC;
+	font-weight: 600;
 }
 
 
