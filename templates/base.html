@@ -13,61 +13,62 @@
 </head>
 <body>
 <div class="layout">
-	<div id="top" class="pure-g">
-		<div id="signature" class="pure-u-md-6-24">
-			<img src="signature1.png" alt="" class="pure-img">
-		</div>
-		<div id="menu" class="pure-u-md-15-24" >
-			<div id="menu-wrapper" class="pure-menu pure-menu-open pure-menu-horizontal">
-				<ul id="" ="menu-items">
-					<li class="home"><a href="">Home</a></li>
-					<li class="python"><a href="">Python</a></li>
-					<li class="java"><a href="">Java</a></li>
-					<li class="javascript"><a href="">JavasSript</a></li>
-					<li class="linux"><a href="">Linux</a></li>
+	<div id="top">
+		<div id="top-wrapper" class="pure-g">
+			<div id="signature" class="pure-u-md-5-24">
+				<img class="pure-img" src="signature1.png" alt="">
+			</div>
+			<div id="menu" class="pure-u-md-16-24">
+				<ul id="menu-items">
+					<li class="menu-item home"><a href="">Home</a></li>
+					<li class="menu-item python"><a href="">Python</a></li>
+					<li class="menu-item java"><a href="">Java</a></li>
+					<li class="menu-item javascript"><a href="">JavasSript</a></li>
+					<li class="menu-item linux"><a href="">Linux</a></li>
 				</ul>
 			</div>
-		</div>
-		<div id="follow-me" class="pure-u-md-3-24">
-			<ul>
-				<li><i class="fa fa-qq" aria-hidden="true"></i></li>
-				<li><i class="fa fa-weixin" aria-hidden="true"></i></li>
-				<li><i class="fa fa-github" aria-hidden="true"></i></li>
-				<li><i class="fa fa-facebook-square" aria-hidden="true"></i></li>
-				<li><i class="fa fa-google" aria-hidden="true"></i></li>
-			</ul>
+			<div id="follow-me" class="pure-u-md-3-24">
+				<ul id="follow-items">
+					<li class="follow-item follow-wx">
+						<a href=""><i class="fa fa-weixin" aria-hidden="true"></i></a>
+					</li>
+					<li class="follow-item follow-gh">
+						<a href=""><i class="fa fa-github" aria-hidden="true"></i></a>
+					</li>
+					<li class="follow-item follow-fb">
+						<a href=""><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+					</li>
+					<li class="follow-item follow-gg">
+						<a href=""><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<div id="main" class="pure-g">
 		<div id="sidebar" class="pure-u-md-5-24">
-			<div class="wrapper">
+			<div class="sidebar-wrapper">
 				<div id="portrait-box">
 					<img src="dahuaxiyou.jpg" alt="" id="portrait" class="pure-img">
 				</div>
 				<div id="search">
-					<div class="pure-form">
-						<input type="text" class="pure-input-rounded">
-						<i class="fa fa-firefox" aria-hidden="true"></i>
+					<div id="search-form" class="pure-form">
+						<input type="text" placeholder="search" class="pure-input-rounded">
 					</div>
 				</div>
 				<div id="tags">
-					<li>hello</li>
-					<li>hello</li>
-					<li>hello</li>
-					<li>hello</li>
-					<li>hello</li>
-					<li>hello</li>
+					<p>There is the tag cloud has not been designed</p>
 				</div>
 			</div>
 		</div>
 		<div id="content" class="pure-u-md-19-24">
-			<div class="wrapper">
+			<div class="blog-wrapper">
 				<div class="blog pure-g">
 					<div class="blog-logo pure-u-md-1-24">
 						<i class="fa fa-file-archive-o" aria-hidden="true"></i>
 					</div>
 					<div class="blog-body pure-u-md-23-24">
-						<div class="blog-title">Blog Of LuoGang</div>
+						<div class="blog-title">Introduction Of Django</div>
 						<div class="blog-meta">
 							<ul>
 								<li class="blog-date">
@@ -83,6 +84,30 @@
 						</div>
 						<div class="blog-footer">
 							<i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More
+						</div>
+					</div>
+				</div>
+				<div class="blog pure-g">
+					<div class="blog-logo pure-u-md-1-24">
+						<i class="fa fa-file-archive-o" aria-hidden="true"></i>
+					</div>
+					<div class="blog-body pure-u-md-23-24">
+						<div class="blog-title">Dive Into Python</div>
+						<div class="blog-meta">
+							<ul>
+								<li class="blog-date">
+									<i class="fa fa-clock-o" aria-hidden="true"></i>2016-08-23
+								</li>
+								<li class="blog-tags">
+									<i class="fa fa-tags" aria-hidden="true"></i>Python
+								</li>
+							</ul>
+						</div>
+						<div class="blog-content">
+							<p>James Newland (22 August 1881 – 19 March 1949) was an Australian officer in the First World War. He received the Victoria Cross for successfully leading a company in several assaults on German positions and repulsing counterattacks in April 1917. Newland joined the Australian military in 1899 and saw active service during the Second Boer War. After completing several years' service in the artillery, he transferred to the militia in 1907. He became a police officer in Tasmania before re-joining the permanent forces in 1910. He was in the first wave of Australian Imperial Force soldiers to land at Gallipoli. In the days following the landing, he was wounded and evacuated to Egypt, where he was commissioned as a second lieutenant. Transferring to the Western Front in 1916, Newland was mentioned in despatches for his leadership while commanding a company during an attack at Mouquet Farm. He was wounded twice more during the war; medically discharged in March 1918, he returned to service with the permanent army. He retired as a lieutenant colonel in 1941. (Full article...)</p>
+						</div>
+						<div class="blog-footer">
+							<a href=""><i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More</a>
 						</div>
 					</div>
 				</div>
