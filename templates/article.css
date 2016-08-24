@@ -176,13 +176,21 @@ body {
 
 #search-form input {
 	width: 100%;
+	border: 1px solid #4182EC;
 }
 
 #tags {
-	/*background: red;*/
+	background: orange;
 	padding: 0;
 	margin: 0;
 }
+
+#categories {
+	background: #A8C75E;
+	padding: 0;
+	margin: 0;
+}
+
 
 /*---------------------------------*/
 #content {
