@@ -5,7 +5,17 @@ from django.core.urlresolvers import reverse
 class Tag(models.Model):
     name = models.CharField(verbose_name='Tag', max_length=20)
     color = models.CharField(verbose_name='Color',
-                             max_length=20, default='transparent')
+                             max_length=20, default='#BFE37C')
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class Category(models.Model):
+    name = models.CharField(verbose_name='Category', max_length=20)
 
     def __unicode__(self):
         return self.name
@@ -17,11 +27,12 @@ class Tag(models.Model):
 class Article(models.Model):
     title = models.CharField(verbose_name='Title', max_length=100)
     tags = models.ManyToManyField(Tag)
+    category = models.ForeignKey(Category, default=None, blank=True, null=True)
     date_time = models.DateField(
         verbose_name='Creation Date', auto_now_add=True)
     summary = models.TextField(
         verbose_name='Summary', max_length=1000, blank=True, null=True)
-    content = models.TextField(verbose_name='Content', blank=True, null=True)
+    content = models.TextField(verbose_name='Content', default='')
 
     def get_absolute_url(self):
         path = reverse('article', kwargs={'id': self.id})
@@ -34,14 +45,3 @@ class Article(models.Model):
         ordering = ['-date_time']
 
 
-class Category(models.Model):
-    name = models.CharField(verbose_name='Category', max_length=20)
-    color = models.CharField(verbose_name='Color',
-                             max_length=20,  default='transparent')
-    articles = models.ManyToManyField(Article)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']

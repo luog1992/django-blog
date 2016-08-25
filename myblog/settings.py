@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     # use bootstrap_admin to beautify the admin platform.
     'django_admin_bootstrapped',
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,16 +92,17 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME':'dj_myblog',
-        'USER':'root', 
-        'PASSWORD':123456,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dj_myblog',
+        'USER': 'root',
+        'PASSWORD': 123456,
         'HOST': '127.0.0.1',
         'PORT': 3306,
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
+        },
     }
 }
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

@@ -3,11 +3,11 @@ from article.models import Article, Tag, Category
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'date_time', 'summary')
-    search_fields = ('title', 'tags')
-    list_filter = ('date_time', 'tags')
-    ordering = ('-date_time', 'title')
-    fields = ('title', 'tags', 'summary', 'content')
+    list_display = ('title', 'category', 'date_time', 'summary')
+    search_fields = ('title', 'category', 'tags')
+    list_filter = ('date_time', 'category', 'tags')
+    ordering = ('category', '-date_time', 'title')
+    fields = ('title', 'tags', 'category', 'summary', 'content')
 
 
 class TagAdmin(admin.ModelAdmin):
@@ -18,10 +18,10 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'color')
-    search_fields = ('name', 'color')
-    ordering = ('name', 'color')
-    fields = ('name', 'color')
+    list_display = ('name',)
+    search_fields = ('name',)
+    ordering = ('name',)
+    fields = ('name',)
 
 
 # Register your models here
