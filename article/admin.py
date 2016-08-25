@@ -1,22 +1,30 @@
 from django.contrib import admin
-from article.models import Article
-from django import forms
-
-
-class ArticleForm(forms.ModelForm):
-	class Meta:
-		model = Article
-		fields = '__all__'
+from article.models import Article, Tag, Category
 
 
 class ArticleAdmin(admin.ModelAdmin):
-	form = ArticleForm
-	list_display  = ('title', 'category', 'date_time')
-	search_fields = ('title', 'category')
-	list_filter   = ('category', 'date_time')
+	list_display  = ('title', 'date_time', 'summary')
+	search_fields = ('title', 'tags')
+	list_filter   = ('date_time', 'tags')
 	ordering      = ('-date_time', 'title')
-	fields        = ('title', 'category', 'content')
+	fields        = ('title', 'tags', 'summary', 'content')
+
+
+class TagAdmin(admin.ModelAdmin):
+	list_display = ('name', 'color')
+	search_fields = ('name', 'color')
+	ordering = ('name', 'color')
+	fields = ('name', 'color')
+
+
+class CategoryAdmin(admin.ModelAdmin):
+	list_display = ('name', 'color')
+	search_fields = ('name', 'color')
+	ordering = ('name', 'color')
+	fields = ('name', 'color')
 
 
 # Register your models here
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Tag, TagAdmin)
+admin.site.register(Category, CategoryAdmin)
