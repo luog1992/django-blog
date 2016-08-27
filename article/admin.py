@@ -1,8 +1,8 @@
 from django.contrib import admin
-from article.models import Article, Tag, Category
+from article.models import Blog, Tag, Category
 
 
-class ArticleAdmin(admin.ModelAdmin):
+class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'date_time', 'summary')
     search_fields = ('title', 'category', 'tags')
     list_filter = ('date_time', 'category', 'tags')
@@ -25,6 +25,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 # Register your models here
-admin.site.register(Article, ArticleAdmin)
+admin.site.register(Blog, BlogAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Category, CategoryAdmin)

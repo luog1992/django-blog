@@ -1,147 +1,96 @@
 <!--base.html-->
 <!DOCTYPE html>
 <html lang="en">
+{% load staticfiles %}
+
 <head>
-	<meta charset="UTF-8">
-	<title>Salted Fish</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="pure-release-0.5.0/pure-min.css">
-    <link rel="stylesheet" href="pure-release-0.5.0/grids-responsive-min.css">
-    <link rel="stylesheet" href="http://picturebag.qiniudn.com/blog.css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="article.css">
+    <meta charset="UTF-8">
+    <title>Salted Fish</title>
+    <!-- include pure -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'pure-release-0.5.0/pure-min.css' %}">
+    <link rel="stylesheet" href="{% static 'pure-release-0.5.0/grids-responsive-min.css' %}">
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <!-- include summernote css/js-->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <!-- include fontawesome for icons -->
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}"> {# markdown css #}
+    <script src="{% static 'highlight/highlight.pack.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'highlight/styles/github.css' %}">
+    <!-- custom blog css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'blog.css' %}">
 </head>
+{# markdown hightlight #}
+<script>
+hljs.initHighlightingOnLoad();
+</script>
+
 <body>
-<div class="layout">
-	<div id="top">
-		<div id="top-wrapper" class="pure-g">
-			<div id="signature" class="pure-u-md-5-24">
-				<img class="pure-img" src="signature1.png" alt="">
-			</div>
-			<div id="menu" class="pure-u-md-16-24">
-				<ul id="menu-items">
-					<li class="menu-item home"><a href="">Home</a></li>
-					<li class="menu-item python"><a href="">Python</a></li>
-					<li class="menu-item java"><a href="">Java</a></li>
-					<li class="menu-item javascript"><a href="">JavasSript</a></li>
-					<li class="menu-item linux"><a href="">Linux</a></li>
-				</ul>
-			</div>
-			<div id="follow-me" class="pure-u-md-3-24">
-				<ul id="follow-items">
-					<li class="follow-item follow-wx">
-						<a href=""><i class="fa fa-weixin" aria-hidden="true"></i></a>
-					</li>
-					<li class="follow-item follow-gh">
-						<a href=""><i class="fa fa-github" aria-hidden="true"></i></a>
-					</li>
-					<li class="follow-item follow-fb">
-						<a href=""><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-					</li>
-					<li class="follow-item follow-gg">
-						<a href=""><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div id="main" class="pure-g">
-		<div id="sidebar" class="pure-u-md-5-24">
-			<div class="sidebar-wrapper">
-				<div id="portrait-box">
-					<img src="dahuaxiyou.jpg" alt="" id="portrait" class="pure-img">
-				</div>
-				<div id="search">
-					<div id="search-form" class="pure-form">
-						<input type="text" placeholder="search" class="pure-input-rounded">
-					</div>
-				</div>
-				<div id="tags">
-					<p>There is the tag cloud has not been designed</p>
-				</div>
-				<div id="categories">
-					<p>There is the categories has not been designed</p>
-				</div>
-			</div>
-		</div>
-		<div id="content" class="pure-u-md-19-24">
-			<div class="blog-wrapper">
-				<div class="blog pure-g">
-					<div class="blog-logo pure-u-md-1-24">
-						<i class="fa fa-file-archive-o" aria-hidden="true"></i>
-					</div>
-					<div class="blog-body pure-u-md-23-24">
-						<div class="blog-title">Introduction Of Django</div>
-						<div class="blog-meta">
-							<ul>
-								<li class="blog-date">
-									<i class="fa fa-clock-o" aria-hidden="true"></i>2016-08-23
-								</li>
-								<li class="blog-tags">
-									<i class="fa fa-tags" aria-hidden="true"></i>Python
-								</li>
-							</ul>
-						</div>
-						<div class="blog-content">
-							<p>James Newland (22 August 1881 – 19 March 1949) was an Australian officer in the First World War. He received the Victoria Cross for successfully leading a company in several assaults on German positions and repulsing counterattacks in April 1917. Newland joined the Australian military in 1899 and saw active service during the Second Boer War. After completing several years' service in the artillery, he transferred to the militia in 1907. He became a police officer in Tasmania before re-joining the permanent forces in 1910. He was in the first wave of Australian Imperial Force soldiers to land at Gallipoli. In the days following the landing, he was wounded and evacuated to Egypt, where he was commissioned as a second lieutenant. Transferring to the Western Front in 1916, Newland was mentioned in despatches for his leadership while commanding a company during an attack at Mouquet Farm. He was wounded twice more during the war; medically discharged in March 1918, he returned to service with the permanent army. He retired as a lieutenant colonel in 1941. (Full article...)</p>
-						</div>
-						<div class="blog-footer">
-							<a href=""><i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More</a>
-						</div>
-					</div>
-				</div>
-				<div class="blog pure-g">
-					<div class="blog-logo pure-u-md-1-24">
-						<i class="fa fa-file-archive-o" aria-hidden="true"></i>
-					</div>
-					<div class="blog-body pure-u-md-23-24">
-						<div class="blog-title">Dive Into Python</div>
-						<div class="blog-meta">
-							<ul>
-								<li class="blog-date">
-									<i class="fa fa-clock-o" aria-hidden="true"></i>2016-08-23
-								</li>
-								<li class="blog-tags">
-									<i class="fa fa-tags" aria-hidden="true"></i>Python
-								</li>
-							</ul>
-						</div>
-						<div class="blog-content">
-							<p>James Newland (22 August 1881 – 19 March 1949) was an Australian officer in the First World War. He received the Victoria Cross for successfully leading a company in several assaults on German positions and repulsing counterattacks in April 1917. Newland joined the Australian military in 1899 and saw active service during the Second Boer War. After completing several years' service in the artillery, he transferred to the militia in 1907. He became a police officer in Tasmania before re-joining the permanent forces in 1910. He was in the first wave of Australian Imperial Force soldiers to land at Gallipoli. In the days following the landing, he was wounded and evacuated to Egypt, where he was commissioned as a second lieutenant. Transferring to the Western Front in 1916, Newland was mentioned in despatches for his leadership while commanding a company during an attack at Mouquet Farm. He was wounded twice more during the war; medically discharged in March 1918, he returned to service with the permanent army. He retired as a lieutenant colonel in 1941. (Full article...)</p>
-						</div>
-						<div class="blog-footer">
-							<a href=""><i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More</a>
-						</div>
-					</div>
-				</div>
-				<div class="blog pure-g">
-					<div class="blog-logo pure-u-md-1-24">
-						<i class="fa fa-file-archive-o" aria-hidden="true"></i>
-					</div>
-					<div class="blog-body pure-u-md-23-24">
-						<div class="blog-title">Dive Into Python</div>
-						<div class="blog-meta">
-							<ul>
-								<li class="blog-date">
-									<i class="fa fa-clock-o" aria-hidden="true"></i>2016-08-23
-								</li>
-								<li class="blog-tags">
-									<i class="fa fa-tags" aria-hidden="true"></i>Python
-								</li>
-							</ul>
-						</div>
-						<div class="blog-content">
-							<p>James Newland (22 August 1881 – 19 March 1949) was an Australian officer in the First World War. He received the Victoria Cross for successfully leading a company in several assaults on German positions and repulsing counterattacks in April 1917. Newland joined the Australian military in 1899 and saw active service during the Second Boer War. After completing several years' service in the artillery, he transferred to the militia in 1907. He became a police officer in Tasmania before re-joining the permanent forces in 1910. He was in the first wave of Australian Imperial Force soldiers to land at Gallipoli. In the days following the landing, he was wounded and evacuated to Egypt, where he was commissioned as a second lieutenant. Transferring to the Western Front in 1916, Newland was mentioned in despatches for his leadership while commanding a company during an attack at Mouquet Farm. He was wounded twice more during the war; medically discharged in March 1918, he returned to service with the permanent army. He retired as a lieutenant colonel in 1941. (Full article...)</p>
-						</div>
-						<div class="blog-footer">
-							<a href=""><i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-	
+    <div class="layout">
+        <div id="top">
+            <div id="top-wrapper" class="pure-g">
+                <div id="signature" class="pure-u-md-5-24">
+                    <img class="pure-img" src="{% static 'img/signature1.png' %}" alt="">
+                </div>
+                <div id="menu" class="pure-u-md-16-24">
+                    <ul id="menu-items">
+                        <li class="menu-item home"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="menu-item python"><a href="">Python</a></li>
+                        <li class="menu-item java"><a href="">Java</a></li>
+                        <li class="menu-item javascript"><a href="">JavasSript</a></li>
+                        <li class="menu-item linux"><a href="">Linux</a></li>
+                    </ul>
+                </div>
+                <div id="follow-me" class="pure-u-md-3-24">
+                    <ul id="follow-items">
+                        <li class="follow-item follow-wx">
+                            <a href=""><i class="fa fa-weixin" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="follow-item follow-gh">
+                            <a href=""><i class="fa fa-github" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="follow-item follow-fb">
+                            <a href=""><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="follow-item follow-gg">
+                            <a href=""><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="main" class="pure-g">
+            <div id="sidebar" class="pure-u-md-5-24">
+                <div class="sidebar-wrapper">
+                    <div id="portrait-box">
+                        <img src="{% static 'img/dahuaxiyou.jpg' %}" alt="" id="portrait" class="pure-img">
+                    </div>
+                    <div id="search">
+                        <div id="search-form" class="pure-form">
+                            <input type="text" placeholder="search" class="pure-input-rounded">
+                        </div>
+                    </div>
+                    <div id="tag-cloud">
+                        <div id="tag-bar">
+                            <p>Tag Cloud</p>
+                        </div>
+                        <ul>
+                            {% for tag in tag_cloud %}
+                            <li><a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.count }}vw; color:{{ tag.color }}">{{ tag.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="content" class="pure-u-md-19-24">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

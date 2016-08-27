@@ -19,7 +19,7 @@ body {
 .layout:after {
     content: "";
     display: block;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -34,7 +34,7 @@ body {
 /*---------------------------------*/
 
 #top {
-    background: #F4F4F4;
+    background: #FDFDFD;
     height: 10%;
     position: fixed;
     top: 0;

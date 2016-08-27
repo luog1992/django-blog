@@ -13,7 +13,8 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('article.views',
-	url(r'^$', RedirectView.as_view(url='/home/'), name='index'),
-    url(r'^home/$', 'home', name='home'),
-	url(r'^article/(?P<id>\d)/$', 'article', name='article'),
+	url(r'^home/$', 'blogs', name='home'),
+	url(r'^blogs/$', 'blogs', name='blogs'),
+	url(r'^blog/(?P<id>\d{1,3})/$', 'blog_detail', name='blog_detail'),
+	url(r'^tag/(?P<name>\w{1,20})', 'tag_blogs', name='tag_blogs'),
 )

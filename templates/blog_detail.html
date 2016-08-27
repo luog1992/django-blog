@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% load custom_markdown %}
+
+{% block content %}
+<div class="blog-wrapper">
+    <div class="blog pure-g">
+        <div class="blog-logo pure-u-md-1-24">
+            <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+        </div>
+        <div class="blog-body pure-u-md-23-24">
+            <div class="blog-title"><a href="">{{ blog.title }}</a></div>
+            <div class="blog-meta-wrapper">
+                <ul class="blog-meta">
+                    <li class="blog-date">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>{{ blog.date_time|date:"Y/m/d" }}
+                    </li>
+                    <li class="blog-category">
+                        <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog.category.name }}
+                    </li>
+                    <li class="blog-tags-wrapper">
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                        <ul class="blog-tags">
+                            {% for tag in blog.tags.all %}
+                            <li style="background:{{ tag.color }};"><a href="">{{ tag.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="blog-content">
+                <p>{{ blog.content|custom_markdown }}</p>
+            </div>
+            <div class="blog-footer">
+                <a href="{% url 'blogs' %}"><i class="fa fa-bookmark-o" aria-hidden="true"></i>Go Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
