@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     # use bootstrap_admin to beautify the admin platform.
     'django_admin_bootstrapped',
+    'django_summernote',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -122,3 +123,43 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode
+    'iframe': True,  # or set False to use SummernoteInplaceWidget - no iframe mode
+
+    # Using Summernote Air-mode
+    'airMode': False,
+
+    # Use native HTML tags (`<b>`, `<i>`, ...) instead of style attributes
+    # (Firefox, Chrome only)
+    'styleWithTags': True,
+
+    # Set text direction : 'left to right' is default.
+    'direction': 'ltr',
+
+    # Change editor size
+    'width': '100%',
+    'height': '800px;',
+
+    # Use proper language setting automatically (default)
+    'lang': None,
+
+    # Customize toolbar buttons
+    # 'toolbarContainer': '.my-toolbar',
+    'toolbar': [
+        ['style', ['style']],
+        ['fontstyle', ['bold', 'italic', 'underline', 'clear']],
+        ['fontsize', ['fontname','fontsize']],
+        ['para', ['ul', 'ol', 'paragraph', 'height']],
+        ['insert', ['link', 'hr', 'picture', 'table']],
+        ['Misc', ['codeview', 'undo', 'redo']],
+    ],
+
+    # You can add custom css/js for SummernoteWidget.
+    'css': (
+        os.path.join(BASE_DIR, "article/static/summernote_custom.css"),
+    ),
+
+}

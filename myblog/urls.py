@@ -10,6 +10,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^summernote/', include('django_summernote.urls')),
 )
 
 urlpatterns += patterns('article.views',

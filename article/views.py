@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category
+from forms import BlogEditor
 
 
 # def home(request):
@@ -37,16 +38,22 @@ def blog_edit(request, id=0):
         print '....', request.POST.get('title')
         print '....', request.POST.get('tags')
         print '....', request.POST.get('content')
-        
+
     id = int(id)
     try:
         blog = Blog.objects.get(id=id)
     except Blog.DoesNotExist:
         raise Http404
 
+    blog_editor = BlogEditor(initial={
+    	'title': blog.title,
+    	'tags': ', '.join([tag.name for tag in blog.tags.all()]),
+    	'content': blog.content
+    })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud})
-    return render_to_response('blog_edit.html', cxt)
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud,
+                'blog_editor': blog_editor})
+    return render_to_response('blog_edit_test.html', cxt)
 
 
 def tag_blogs(request, name):

@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<div class="blog-wrapper">
+    <form action="" id="blog-editor" method="post">{% csrf_token %}
+        <div id="blog-title-edit">
+            {{ blog_editor.title }}
+        </div>
+        <div id="blog-meta-edit">
+            <ul>
+                <li><i class="fa fa-tags" aria-hidden="true"></i></li>
+                <li>{{ blog_editor.tags }}</li>
+            </ul>
+        </div>
+        <div id="blog-content-edit">
+            {{ blog_editor.content }}
+        </div>
+    </form>
+</div>
+{% endblock %}
