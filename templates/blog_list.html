@@ -6,10 +6,10 @@
 	{% for blog in blogs %}
     <div class="blog pure-g">
         <div class="blog-logo pure-u-md-1-24">
-            <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
         </div>
         <div class="blog-body pure-u-md-23-24">
-            <div class="blog-title"><a href="{% url 'blog_detail' id=blog.id%}">{{ blog.title }}</a></div>
+            <div class="blog-title"><a href="{% url 'blog_detail' id=blog.id %}">{{ blog.title }}</a></div>
             <div class="blog-meta-wrapper">
                 <ul class="blog-meta">
                     <li class="blog-date">
@@ -32,7 +32,7 @@
                 <p>{{ blog.summary|custom_markdown }}</p>
             </div>
             <div class="blog-footer">
-                <a href="{% url 'blog_detail' id=blog.id%}"><i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More</a>
+                <a href="{% url 'blog_detail' id=blog.id %}"><i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More</a>
             </div>
         </div>
     </div>

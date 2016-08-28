@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<!-- include libraries(jQuery, bootstrap) -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <!-- include summernote css/js-->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
-</head>
-<body>
-<div id="summernote">Hello Summernote</div>
-<script>
-$(document).ready(function() {
-    $('#summernote').summernote();
-});
-</script>
-</body>
-</html>
-
-
+{% extends "base.html" %} {% block content %}
+<div class="blog-wrapper">
+	<form action="" id="blog-editor" method="post">{% csrf_token %}
+		<button type="submit" class="pure-button">Save</button>
+		<button type="reset" class="pure-button">Cancel</button>
+		<input type="text" name="title" value="{{ blog.title }}">
+		<input type="text" name="tags" value="{{ blog.tags }}">
+	    <div id="blog-content-editor" name="content">{{ blog.content }}</div>
+	    <script>
+	    $(document).ready(function() {
+	        $('#blog-title-editor').summernote({airMode: true});
+	        $('#blog-tags-editor').summernote({airMode: true});
+	        $('#blog-content-editor').summernote({focus: true});
+	    });
+	    </script>
+    </form>
+</div>
+{% endblock %}

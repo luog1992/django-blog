@@ -1,14 +1,18 @@
 {% extends "base.html" %} 
-{% load custom_markdown %}
+{% load custom_markdown %} 
 
 {% block content %}
 <div class="blog-wrapper">
     <div class="blog pure-g">
         <div class="blog-logo pure-u-md-1-24">
-            <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+            <a href="{% url 'blog_edit' id=blog.id %}">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </a>
         </div>
         <div class="blog-body pure-u-md-23-24">
-            <div class="blog-title"><a href="">{{ blog.title }}</a></div>
+            <div class="blog-title">
+                <p>{{ blog.title }}</p>
+            </div>
             <div class="blog-meta-wrapper">
                 <ul class="blog-meta">
                     <li class="blog-date">
