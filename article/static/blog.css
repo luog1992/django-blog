@@ -241,7 +241,7 @@ body {
 }
 
 .blog-wrapper {
-    /*background: yellow;*/
+    background: yellow;
     padding: 1em;
 }
 
@@ -329,8 +329,8 @@ body {
 }
 
 .blog-meta i {
-    margin-right: 0.5em;
     /*background: #E70E0E;*/
+    margin-right: 0.5em;
 }
 
 .blog-date,
@@ -361,7 +361,7 @@ body {
 }
 
 .blog-content {
-    /*background: yellow;*/
+    background: yellow;
     font-weight: normal;
     font-family: Helvetica, Arial, Sans-serif;
     line-height: 180%;
