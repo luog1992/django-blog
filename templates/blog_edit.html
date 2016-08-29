@@ -1,17 +1,20 @@
 {% extends "base.html" %} {% block content %}
-<div class="blog-wrapper">
-	<form action="" id="blog-editor" method="post">{% csrf_token %}
-		<button type="submit" class="pure-button">Save</button>
-		<button type="reset" class="pure-button">Cancel</button>
-
-		<input type="text" id="blog-title-editor" name="title" value="">
-		<input type="text" name="tags" value="{{ blog.tags }}">
-	    <div id="blog-content-editor" name="content" sytle="height:500px;">{{ blog.content }}</div>
-	    <script>
-	    $(document).ready(function() {
-	        $('#blog-content-editor').summernote({focus: true});
-	    });
-	    </script>
-    </form>
+<div class="content-wrapper">
+    <div class="blog-editor-wrapper">
+        <form action="" id="blog-editor" autocomplete="off" method="post">{% csrf_token %}
+            <div id="blog-title-edit">
+                {{ blog_editor.title }}
+                <button type="submit" value="save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                <button type="reset" values="reset"><i class="fa fa-undo" aria-hidden="true"></i></button>
+            </div>
+            <div id="blog-meta-edit">
+                <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
+                <i class="fa fa-tags" aria-hidden="true"></i> {{ blog_editor.tags }}
+            </div>
+            <div id="blog-content-edit">
+                {{ blog_editor.content }}
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

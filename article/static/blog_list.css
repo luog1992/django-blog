@@ -204,7 +204,7 @@ body {
     font-size: 1vw;
     color: #4182EC;
     position: relative;
-    top: 0.5vw;
+    top: 0.2vw;
 }
 
 #tag-cloud ul {
@@ -240,7 +240,7 @@ body {
     /*padding: 0 1em;*/
 }
 
-.blog-wrapper {
+.content-wrapper {
     /*background: green;*/
     padding: 1em;
 }
@@ -287,7 +287,10 @@ body {
     /*background: blue;*/
     font-size: 200%;
     color: #4182EC;
-    /*padding-left: 1vw;*/
+    padding-left: 0.5vw;
+}
+
+.blog-logo i {
 }
 
 .blog-logo a {

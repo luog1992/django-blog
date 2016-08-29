@@ -36,6 +36,7 @@ def blog_edit(request, id=0):
     print '....Request.Method:', request.method
     if request.method == 'POST':
         print '....', request.POST.get('title')
+        # print '....', request.POST.get('category')
         print '....', request.POST.get('tags')
         print '....', request.POST.get('content')
 
@@ -45,14 +46,17 @@ def blog_edit(request, id=0):
     except Blog.DoesNotExist:
         raise Http404
 
+    categories = ((category.name, category.name) for category in Category.objects.all())
+    print 'categories', tuple(categories)
     blog_editor = BlogEditor(initial={
-    	'title': blog.title,
-    	'tags': ', '.join([tag.name for tag in blog.tags.all()]),
-    	'content': blog.content
+        'title': blog.title,
+        'category': tuple(categories),
+        'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
+        'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
-    return render_to_response('blog_edit_test.html', cxt)
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})#, 'categories': categories})
+    return render_to_response('blog_edit.html', cxt)
 
 
 def tag_blogs(request, name):

@@ -158,8 +158,8 @@ SUMMERNOTE_CONFIG = {
     ],
 
     # You can add custom css/js for SummernoteWidget.
-    'css': (
-        os.path.join(BASE_DIR, "article/static/summernote_custom.css"),
-    ),
+    # 'css': (
+    #     os.path.join(BASE_DIR, "article/static/summernote_custom.css"),
+    # ),
 
 }
