@@ -31,31 +31,32 @@ def blog_detail(request, id=0):
 
 
 def blog_edit(request, id=0):
+    id = int(id)
     cxt = {}
     cxt.update(csrf(request))
     print '....Request.Method:', request.method
     if request.method == 'POST':
-        print '....', request.POST.get('title')
-        # print '....', request.POST.get('category')
-        print '....', request.POST.get('tags')
-        print '....', request.POST.get('content')
+        title = request.POST.get('title')
+        category = request.POST.get('category')
+        tags = request.POST.get('tags')
+       	content = request.POST.get('content')
+        blog = Blog.objects.get(id=id)
+        blog.title = title
+        blog.content = content
+        blog.save()
 
-    id = int(id)
     try:
         blog = Blog.objects.get(id=id)
     except Blog.DoesNotExist:
         raise Http404
 
-    categories = ((category.name, category.name) for category in Category.objects.all())
-    print 'categories', tuple(categories)
     blog_editor = BlogEditor(initial={
         'title': blog.title,
-        'category': tuple(categories),
         'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
         'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})#, 'categories': categories})
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
     return render_to_response('blog_edit.html', cxt)
 
 

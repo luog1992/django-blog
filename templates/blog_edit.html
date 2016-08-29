@@ -4,8 +4,7 @@
         <form action="" id="blog-editor" autocomplete="off" method="post">{% csrf_token %}
             <div id="blog-title-edit">
                 {{ blog_editor.title }}
-                <button type="submit" value="save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                <button type="reset" values="reset"><i class="fa fa-undo" aria-hidden="true"></i></button>
+               	<input type="submit" value="Save"><input type="reset" value="Undo">
             </div>
             <div id="blog-meta-edit">
                 <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
