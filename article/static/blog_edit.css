@@ -20,16 +20,6 @@
 	display: inline;
 }
 
-#id_tags {
-	/*background: orange;	*/
-	background: transparent;
-	border: transparent;
-	width: 80%;
-	height: 1.5vw;
-    padding: 0.5vw 0;
-}
-
-#id-content {
-	background: gray;
-	width: 100%;
-}
+#blog-content-edit {
+	/*padding: 1vw 1vw 1vw 0;*/
+	/*background: green;*/

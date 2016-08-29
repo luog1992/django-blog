@@ -2,16 +2,13 @@
 <div class="blog-wrapper">
     <form action="" id="blog-editor" method="post">{% csrf_token %}
         <div id="blog-title-edit">
-            {{ blog_editor.title }}
+            {{ blog_editor.title|safe }}
         </div>
         <div id="blog-meta-edit">
-            <ul>
-                <li><i class="fa fa-tags" aria-hidden="true"></i></li>
-                <li>{{ blog_editor.tags }}</li>
-            </ul>
+            <i class="fa fa-tags" aria-hidden="true"></i> {{ blog_editor.tags|safe }}
         </div>
         <div id="blog-content-edit">
-            {{ blog_editor.content }}
+            {{ blog_editor.content|safe }}
         </div>
     </form>
 </div>

@@ -51,8 +51,7 @@ def blog_edit(request, id=0):
     	'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud,
-                'blog_editor': blog_editor})
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
     return render_to_response('blog_edit_test.html', cxt)
 
 
@@ -61,7 +60,7 @@ def tag_blogs(request, name):
         tag = Tag.objects.filter(name=name)[0]
     except:
         raise Http404
-    print tag
+
     blogs = tag.blogs.all()
     tag_cloud = Tag.objects.all().order_by('color')
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})

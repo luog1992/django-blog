@@ -6,7 +6,7 @@
 
 		<input type="text" id="blog-title-editor" name="title" value="">
 		<input type="text" name="tags" value="{{ blog.tags }}">
-	    <div id="blog-content-editor" name="content">{{ blog.content }}</div>
+	    <div id="blog-content-editor" name="content" sytle="height:500px;">{{ blog.content }}</div>
 	    <script>
 	    $(document).ready(function() {
 	        $('#blog-content-editor').summernote({focus: true});

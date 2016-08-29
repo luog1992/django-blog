@@ -5,13 +5,7 @@ from django import forms
 
 class BlogEditor(forms.Form):
     # instead of forms.Textarea
-    title = forms.CharField()
+    title = forms.CharField(max_length=100, required=True)
     tags = forms.CharField()
-    content = forms.CharField(widget=SummernoteWidget())
-
-# If you don't like <iframe>, then use inplace widget
-# Or if you're using django-crispy-forms, please use this.
-
-
-class AnotherForm(forms.Form):
-    bar = forms.CharField(widget=SummernoteInplaceWidget())
+    content = forms.CharField(widget=SummernoteInplaceWidget(
+        attrs={'width': '100%', 'height': '800px'}), required=True)
