@@ -3,6 +3,7 @@ from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category
 from forms import BlogEditor
+import re
 
 
 # def home(request):
@@ -30,19 +31,44 @@ def blog_detail(request, id=0):
     return render_to_response('blog_detail.html', {'blog': blog, 'tag_cloud': tag_cloud})
 
 
+def blog_add(request):
+    cxt = {}
+    cxt.update(csrf(request))
+    blog_editor = BlogEditor(initial={
+        'title': 'title here...',
+        # 'category': blog.category.name,
+        'tags': 'tags here...',
+        'content': 'content here...'
+    })
+    tag_cloud = Tag.objects.all().order_by('color')
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
+    return render_to_response('blog_edit.html', cxt)
+
+
 def blog_edit(request, id=0):
     id = int(id)
     cxt = {}
     cxt.update(csrf(request))
     print '....Request.Method:', request.method
     if request.method == 'POST':
-        title = request.POST.get('title')
-        category = request.POST.get('category')
-        tags = request.POST.get('tags')
-       	content = request.POST.get('content')
         blog = Blog.objects.get(id=id)
-        blog.title = title
-        blog.content = content
+        blog.title = request.POST.get('title')
+        blog.category = Category.objects.get(name=request.POST.get('category'))
+        blog.content = request.POST.get('content')
+        patt_sum = re.compile(r'@sum(.*?)@endsum', re.S)
+        summary = patt_sum.findall(blog.content)
+        if summary:
+            blog.summary = summary[0].strip(' \n')
+        tags_raw = filter(lambda item: item != '', [tag.strip(
+            ' ,;').lower() for tag in (request.POST.get('tags')).split('|') if tag])
+        if tags_raw:
+            tags_all = [tag.name.lower() for tag in Tag.objects.all()]
+            tags_new = list(set(tags_raw) - set(tags_all))
+            if tags_new:
+                Tag.objects.bulk_create([Tag(name=tag) for tag in tags_new])
+            blog.tags.clear()
+            for tag_name in tags_raw:
+                blog.tags.add(Tag.objects.get(name=tag_name))
         blog.save()
 
     try:
@@ -52,11 +78,13 @@ def blog_edit(request, id=0):
 
     blog_editor = BlogEditor(initial={
         'title': blog.title,
+        'category': blog.category.name,
         'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
         'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud,
+                'blog_editor': blog_editor})
     return render_to_response('blog_edit.html', cxt)
 
 

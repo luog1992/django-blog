@@ -3,17 +3,50 @@
 	padding: 1vw 3vw;
 }
 
+#blog-title-edit {
+	/*background: orange;*/
+	margin: 1vw 0;
+}
+
 #id_title {
 	/*background: #CBCBCB;*/
 	/*background: transparent;*/
 	border: transparent;
-	width: 90%;
+	width: 60%;
 	height: 2vw;
 	font-size: 1.5vw;
-	margin: 1vw 0 1vw 0;
     font-family: Helvetica, Arial, Sans-serif;
     color: #4182EC;
     font-weight: 600;
+}
+
+.blog-editor-save,
+.blog-editor-undo {
+	float: right;
+	height: 1.5vw;
+	width: 4vw;
+	color: white;
+	font-weight: 600;
+	border: transparent;
+	border-radius: 0.2vw;
+	margin-left: 0.5vw;
+	margin-top: 0.25vw;
+}
+
+.blog-editor-save {
+	background: #B3CE84;
+}
+
+.blog-editor-save:hover {
+	background: #A2BD62;
+}
+
+.blog-editor-undo {
+	background: #E9CA47;
+}
+
+.blog-editor-undo:hover {
+	background: #F3A558;
 }
 
 #blog-meta-edit {
@@ -43,6 +76,7 @@
 	background: transparent;
 	border: transparent;
 	height: 100%;
+	width: 50%;
     font-family: Helvetica, Arial, Sans-serif;
 	font-size: 0.9vw;
 	color: #414141;
