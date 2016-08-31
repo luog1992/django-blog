@@ -34,6 +34,7 @@ def blog_detail(request, id=0):
 def blog_add(request):
     cxt = {}
     cxt.update(csrf(request))
+    blog = Blog()
     blog_editor = BlogEditor(initial={
         'title': 'title here...',
         # 'category': blog.category.name,
