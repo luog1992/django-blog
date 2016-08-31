@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <div class="content-wrapper">
     <div class="blog-editor-wrapper">
-        <form action="" id="blog-editor" autocomplete="off" method="post">{% csrf_token %}
+        <form action="{% url 'blog_edit' id=blog.id %}" id="blog-editor" autocomplete="off" method="post">{% csrf_token %}
             <div id="blog-title-edit">
                 {{ blog_editor.title }}
                 <button type="reset" class="blog-editor-undo">Undo</button>

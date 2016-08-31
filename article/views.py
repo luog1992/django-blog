@@ -7,8 +7,8 @@ import re
 
 
 # def home(request):
-# 	post_list = Blog.objects.all()
-# 	return render_to_response('home.html', {'post_list': post_list})
+#   post_list = Blog.objects.all()
+#   return render_to_response('home.html', {'post_list': post_list})
 
 def search(request):
     if 'q' in request.GET:
@@ -32,14 +32,15 @@ def blog_detail(request, id=0):
 
 
 def blog_add(request):
+    print '....blog add', request.method
     cxt = {}
     cxt.update(csrf(request))
-    blog = Blog()
+    blog = Blog(category=Category.objects.get(name='Draft'))
+    blog.save()
     blog_editor = BlogEditor(initial={
-        'title': 'title here...',
-        # 'category': blog.category.name,
-        'tags': 'tags here...',
-        'content': 'content here...'
+        'title': blog.title,
+        'category': blog.category.name,
+        'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
     cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
@@ -50,7 +51,7 @@ def blog_edit(request, id=0):
     id = int(id)
     cxt = {}
     cxt.update(csrf(request))
-    print '....Request.Method:', request.method
+    print '....blog edit', request.method
     if request.method == 'POST':
         blog = Blog.objects.get(id=id)
         blog.title = request.POST.get('title')
@@ -59,7 +60,7 @@ def blog_edit(request, id=0):
         patt_sum = re.compile(r'@sum(.*?)@endsum', re.S)
         summary = patt_sum.findall(blog.content)
         if summary:
-            blog.summary = summary[0].strip(' \n')
+            blog.summary = summary[0].strip('\n <br>')
         tags_raw = filter(lambda item: item != '', [tag.strip(
             ' ,;').lower() for tag in (request.POST.get('tags')).split('|') if tag])
         if tags_raw:
@@ -84,8 +85,7 @@ def blog_edit(request, id=0):
         'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud,
-                'blog_editor': blog_editor})
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
     return render_to_response('blog_edit.html', cxt)
 
 

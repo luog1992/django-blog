@@ -27,19 +27,15 @@ class Category(models.Model):
 
 
 class Blog(models.Model):
+    default_content = '@sum<br><br>Summary your blog here...<br><br>@endsum<br><br><hr>'
     title = models.CharField(verbose_name='Title', max_length=100, null=False, default='Untitle')
-    _status = (
-        ('DRAFT', 'Draft'),
-        ('PUBLIC', 'Public'),
-        ('PRIVATE', 'Private'),
-    )
-    status = models.CharField(verbose_name='Status', choices=_status, max_length=7, default='DRAFT')
+    public = models.BooleanField(verbose_name='Public', default=False)
+    valid = models.BooleanField(verbose_name='Valid', default=False)
     date_time = models.DateField(verbose_name='Creation Date', auto_now_add=True)
     category = models.ForeignKey(Category, related_name='blogs', default=None, null=False)
     tags = models.ManyToManyField(Tag, related_name='blogs')
-    summary = models.TextField(verbose_name='Summary', max_length=1000, blank=True, null=True, 
-        default=r'@sum\nsummary your blog here...\n@endsum')
-    content = models.TextField(verbose_name='Content', default='')
+    summary = models.TextField(verbose_name='Summary', max_length=1000, blank=True, null=True)
+    content = models.TextField(verbose_name='Content', default=default_content)
 
     def get_absolute_url(self):
         path = reverse('article', kwargs={'id': self.id})
