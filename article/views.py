@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response
+from django.shortcuts import redirect
 from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category
@@ -37,14 +38,7 @@ def blog_add(request):
     cxt.update(csrf(request))
     blog = Blog(category=Category.objects.get(name='Draft'))
     blog.save()
-    blog_editor = BlogEditor(initial={
-        'title': blog.title,
-        'category': blog.category.name,
-        'content': blog.content
-    })
-    tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
-    return render_to_response('blog_edit.html', cxt)
+    return blog_edit(request, id=blog.id)
 
 
 def blog_edit(request, id=0):
@@ -53,6 +47,7 @@ def blog_edit(request, id=0):
     cxt.update(csrf(request))
     print '....blog edit', request.method
     if request.method == 'POST':
+        print '........blog update'
         blog = Blog.objects.get(id=id)
         blog.title = request.POST.get('title')
         blog.category = Category.objects.get(name=request.POST.get('category'))
@@ -85,8 +80,17 @@ def blog_edit(request, id=0):
         'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud,
+                'blog_editor': blog_editor})
     return render_to_response('blog_edit.html', cxt)
+
+
+def blog_del(request, id=0):
+    print '....blog del'
+    id = int(id)
+    blog = Blog.objects.get(id=id)
+    blog.delete()
+    return redirect('/home')
 
 
 def tag_blogs(request, name):

@@ -261,3 +261,8 @@ body {
     /*background: #89F05D;*/
     /*padding: 0 1em;*/
 }
+
+.content-wrapper {
+    /*background: green;*/
+    padding: 1em;
+}

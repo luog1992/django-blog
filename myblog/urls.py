@@ -21,5 +21,6 @@ urlpatterns += patterns('article.views',
 	url(r'^blog/(?P<id>\d{1,3})/detail$', 'blog_detail', name='blog_detail'),
 	url(r'^blog/add$', 'blog_add', name='blog_add'),
 	url(r'^blog/(?P<id>\d{1,3})/edit/$', 'blog_edit', name='blog_edit'),
+	url(r'^blog/(?P<id>\d{1,3})/delete/$', 'blog_del', name='blog_del'),
 	url(r'^tag/(?P<name>\w{1,20})', 'tag_blogs', name='tag_blogs'),
 )

@@ -1,20 +1,26 @@
 {% extends "base.html" %} {% block content %}
 <div class="content-wrapper">
-    <div class="blog-editor-wrapper">
-        <form action="{% url 'blog_edit' id=blog.id %}" id="blog-editor" autocomplete="off" method="post">{% csrf_token %}
-            <div id="blog-title-edit">
-                {{ blog_editor.title }}
-                <button type="reset" class="blog-editor-undo">Undo</button>
-                <button type="submit" class="blog-editor-save">Save</button>
-            </div>
-            <div id="blog-meta-edit">
-                <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
-                <i class="fa fa-tags" aria-hidden="true"></i> {{ blog_editor.tags }}
-            </div>
-            <div id="blog-content-edit">
-                {{ blog_editor.content }}
-            </div>
-        </form>
+    <div class="blog-editor-wrapper pure-g">
+        <div id="blog-view" class="pure-u-md-1-24">
+            <a href="{% url 'blog_detail' id=blog.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+        </div>
+        <div id="blog-editor" class="pure-u-md-23-24">
+            <form action="{% url 'blog_edit' id=blog.id %}" id="blog-editor" autocomplete="off" method="post">{% csrf_token %}
+                <div id="blog-title-edit">
+                    {{ blog_editor.title }}
+                    <a href="{% url 'blog_del' id=blog.id %}">Discard</a>
+                    <button type="reset" class="blog-editor-undo">Undo</button>
+                    <button type="submit" class="blog-editor-save">Save</button>
+                </div>
+                <div id="blog-meta-edit">
+                    <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
+                    <i class="fa fa-tags" aria-hidden="true"></i> {{ blog_editor.tags }}
+                </div>
+                <div id="blog-content-edit">
+                    {{ blog_editor.content }}
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
