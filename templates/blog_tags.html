@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+	{% for tag in tags %}
+	<p>{{ tag.name }} | <span style="background:{{ tag.color }}">{{ tag.color }}</span></p>
+	{% endfor %}
+</div>
+{% endblock %}

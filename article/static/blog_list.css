@@ -40,25 +40,21 @@
     left: auto;
 }
 
-.blog-logo {
+.blog-toolbar {
     /*background: blue;*/
-    font-size: 200%;
-    color: #4182EC;
-    padding-left: 0.5vw;
-    padding-top: 0.1vw;
+    font-size: 1.5vw;
+    text-align: center;
 }
 
-.blog-logo a {
+.blog-toolbar a {
     /*background: yellow;*/
-    color: #4182EC;
+    color: #414141;
     padding: 0.1vw 0.2vw;
     border-radius: 5px;
 }
 
-.blog-logo a:hover,
-.blog-logo a:focus {
-    color: white;
-    background: #4182EC;
+.blog-toolbar a:hover {
+    color: #4182EC;
 }
 
 .blog-body {
@@ -142,6 +138,7 @@
     /*background: blue;*/
     border-top: 1px solid #9B9B9B;
     padding: 0.5em 0;
+    margin: 0.5vw 0;
 }
 
 .blog-footer i {

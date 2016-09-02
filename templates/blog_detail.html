@@ -4,9 +4,12 @@
 {% block content %}
 <div class="content-wrapper">
     <div class="blog pure-g">
-        <div class="blog-logo pure-u-md-1-24">
+        <div class="blog-toolbar pure-u-md-1-24">
             <a href="{% url 'blog_edit' id=blog.id %}">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </a><br>
+            <a href="{% url 'blog_del' id=blog.id %}">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
             </a>
         </div>
         <div class="blog-body pure-u-md-23-24">

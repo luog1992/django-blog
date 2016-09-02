@@ -17,7 +17,7 @@ def search(request):
 
 
 def blogs(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.filter(valid=True)
     tag_cloud = Tag.objects.all().order_by('color')
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
@@ -36,7 +36,13 @@ def blog_add(request):
     print '....blog add', request.method
     cxt = {}
     cxt.update(csrf(request))
-    blog = Blog(category=Category.objects.get(name='Draft'))
+    try:
+        default_cat = Category.objects.get(name='Default')
+    except Category.DoesNotExist:
+        default_cat = Category(name='Default')
+        default_cat.save()
+        default_cat = Category.objects.get(name='Default')
+    blog = Blog(category=default_cat)
     blog.save()
     return blog_edit(request, id=blog.id)
 
@@ -47,8 +53,9 @@ def blog_edit(request, id=0):
     cxt.update(csrf(request))
     print '....blog edit', request.method
     if request.method == 'POST':
-        print '........blog update'
+        print '........blog saved'
         blog = Blog.objects.get(id=id)
+        blog.valid = True
         blog.title = request.POST.get('title')
         blog.category = Category.objects.get(name=request.POST.get('category'))
         blog.content = request.POST.get('content')
@@ -59,7 +66,7 @@ def blog_edit(request, id=0):
         tags_raw = filter(lambda item: item != '', [tag.strip(
             ' ,;').lower() for tag in (request.POST.get('tags')).split('|') if tag])
         if tags_raw:
-            tags_all = [tag.name.lower() for tag in Tag.objects.all()]
+            tags_all = [tag.name for tag in Tag.objects.all()]
             tags_new = list(set(tags_raw) - set(tags_all))
             if tags_new:
                 Tag.objects.bulk_create([Tag(name=tag) for tag in tags_new])
@@ -88,10 +95,13 @@ def blog_edit(request, id=0):
 def blog_del(request, id=0):
     print '....blog del'
     id = int(id)
-    blog = Blog.objects.get(id=id)
-    blog.delete()
+    Blog.objects.filter(id=id).update(valid=False)
     return redirect('/home')
 
+def blog_tags(request):
+    tags = Tag.objects.all()
+    tag_cloud = Tag.objects.all().order_by('color')
+    return render_to_response('blog_tags.html', {'tags': tags, 'tag_cloud': tag_cloud})
 
 def tag_blogs(request, name):
     try:

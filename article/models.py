@@ -29,7 +29,7 @@ class Category(models.Model):
 class Blog(models.Model):
     default_content = '@sum<br><br>Summary your blog here...<br><br>@endsum<br><br><hr>'
     title = models.CharField(verbose_name='Title', max_length=100, null=False, default='Untitle')
-    public = models.BooleanField(verbose_name='Public', default=False)
+    public = models.BooleanField(verbose_name='Public', default=True)
     valid = models.BooleanField(verbose_name='Valid', default=False)
     date_time = models.DateField(verbose_name='Creation Date', auto_now_add=True)
     category = models.ForeignKey(Category, related_name='blogs', default=None, null=False)

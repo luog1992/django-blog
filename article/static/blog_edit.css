@@ -3,18 +3,6 @@
 	padding: 1vw 3vw 0 1vw;
 }
 
-#blog-view {
-	/*background: orange;*/
-	margin: 1vw 0;
-}
-
-#blog-view i {
-	font-size: 200%;
-    color: #4182EC;
-    padding-left: 0.5vw;
-    padding-top: 0.1vw;
-}
-
 #blog-editor {
 	/*background: gray;*/
 	padding: 0 0.5vw;
@@ -22,9 +10,7 @@
 
 #blog-title-edit {
 	/*background: green;*/
-	/*border-left: 5px solid #6E6E6E;*/
-	/*padding-left: 1vw;*/
-	margin: 1vw 0;
+	/*margin: 1vw 0;*/
 }
 
 #id_title {
@@ -84,7 +70,7 @@
 	/*background: #E6E6E6;*/
 	height: 1.2vw;
 	padding: 0;
-	margin: 0 0 1vw 0;
+	margin: 1vw 0;
 }
 
 #blog-meta-edit i {

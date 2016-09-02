@@ -3,11 +3,11 @@ from article.models import Blog, Tag, Category
 
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'date_time', 'summary')
+    list_display = ('title', 'public', 'valid', 'category', 'date_time', 'summary')
     search_fields = ('title', 'category', 'tags')
-    list_filter = ('date_time', 'category', 'tags')
-    ordering = ('category', '-date_time', 'title')
-    fields = ('title', 'tags', 'category', 'summary', 'content')
+    list_filter = ('date_time', 'category', 'tags', 'public', 'valid')
+    ordering = ('valid', 'category', '-date_time', 'title')
+    fields = ('title', 'public', 'tags', 'category', 'summary', 'content')
 
 
 class TagAdmin(admin.ModelAdmin):

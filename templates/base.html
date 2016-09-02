@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'blog_list.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog_detail.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog_edit.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog_tags.css' %}">
 </head>
 {# markdown hightlight #}
 <script>
@@ -84,11 +85,13 @@ hljs.initHighlightingOnLoad();
                     </div>
                     <div id="tag-cloud">
                         <div id="tag-bar">
-                            <p>Tag Cloud</p>
+                            <a href="{% url 'blog_tags' %}">Tag Cloud</a>
                         </div>
                         <ul>
                             {% for tag in tag_cloud %}
-                            <li><a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.count }}vw; color:{{ tag.color }}">{{ tag.name }}</a></li>
+                            <li>
+                                <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.count }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
+                            </li>
                             {% endfor %}
                         </ul>
                     </div>
