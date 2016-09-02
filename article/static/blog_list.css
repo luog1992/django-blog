@@ -1,6 +1,6 @@
-#blog-func {
+/*#blog-func {
     background: orange;
-}
+}*/
 
 .blog {
     position: relative;
@@ -40,10 +40,13 @@
     left: auto;
 }
 
+/*-------------------------------*/
+
 .blog-toolbar {
     /*background: blue;*/
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     text-align: center;
+    padding-top: 0.3vw;
 }
 
 .blog-toolbar a {
@@ -56,6 +59,8 @@
 .blog-toolbar a:hover {
     color: #4182EC;
 }
+
+/*-------------------------------*/
 
 .blog-body {
     /*background: gray;*/
@@ -80,7 +85,7 @@
 
 .blog-meta-wrapper {
     /*background: red;*/
-    margin: 0.5vw 0;
+    margin: 1vw 0;
 }
 
 .blog-meta {

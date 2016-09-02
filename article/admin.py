@@ -6,8 +6,8 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'public', 'valid', 'category', 'date_time', 'summary')
     search_fields = ('title', 'category', 'tags')
     list_filter = ('date_time', 'category', 'tags', 'public', 'valid')
-    ordering = ('valid', 'category', '-date_time', 'title')
-    fields = ('title', 'public', 'tags', 'category', 'summary', 'content')
+    ordering = ('-valid', 'category', '-date_time', 'title')
+    fields = ('title', 'valid', 'public', 'tags', 'category', 'summary', 'content')
 
 
 class TagAdmin(admin.ModelAdmin):

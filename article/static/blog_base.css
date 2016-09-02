@@ -36,7 +36,7 @@ body {
     /*background: green;*/
     position: fixed;
     bottom: 1.5vw;
-    right: 1.5vw;
+    right: 3vw;
     height: 2vw;
     width: 2vw;
     padding: 0;
@@ -61,7 +61,6 @@ body {
 #toolbar i:focus {
     color: #4E5BFC;s
 }
-
 
 /*---------------------------------*/
 
@@ -104,6 +103,8 @@ body {
     margin: 0 auto;
 }
 
+/*--------------------------------*/
+
 #menu {
     /*background: green;*/
 }
@@ -129,6 +130,8 @@ body {
 .menu-item a:focus {
     color: #4182EC;
 }
+
+/*--------------------------------*/
 
 #follow-me {
     /*background: red;*/
@@ -215,6 +218,8 @@ body {
     width: 100%;
 }
 
+/*--------------------------------*/
+
 #tag-cloud {
     background: white;
     padding: 0;
@@ -261,6 +266,8 @@ body {
     margin: 0 0.1vw;
     text-decoration: underline;
 }
+
+/*--------------------------------*/
 
 #content {
     /*background: orange;*/
