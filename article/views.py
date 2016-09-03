@@ -87,8 +87,7 @@ def blog_edit(request, id=0):
         'content': blog.content
     })
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud,
-                'blog_editor': blog_editor})
+    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
     return render_to_response('blog_edit.html', cxt)
 
 
@@ -100,8 +99,18 @@ def blog_del(request, id=0):
 
 def blog_tags(request):
     tags = Tag.objects.all()
+    tag_cat_keys =list(set([tag.name[0] for tag in tags]))
+    tag_cats = []
+    for tag_cat_key in tag_cat_keys:
+        tag_cat_val = []
+        for tag in tags:
+            if tag.name[0] == tag_cat_key:
+                tag_cat_val.append(tag)
+        tag_cats.append(tag_cat_val)
+
     tag_cloud = Tag.objects.all().order_by('color')
-    return render_to_response('blog_tags.html', {'tags': tags, 'tag_cloud': tag_cloud})
+    return render_to_response('blog_tags.html', \
+        {'tag_cats': tag_cats, 'tag_cloud': tag_cloud})
 
 def tag_blogs(request, name):
     try:
@@ -113,6 +122,18 @@ def tag_blogs(request, name):
     tag_cloud = Tag.objects.all().order_by('color')
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
+def tag_modify(request, id):
+    id = int(id)
+    cxt = {}
+    cxt.update(csrf(request))
+    if request.method == 'POST':
+        Tag.objects.filter(id=id).update(
+            name=request.POST.get('name'),
+            color='#' + request.POST.get('color'),
+        )
+    tag = Tag.objects.get(id=id)
+    cxt.update({'tag': tag})
+    return render_to_response('tag_modify.html', cxt)
 
 def request(request):
     print '.... request.GET', request.GET
