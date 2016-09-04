@@ -6,7 +6,10 @@ class Tag(models.Model):
     name = models.CharField(verbose_name='Tag', max_length=20)
     color = models.CharField(verbose_name='Color', max_length=20, default='#BFE37C')
 
-    def count(self):
+    def blog_nums(self):
+        return self.blogs.count()
+
+    def font_size(self):
         return 0.8+(self.blogs.count())/5.0
 
     def __unicode__(self):

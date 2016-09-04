@@ -12,19 +12,18 @@
     <link rel="stylesheet" href="{% static 'pure-release-0.5.0/pure-min.css' %}">
     <link rel="stylesheet" href="{% static 'pure-release-0.5.0/grids-responsive-min.css' %}">
     <!-- include libraries(jQuery, bootstrap) -->
-	<link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
     <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-    <script src="% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
     <script src="{% static 'jqcolpick/js/colpick.js' %}" type="text/javascript"></script>
-	<link rel="stylesheet" href="{% static 'jqcolpick/css/colpick.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'jqcolpick/css/colpick.css' %}" type="text/css" />
     <!-- include summernote css/js-->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
     <!-- include fontawesome for icons -->
-    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}"> 
-    {# markdown css #}
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}"> {# markdown css #}
     <script src="{% static 'highlight/highlight.pack.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'highlight/styles/github.css' %}">
     <!-- custom blog css -->
@@ -96,7 +95,7 @@ hljs.initHighlightingOnLoad();
                         <ul>
                             {% for tag in tag_cloud %}
                             <li>
-                                <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.count }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
+                                <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.font_size }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
                             </li>
                             {% endfor %}
                         </ul>

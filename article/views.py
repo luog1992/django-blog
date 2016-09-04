@@ -44,7 +44,7 @@ def blog_add(request):
         default_cat = Category.objects.get(name='Default')
     blog = Blog(category=default_cat)
     blog.save()
-    return blog_edit(request, id=blog.id)
+    return redirect('/blog/%s/edit/' % blog.id)
 
 
 def blog_edit(request, id=0):
@@ -53,41 +53,48 @@ def blog_edit(request, id=0):
     cxt.update(csrf(request))
     print '....blog edit', request.method
     if request.method == 'POST':
-        print '........blog saved'
+        print '........blog save'
+        blog_editor = BlogEditor(request.POST)
         blog = Blog.objects.get(id=id)
-        blog.valid = True
-        blog.title = request.POST.get('title')
-        blog.category = Category.objects.get(name=request.POST.get('category'))
-        blog.content = request.POST.get('content')
-        patt_sum = re.compile(r'@sum(.*?)@endsum', re.S)
-        summary = patt_sum.findall(blog.content)
-        if summary:
-            blog.summary = summary[0].strip('\n <br>')
-        tags_raw = filter(lambda item: item != '', [tag.strip(
-            ' ,;').lower() for tag in (request.POST.get('tags')).split('|') if tag])
-        if tags_raw:
-            tags_all = [tag.name for tag in Tag.objects.all()]
-            tags_new = list(set(tags_raw) - set(tags_all))
-            if tags_new:
-                Tag.objects.bulk_create([Tag(name=tag) for tag in tags_new])
-            blog.tags.clear()
-            for tag_name in tags_raw:
-                blog.tags.add(Tag.objects.get(name=tag_name))
-        blog.save()
+        cxt.update({'blog': blog, 'blog_editor': blog_editor})
+        if blog_editor.is_valid():
+            data = blog_editor.cleaned_data
+            blog.valid = True
+            blog.title = data['title']
+            blog.category = Category.objects.get(name=data['category'])
+            blog.content = data['content']
+            patt_sum = re.compile(r'@sum(.*?)@endsum', re.S)
+            summary = patt_sum.findall(blog.content)
+            if summary:
+                summary = filter(lambda item: item != '', re.findall(r'>(.*?)<', summary[0]))
+                if summary:
+                    blog.summary = summary[0]
 
-    try:
+            tags_raw = filter(lambda item: item != '', [tag.strip(
+                ' ,;').lower() for tag in (data['tags']).split('|') if tag])
+            if tags_raw:
+                tags_all = [tag.name for tag in Tag.objects.all()]
+                tags_new = list(set(tags_raw) - set(tags_all))
+                if tags_new:
+                    Tag.objects.bulk_create([Tag(name=tag) for tag in tags_new])
+                blog.tags.clear()
+                for tag_name in tags_raw:
+                    blog.tags.add(Tag.objects.get(name=tag_name))
+            blog.save()
+            return redirect('/blog/%s/edit/' % blog.id)
+
+    else:
         blog = Blog.objects.get(id=id)
-    except Blog.DoesNotExist:
-        raise Http404
-
-    blog_editor = BlogEditor(initial={
-        'title': blog.title,
-        'category': blog.category.name,
-        'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
-        'content': blog.content
-    })
+        blog_editor = BlogEditor(initial={
+            'title': blog.title,
+            'category': blog.category.name,
+            'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
+            'content': blog.content
+        })
+        cxt.update({'blog': blog, 'blog_editor': blog_editor})
+        
     tag_cloud = Tag.objects.all().order_by('color')
-    cxt.update({'blog': blog, 'tag_cloud': tag_cloud, 'blog_editor': blog_editor})
+    cxt.update({'tag_cloud': tag_cloud})
     return render_to_response('blog_edit.html', cxt)
 
 
@@ -95,7 +102,7 @@ def blog_del(request, id=0):
     print '....blog del'
     id = int(id)
     Blog.objects.filter(id=id).update(valid=False)
-    return redirect('/home')
+    return redirect('/home/')
 
 def blog_tags(request):
     tags = Tag.objects.all()
@@ -127,9 +134,10 @@ def tag_modify(request, id):
     cxt = {}
     cxt.update(csrf(request))
     if request.method == 'POST':
+        print '....tag_modify', request.POST.get('content')
         Tag.objects.filter(id=id).update(
             name=request.POST.get('name'),
-            color='#' + request.POST.get('color'),
+            color='#' + request.POST.get('color')[-6:],
         )
     tag = Tag.objects.get(id=id)
     cxt.update({'tag': tag})

@@ -1,13 +1,14 @@
 .tag-box {
 	width: 100%;
 	background: white;
+	padding: 1vw;
 }
 
 .tag-cat {
     /*background: yellow;*/
     border-left: 3px solid gray;
     padding-left: 0.5vw;
-    margin: 1vw;
+    margin: 1vw 2vw;
 }
 .tag-items {
 	list-style: none;
@@ -15,7 +16,7 @@
 	margin: 0;
 }
 
-.tag-meta {
+.tag-item {
 	/*background: green;*/
 	list-style: none;
 	padding: 0;
@@ -26,12 +27,22 @@
 	margin: 0;
 }
 
-.tag-meta li {
+.tag-item li {
 	display: inline;
 }
 
-.tag-meta li.tag-color {
+.tag-item li.tag-name {
 	border-radius: 3px;
-	padding: 0.2vw;
+	padding: 0.2vw 0.3vw;
+	margin: 0 0.2vw;
+	color: white;
+}
+
+.tag-item li.tag-pen {
+	display: none;
+}
+
+.tag-item i {
+	color: gray;
 }
 

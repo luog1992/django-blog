@@ -1,33 +1,52 @@
-{% extends "base.html" %} 
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="pure-g tag-box">
     {% for tag_cat in tag_cats %}
-    <div class="pure-u-5-24 tag-cat">
+    <div class="pure-u-3-24 tag-cat">
         <ul class="tag-items">
-            {% for tag in tag_cat %}
-            {% if not forloop.last %}
-            <ul class="tag-meta">
-	            <li>{{ tag.name }}</li>
-	            <li class="tag-color" style="background:{{ tag.color }}">{{ tag.color }}</li>
-	            <li><a href="{% url 'tag_modify' id=tag.id %}">
-	            	<i class="fa fa-pencil" aria-hidden="true"></i>
-	            </a></li>
+            {% for tag in tag_cat %} {% if not forloop.last %}
+            <ul class="tag-item" onmousemove="showTagPen(this);" onmouseout="hideTagPen(this);">
+                <li>({{ tag.blog_nums }})</li>
+                <li class="tag-name" style="background:{{ tag.color }}">{{ tag.name }}</li>
+                <li class="tag-pen">
+                    <a href="{% url 'tag_modify' id=tag.id %}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                </li>
             </ul>
             {% else %}
-            <ul class="tag-meta tag-last">
-	            <li>{{ tag.name }}</li>
-	            <li class="tag-color" style="background:{{ tag.color }}">{{ tag.color }}</li>
-	            <li><a href="{% url 'tag_modify' id=tag.id %}">
-	            	<i class="fa fa-pencil" aria-hidden="true"></i>
-	            </a></li>
+            <ul class="tag-item tag-last" onmousemove="showTagPen(this);" onmouseout="hideTagPen(this);">
+                <li>({{ tag.blog_nums }})</li>
+                <li class="tag-name" style="background:{{ tag.color }}">{{ tag.name }}</li>
+                <li class="tag-pen">
+                    <a href="{% url 'tag_modify' id=tag.id %}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                </li>
             </ul>
-            {% endif %}
-            {% endfor %}
+            {% endif %} {% endfor %}
         </ul>
     </div>
     {% endfor %}
 </div>
+<script type="text/javascript">
+function showTagPen(obj) {
+    var oTagItem = obj;
+    var oTagPen = oTagItem.children[2];
+    oTagPen.style.display = "inline";
+}
+
+function hideTagPen(obj) {
+    var oTagItem = obj;
+    var oTagPen = oTagItem.children[2];
+    var timer = null;
+    timer = setTimeout(function() {
+        oTagPen.style.display = "none";
+    }, 300);
+    oTagPen.onmousemove = function() {
+        clearTimeout(timer);
+    };
+}
+</script>
 <script>
 $('.tag-box').masonry({
     // options

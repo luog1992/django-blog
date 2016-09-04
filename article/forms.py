@@ -10,4 +10,11 @@ class BlogEditor(forms.Form):
     title = forms.CharField(max_length=100, required=True)
     category = forms.ChoiceField(choices=categories, required=True)
     tags = forms.CharField(max_length=100)
-    content = forms.CharField(widget=SummernoteInplaceWidget(), required=True)
+    content = forms.CharField(widget=SummernoteWidget(), required=True)
+
+
+class TestForm(forms.Form):
+	subject = forms.CharField(max_length=50, required=True)
+	email = forms.EmailField(required=True)
+	message = forms.CharField(max_length=1000, required=True)
+
