@@ -48,10 +48,10 @@ hljs.initHighlightingOnLoad();
                 <div id="menu" class="pure-u-md-16-24">
                     <ul id="menu-items">
                         <li class="menu-item home"><a href="{% url 'home' %}">Home</a></li>
-                        <li class="menu-item python"><a href="">Python</a></li>
-                        <li class="menu-item java"><a href="">Java</a></li>
-                        <li class="menu-item javascript"><a href="">JavasSript</a></li>
-                        <li class="menu-item linux"><a href="">Linux</a></li>
+                        <li class="menu-item python"><a href="">Collections</a></li>
+                        <li class="menu-item java"><a href="">Categories</a></li>
+                        <li class="menu-item javascript"><a href="{% url 'blog_tags' %}">Tags</a></li>
+                        <li class="menu-item javascript"><a href="">AboutMe</a></li>
                     </ul>
                 </div>
                 <div id="follow-me" class="pure-u-md-3-24">
@@ -97,6 +97,8 @@ hljs.initHighlightingOnLoad();
                             <li>
                                 <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.font_size }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
                             </li>
+                            {% empty %}
+                            No Tags lalala...
                             {% endfor %}
                         </ul>
                     </div>

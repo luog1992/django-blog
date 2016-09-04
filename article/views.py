@@ -4,12 +4,10 @@ from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category
 from forms import BlogEditor
+from utils import Constant
+import random
 import re
 
-
-# def home(request):
-#   post_list = Blog.objects.all()
-#   return render_to_response('home.html', {'post_list': post_list})
 
 def search(request):
     if 'q' in request.GET:
@@ -66,20 +64,30 @@ def blog_edit(request, id=0):
             patt_sum = re.compile(r'@sum(.*?)@endsum', re.S)
             summary = patt_sum.findall(blog.content)
             if summary:
-                summary = filter(lambda item: item != '', re.findall(r'>(.*?)<', summary[0]))
+                summary = re.findall(r'>(.+?)<', summary[0])
                 if summary:
                     blog.summary = summary[0]
+                else:
+                    blog.summary = data['content'][:500] + '...'
+            else:
+                blog.summary = data['content'][:500] + '...'
 
-            tags_raw = filter(lambda item: item != '', [tag.strip(
-                ' ,;').lower() for tag in (data['tags']).split('|') if tag])
+            tags_raw = list(set(filter(lambda item: item != '', [tag.strip(
+                ' ,;').lower() for tag in (data['tags']).split('|') if tag])))
             if tags_raw:
                 tags_all = [tag.name for tag in Tag.objects.all()]
                 tags_new = list(set(tags_raw) - set(tags_all))
                 if tags_new:
-                    Tag.objects.bulk_create([Tag(name=tag) for tag in tags_new])
+                    for tag in tags_new:
+                        new_tag = Tag(name=tag, color=random.choice(Constant.TAGCOLORS))
+                        new_tag.save()
+                  
                 blog.tags.clear()
                 for tag_name in tags_raw:
                     blog.tags.add(Tag.objects.get(name=tag_name))
+            else:
+                blog.tags.clear()
+
             blog.save()
             return redirect('/blog/%s/edit/' % blog.id)
 
@@ -92,7 +100,7 @@ def blog_edit(request, id=0):
             'content': blog.content
         })
         cxt.update({'blog': blog, 'blog_editor': blog_editor})
-        
+
     tag_cloud = Tag.objects.all().order_by('color')
     cxt.update({'tag_cloud': tag_cloud})
     return render_to_response('blog_edit.html', cxt)
@@ -104,9 +112,10 @@ def blog_del(request, id=0):
     Blog.objects.filter(id=id).update(valid=False)
     return redirect('/home/')
 
+
 def blog_tags(request):
     tags = Tag.objects.all()
-    tag_cat_keys =list(set([tag.name[0] for tag in tags]))
+    tag_cat_keys = list(set([tag.name[0] for tag in tags]))
     tag_cats = []
     for tag_cat_key in tag_cat_keys:
         tag_cat_val = []
@@ -116,8 +125,9 @@ def blog_tags(request):
         tag_cats.append(tag_cat_val)
 
     tag_cloud = Tag.objects.all().order_by('color')
-    return render_to_response('blog_tags.html', \
-        {'tag_cats': tag_cats, 'tag_cloud': tag_cloud})
+    return render_to_response('blog_tags.html',
+                              {'tag_cats': tag_cats, 'tag_cloud': tag_cloud})
+
 
 def tag_blogs(request, name):
     try:
@@ -128,6 +138,7 @@ def tag_blogs(request, name):
     blogs = tag.blogs.all()
     tag_cloud = Tag.objects.all().order_by('color')
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
+
 
 def tag_modify(request, id):
     id = int(id)
@@ -142,6 +153,7 @@ def tag_modify(request, id):
     tag = Tag.objects.get(id=id)
     cxt.update({'tag': tag})
     return render_to_response('tag_modify.html', cxt)
+
 
 def request(request):
     print '.... request.GET', request.GET
