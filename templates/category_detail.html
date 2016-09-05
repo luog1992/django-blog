@@ -1,35 +1,35 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
+{% block sidebar %}
+<div class="category-sidebar" style="background:{{ category.color }}">
+    <p><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</p>
+    <ul class="category-blogs">
+        {% for blog in category.get_valid_blogs %}
+        <li class="category-blog">{{ forloop.counter }}<a href="{% url 'blog_detail' id=blog.id %}">
+        {{ blog.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
 {% block content %}
-<div class="pure-g category-editor">
-    <div class="pure-u-1-5 category-sidebar">
-        <p><i class="fa fa-folder-open" aria-hidden="true"></i>
-        {{ category.name }}</p>
-        <ul class="category-blogs">
-            {% for blog in category.get_valid_blogs %}
-            <li class="category-blog"><a href="{% url 'blog_detail' id=blog.id %}">{{ blog.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="blog-editor pure-u-md-4-5">
-        <form class="blog-editor" action="{% url 'blog_edit' id=blog.id %}" autocomplete="off" method="post">
-            {% csrf_token %}
-            <div class="blog-title-edit">
-                {{ blog_editor.title.errors }}
-                {{ blog_editor.title }}
-                <a href="{% url 'blog_del' id=blog.id %}">Delete</a>
-                <button type="reset" class="blog-editor-undo">Undo</button>
-                <button type="submit" class="blog-editor-save">Save</button>
-            </div>
-            <div class="blog-meta-edit">
-                <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
-                <i class="fa fa-tags" aria-hidden="true"></i>{{ blog_editor.tags }}
-            </div>
-            <div class="blog-content-edit">
-                {{ blog_editor.content.errors }}
-                {{ blog_editor.content }}
-            </div>
-        </form>
-    </div>
+<div class="category-editor">
+    <form class="blog-editor" action="{% url 'blog_edit' id=blog.id %}" autocomplete="off" method="post">
+        {% csrf_token %}
+        <div class="blog-title-edit">
+            {{ blog_editor.title.errors }}
+            {{ blog_editor.title }}
+            <a href="{% url 'blog_del' id=blog.id %}">Delete</a>
+            <button type="reset" class="blog-editor-undo">Undo</button>
+            <button type="submit" class="blog-editor-save">Save</button>
+        </div>
+        <div class="blog-meta-edit">
+            <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
+            <i class="fa fa-tags" aria-hidden="true"></i>{{ blog_editor.tags }}
+        </div>
+        <div class="blog-content-edit">
+            {{ blog_editor.content.errors }}
+            {{ blog_editor.content }}
+        </div>
+    </form>
 </div>
 {% endblock %}

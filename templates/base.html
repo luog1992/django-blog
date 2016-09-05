@@ -78,37 +78,10 @@ hljs.initHighlightingOnLoad();
         </div>
         <div id="main" class="pure-g">
             <div id="sidebar" class="pure-u-md-5-24">
-                <div class="sidebar-wrapper">
-                    <div id="portrait-box">
-                        <img src="{% static 'img/dahuaxiyou.jpg' %}" alt="" id="portrait" class="pure-img">
-                    </div>
-                    <div id="search">
-                        <div id="search-form" class="pure-form">
-                            <form action="{% url 'search' %}" method="get">
-                                <input name="q" type="text" placeholder="search" class="pure-input-rounded">
-                            </form>
-                        </div>
-                    </div>
-                    <div id="tag-cloud">
-                        <div id="tag-bar">
-                            <a href="{% url 'tags' %}">Tag Cloud</a>
-                        </div>
-                        <ul>
-                            {% for tag in tag_cloud %}
-                            <li>
-                                <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.font_size }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
-                            </li>
-                            {% empty %}
-                            No Tags lalala...
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+                {% block sidebar %} {% endblock %}
             </div>
             <div id="content" class="pure-u-md-19-24">
-                <div class="content-wrapper">
-                    {% block content %} {% endblock %}
-                </div>
+                {% block content %} {% endblock %}
             </div>
         </div>
     </div>

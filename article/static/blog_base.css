@@ -198,13 +198,13 @@ body {
     /*background: yellow;*/
 }
 
-.sidebar-wrapper {
-    /*background: green;*/
-    padding: 1em 1.5em;
-}
+/*.sidebar-wrapper {
+    background: #CDCDCD;
+    padding: 1em 1em;
+}*/
 
 #portrait-box {
-    background: blue;
+    /*background: blue;*/
 }
 
 #search {
@@ -271,12 +271,12 @@ body {
 
 #content {
     /*background: orange;*/
-    padding: 0 1em;
+    /*padding: 0 1em;*/
 }
 
 .content-wrapper {
-    /*background: gray;*/
-    padding: 1em;
+    /*background: #CDCDCD;*/
+    /*padding: 1em;*/
 }
 
 /*--------------------------------*/

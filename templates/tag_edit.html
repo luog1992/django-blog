@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base_sidebar.html" %} 
+
+{% block content %}
 <form action="{% url 'tag_edit' id=tag.id %}" class="pure-form" method="post">
     {% csrf_token %}
     <legend>Modify Tag</legend>
