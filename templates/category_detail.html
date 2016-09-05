@@ -1,17 +1,18 @@
 {% extends "base.html" %} 
 
-{% block content %} 
-{% if blog_editor.errors %}
-<ul class="errorlist">Errors found!</ul>
-{% endif %}
-<div class="blog-editor-wrapper pure-g">
-    <div class="blog-toolbar pure-u-md-1-24">
-        <a href="{% url 'blog_detail' id=blog.id %}">
-            <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        </a>
+{% block content %}
+<div class="pure-g category-editor">
+    <div class="pure-u-1-5 category-sidebar">
+        <p><i class="fa fa-folder-open" aria-hidden="true"></i>
+        {{ category.name }}</p>
+        <ul class="category-blogs">
+            {% for blog in category.get_valid_blogs %}
+            <li class="category-blog"><a href="{% url 'blog_detail' id=blog.id %}">{{ blog.title }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
-    <div class="blog-editor pure-u-md-23-24">
-        <form action="{% url 'blog_edit' id=blog.id %}" class="blog-editor" autocomplete="off" method="post">
+    <div class="blog-editor pure-u-md-4-5">
+        <form class="blog-editor" action="{% url 'blog_edit' id=blog.id %}" autocomplete="off" method="post">
             {% csrf_token %}
             <div class="blog-title-edit">
                 {{ blog_editor.title.errors }}

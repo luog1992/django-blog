@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<div class="pure-g category-box">
+    {% for category in categories %}
+    <div class="pure-u-7-24 category" style="background: {{ category.color }}">
+        <p>
+            <i class="fa fa-folder-open" aria-hidden="true"></i>
+            <a href="{% url 'category_detail' id=category.id %}">{{ category.name }}</a>
+        </p>
+        <ul class="category-blogs">
+            {% for blog in category.get_valid_blogs %}
+            <li class="category-blog"><a href="{% url 'blog_detail' id=blog.id %}">{{ blog.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+<script>
+$('.category-box').masonry({
+    // options
+    itemSelector: '.category',
+    columnWidth: '.category'
+});
+</script>
+{% endblock %}

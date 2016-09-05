@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<form action="{% url 'tag_modify' id=tag.id %}" class="pure-form" method="post">
+<form action="{% url 'tag_edit' id=tag.id %}" class="pure-form" method="post">
     {% csrf_token %}
     <legend>Modify Tag</legend>
     <input type="text" name="name" value="{{ tag.name }}" required>

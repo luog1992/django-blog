@@ -31,7 +31,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'blog_list.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog_detail.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog_edit.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'blog_tags.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'tag_list.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'category_list.css' %}">
 </head>
 {# markdown hightlight #}
 <script>
@@ -49,8 +50,8 @@ hljs.initHighlightingOnLoad();
                     <ul id="menu-items">
                         <li class="menu-item home"><a href="{% url 'home' %}">Home</a></li>
                         <li class="menu-item python"><a href="">Collections</a></li>
-                        <li class="menu-item java"><a href="">Categories</a></li>
-                        <li class="menu-item javascript"><a href="{% url 'blog_tags' %}">Tags</a></li>
+                        <li class="menu-item java"><a href="{% url 'categories' %}">Categories</a></li>
+                        <li class="menu-item javascript"><a href="{% url 'tags' %}">Tags</a></li>
                         <li class="menu-item javascript"><a href="">AboutMe</a></li>
                     </ul>
                 </div>
@@ -90,7 +91,7 @@ hljs.initHighlightingOnLoad();
                     </div>
                     <div id="tag-cloud">
                         <div id="tag-bar">
-                            <a href="{% url 'blog_tags' %}">Tag Cloud</a>
+                            <a href="{% url 'tags' %}">Tag Cloud</a>
                         </div>
                         <ul>
                             {% for tag in tag_cloud %}

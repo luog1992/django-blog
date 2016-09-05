@@ -18,16 +18,16 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ('name',)
-    fields = ('name',)
+    list_display = ('name', 'color')
+    search_fields = ('name', 'color')
+    ordering = ('name', 'color')
+    fields = ('name', 'color')
 
 class CollectionAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ('name',)
-    fields = ('name',)
+    list_display = ('name', 'color')
+    search_fields = ('name', 'color')
+    ordering = ('name', 'color')
+    fields = ('name', 'color')
 
 # Register your models here
 admin.site.register(Blog, BlogAdmin)

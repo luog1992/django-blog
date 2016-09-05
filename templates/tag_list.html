@@ -1,29 +1,24 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+
+{% block content %}
 <div class="pure-g tag-box">
     {% for tag_cat in tag_cats %}
     <div class="pure-u-3-24 tag-cat">
         <ul class="tag-items">
             {% for tag in tag_cat %} {% if not forloop.last %}
             <ul class="tag-item" onmousemove="showTagPen(this);" onmouseout="hideTagPen(this);">
-                <li>({{ tag.blog_nums }})</li>
-                <li class="tag-name" style="background:{{ tag.color }}">{{ tag.name }}</li>
-                <li class="tag-pen">
-                    <a href="{% url 'tag_modify' id=tag.id %}">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                </li>
-            </ul>
             {% else %}
             <ul class="tag-item tag-last" onmousemove="showTagPen(this);" onmouseout="hideTagPen(this);">
+            {% endif %}
                 <li>({{ tag.blog_nums }})</li>
                 <li class="tag-name" style="background:{{ tag.color }}">{{ tag.name }}</li>
                 <li class="tag-pen">
-                    <a href="{% url 'tag_modify' id=tag.id %}">
+                    <a href="{% url 'tag_edit' id=tag.id %}">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                 </li>
             </ul>
-            {% endif %} {% endfor %}
+            {% endfor %}
         </ul>
     </div>
     {% endfor %}

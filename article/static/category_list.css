@@ -1,0 +1,32 @@
+.category-box {
+	background: white;
+	padding-left: 0.5vw;
+}
+
+.category {
+	/*background: white;*/
+  	box-shadow: 1px 2px 3px #7E7E7E;
+	margin: 1vw;
+	padding: 0.5vw;
+}
+
+.category p {
+	/*background: yellow;*/
+	border-bottom: 1.5px solid white;
+	padding: 0 0 0.2vw 0.5vw;
+	font-size: 1vw;
+	color: #7E7E7E;
+}
+
+.category-blogs {
+	/*background: orange;*/
+	list-style: none;
+	padding: 0 1vw 0 1vw;
+	margin-bottom: 0.5vw;
+}
+
+.category-blog {
+	color: black;
+	font-size: 0.8vw;
+	margin-bottom: 0.2vw;
+}

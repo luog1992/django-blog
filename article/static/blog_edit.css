@@ -3,12 +3,12 @@
 	padding: 1vw 3vw 0 1vw;
 }
 
-#blog-editor {
+.blog-editor {
 	/*background: gray;*/
 	padding: 0 0.5vw;
 }
 
-#blog-title-edit {
+.blog-title-edit {
 	/*background: green;*/
 	/*margin: 1vw 0;*/
 }
@@ -25,7 +25,7 @@
     font-weight: 600;
 }
 
-#blog-title-edit a,
+.blog-title-edit a,
 .blog-editor-save,
 .blog-editor-undo {
 	float: right;
@@ -39,14 +39,14 @@
 	margin-top: 0.25vw;
 }
 
-#blog-title-edit a {
+.blog-title-edit a {
 	background: #F78282;
 	padding: 0.25vw;
 	text-align: center;
 	text-decoration: none;
 }
 
-#blog-title-edit a:hover {
+.blog-title-edit a:hover {
 	background: #E84343
 }
 
@@ -66,14 +66,14 @@
 	background: #F3A558;
 }
 
-#blog-meta-edit {
+.blog-meta-edit {
 	/*background: #E6E6E6;*/
 	height: 1.2vw;
 	padding: 0;
 	margin: 1vw 0;
 }
 
-#blog-meta-edit i {
+.blog-meta-edit i {
 	/*background: gray;*/
 	margin-right: 0.3vw;
 	color: #6E6E6E;

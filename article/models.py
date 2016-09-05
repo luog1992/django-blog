@@ -3,8 +3,8 @@ from django.core.urlresolvers import reverse
 
 
 class Tag(models.Model):
-    name = models.CharField(verbose_name='Tag', max_length=20)
-    color = models.CharField(verbose_name='Color', max_length=20, default='#CCCCCC')
+    name = models.CharField(verbose_name='Tag', max_length=20, unique=True)
+    color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
 
     def blog_nums(self):
         return self.blogs.count()
@@ -20,7 +20,11 @@ class Tag(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(verbose_name='Category', max_length=20)
+    name = models.CharField(verbose_name='Category', max_length=20, unique=True)
+    color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
+
+    def get_valid_blogs(self):
+        return self.blogs.filter(valid=True).order_by('title')
 
     def __unicode__(self):
         return self.name
@@ -30,7 +34,8 @@ class Category(models.Model):
 
 
 class Collection(models.Model):
-    name = models.CharField(verbose_name='Collection', max_length=20)
+    name = models.CharField(verbose_name='Collection', max_length=20, unique=True)
+    color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
 
     def __unicode__(self):
         return self.name
