@@ -5,8 +5,8 @@
     <p><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</p>
     <ul class="category-blogs">
         {% for blog in category.get_valid_blogs %}
-        <li class="category-blog">{{ forloop.counter }}<a href="{% url 'blog_detail' id=blog.id %}">
-        {{ blog.title }}</a></li>
+        <li class="category-blog"><a href="{% url 'blog_detail' id=blog.id %}">
+        {{ forloop.counter }}. {{ blog.title }}</a></li>
         {% endfor %}
     </ul>
 </div>

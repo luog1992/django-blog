@@ -185,23 +185,18 @@ body {
 /*---------------------------------*/
 
 #main {
-    /*background: #CEC8C8;*/
+    /*background: #6C6C6C;*/
     width: 80%;
     margin: 0 auto;
-    margin-top: 6%;
+    margin-top: 8%;
 }
 
 
 /*---------------------------------*/
 
 #sidebar {
-    /*background: yellow;*/
+    background: yellow;
 }
-
-/*.sidebar-wrapper {
-    background: #CDCDCD;
-    padding: 1em 1em;
-}*/
 
 #portrait-box {
     /*background: blue;*/
@@ -270,13 +265,8 @@ body {
 /*--------------------------------*/
 
 #content {
-    /*background: orange;*/
+    background: orange;
     /*padding: 0 1em;*/
-}
-
-.content-wrapper {
-    /*background: #CDCDCD;*/
-    /*padding: 1em;*/
 }
 
 /*--------------------------------*/

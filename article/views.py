@@ -4,7 +4,7 @@ from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category, Collection
 from forms import BlogEditor
-from utils import Constant
+from utils import Constant, Tools
 import random
 import re
 
@@ -52,6 +52,7 @@ def blog_edit(request, id=0):
     print '....blog edit', request.method
     if request.method == 'POST':
         print '........blog save'
+        print '........request.get_full_path', request.get_full_path()
         blog_editor = BlogEditor(request.POST)
         blog = Blog.objects.get(id=id)
         cxt.update({'blog': blog, 'blog_editor': blog_editor})
@@ -61,17 +62,7 @@ def blog_edit(request, id=0):
             blog.title = data['title']
             blog.category = Category.objects.get(name=data['category'])
             blog.content = data['content']
-            patt_sum = re.compile(r'@sum(.*?)@endsum', re.S)
-            summary = patt_sum.findall(blog.content)
-            if summary:
-                summary = re.findall(r'>(.+?)<', summary[0])
-                if summary:
-                    blog.summary = summary[0]
-                else:
-                    blog.summary = data['content'][:500] + '...'
-            else:
-                blog.summary = data['content'][:500] + '...'
-
+            blog.summary = Tools.get_summary(data['content'])
             tags_raw = list(set(filter(lambda item: item != '', [tag.strip(
                 ' ,;').lower() for tag in (data['tags']).split('|') if tag])))
             if tags_raw:

@@ -148,11 +148,12 @@ SUMMERNOTE_CONFIG = {
     # 'toolbarContainer': '.my-toolbar',
     'toolbar': [
         ['style', ['style']],
-        ['fontstyle', ['bold', 'italic', 'underline', 'clear']],
+        ['color', ['color']],
+        ['fontstyle', ['bold', 'clear']],
         ['fontsize', ['fontname','fontsize']],
         ['para', ['ul', 'ol', 'paragraph', 'height']],
         ['insert', ['link', 'hr', 'picture', 'table']],
-        ['Misc', ['codeview', 'undo', 'redo']],
+        ['Misc', ['undo', 'redo']],
     ],
 
     # You can add custom css/js for SummernoteWidget.
