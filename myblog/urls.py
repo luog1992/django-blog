@@ -28,6 +28,7 @@ urlpatterns += patterns('article.views',
 	url(r'^tag/(?P<name>\w{1,20})/blogs/', 'tag_blogs', name='tag_blogs'),
 
 	url(r'^categories/$', 'categories', name='categories'),
+	url(r'^category/(?P<id>\d{1,3})/modify/$', 'category_modify', name='category_modify'),
 	url(r'^category/(?P<catid>\d{1,3})/add/$', 'category_add_blog', name='category_add_blog'),
 	url(r'^category/(?P<catid>\d{1,3})/edit/(?P<blogid>\d{1,3})/$', 'category_edit_blog', name='category_edit_blog'),
 	url(r'^category/(?P<catid>\d{1,3})/delete/(?P<blogid>\d{1,3})/$', 'category_del_blog', name='category_del_blog'),

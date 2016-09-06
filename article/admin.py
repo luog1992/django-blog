@@ -3,7 +3,7 @@ from article.models import Blog, Tag, Category, Collection
 
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'public', 'valid', 'trash', 'category', 'date_time', 'summary')
+    list_display = ('title', 'public', 'trash', 'category', 'date_time', 'summary')
     search_fields = ('title', 'category', 'tags')
     list_filter = ('date_time', 'category', 'tags', 'public', 'trash')
     ordering = ('-trash', 'category', '-date_time', 'title')

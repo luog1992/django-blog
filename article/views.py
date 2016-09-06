@@ -13,11 +13,10 @@ def search(request):
     if 'q' in request.GET:
         print request.GET['q']
 
+
 def get_new_blog(catid=0, colid=0):
     cxt = {}
     cxt.update(csrf(request))
-    # invalid_blog = Blog.objects.filter(valid=False)
-    # invalid_blog.delete()
     if catid:
         category = Category.objects.get(id=catid)
     else:
@@ -27,9 +26,9 @@ def get_new_blog(catid=0, colid=0):
             category = Category(name='Default')
             category.save()
             category = Category.objects.get(name='Default')
-    
+
     blog = Blog(category=category)
-    
+
     if colid:
         collection = Collection.objects.get(id=colid)
         blog.collections.add(collection)
@@ -40,7 +39,6 @@ def get_new_blog(catid=0, colid=0):
 
 def save_blog(blog, blog_editor):
     data = blog_editor.cleaned_data
-    blog.valid = True
     blog.title = data['title']
     blog.category = Category.objects.get(name=data['category'])
     blog.content = data['content']
@@ -52,7 +50,8 @@ def save_blog(blog, blog_editor):
         tags_new = list(set(tags_raw) - set(tags_all))
         if tags_new:
             for tag in tags_new:
-                new_tag = Tag(name=tag, color=random.choice(Constant.TAGCOLORS))
+                new_tag = Tag(
+                    name=tag, color=random.choice(Constant.TAGCOLORS))
                 new_tag.save()
         blog.tags.clear()
         for tag_name in tags_raw:
@@ -68,7 +67,7 @@ def del_blog(id=0):
 
 
 def blogs(request):
-    blogs = Blog.objects.filter(valid=True, trash=False)
+    blogs = Blog.objects.filter(trash=False)
     tag_cloud = Tag.objects.all().order_by('color')
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
@@ -125,7 +124,7 @@ def tag_blogs(request, name):
     except:
         raise Http404
 
-    blogs = tag.blogs.all()
+    blogs = tag.blogs.filter(trash=False)
     tag_cloud = Tag.objects.all().order_by('color')
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
@@ -150,10 +149,9 @@ def tag_edit(request, id):
     cxt = {}
     cxt.update(csrf(request))
     if request.method == 'POST':
-        print '....tag_modify', request.POST.get('content')
         Tag.objects.filter(id=id).update(
-            name=request.POST.get('name'),
-            color='#' + request.POST.get('color')[-6:],
+            name = request.POST.get('name'),
+            color = '#' + request.POST.get('color')[-6:],
         )
     tag = Tag.objects.get(id=id)
     cxt.update({'tag': tag})
@@ -163,6 +161,20 @@ def tag_edit(request, id):
 def categories(request):
     categories = Category.objects.all()
     return render_to_response('category_list.html', {'categories': categories})
+
+
+def category_modify(request, id=0):
+    id = int(id)
+    cxt = {}
+    cxt.update(csrf(request))
+    if request.method == 'POST':
+        Category.objects.filter(id=id).update(
+            name = request.POST.get('name'),
+            color = '#' + request.POST.get('color')[-6:],
+        )
+    category = Category.objects.get(id=id)
+    cxt.update({'category': category})
+    return render_to_response('category_modify.html', cxt)
 
 
 def category_edit_blog(request, catid=0, blogid=0):
@@ -177,7 +189,6 @@ def category_edit_blog(request, catid=0, blogid=0):
         if blog_editor.is_valid():
             save_blog(blog, blog_editor)
             return redirect('/category/%s/edit/%s' % (catid, blogid))
-
     else:
         category = Category.objects.get(id=catid)
         blog_ids = [cat.id for cat in category.blogs.all()]
@@ -196,7 +207,8 @@ def category_edit_blog(request, catid=0, blogid=0):
             'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
             'content': blog.content
         })
-        cxt.update({'category': category, 'blog': blog, 'blog_editor': blog_editor})
+        cxt.update({'category': category, 'blog': blog,
+                    'blog_editor': blog_editor})
         return render_to_response('category_edit.html', cxt)
 
 

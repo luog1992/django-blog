@@ -1,16 +1,25 @@
 {% extends "base_sidebar.html" %} 
 
 {% block content %}
-<form action="{% url 'tag_edit' id=tag.id %}" class="pure-form" method="post">
-    {% csrf_token %}
-    <legend>Modify Tag</legend>
-    <input type="text" name="name" value="{{ tag.name }}" required>
-    <input type="text" name="color" id="picker" value="{{ tag.color }}" required>
-    <button type="submit">Submit</button>
-    <button type="reset">Reset</button>
-</form>
+<div class="content-wrapper">
+    <form method="post" action="{% url 'tag_edit' id=tag.id %}" class="pure-form pure-form-aligned">
+        {% csrf_token %}
+        <div class="pure-control-group">
+            <label for="name">Tag Name</label>
+            <input type="text" name="name" value="{{ tag.name }}" required>
+        </div>
+        <div class="pure-control-group">
+            <label for="color">Tag Color</label>
+            <input type="text" name="color" id="tag-picker" value="{{ tag.color }}" required>
+        </div>
+        <div class="pure-controls">
+            <button type="submit" class="pure-button">Submit</button>
+            <button type="reset" class="pure-button">Reset</button>
+        </div>
+    </form>
+</div>
 <script>
-$('#picker').colpick({
+$('#tag-picker').colpick({
     layout: 'hex',
     submit: 0,
     colorScheme: 'dark',
