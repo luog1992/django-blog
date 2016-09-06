@@ -195,7 +195,11 @@ body {
 /*---------------------------------*/
 
 #sidebar {
-    background: yellow;
+    /*background: yellow;*/
+}
+
+.sidebar-wrapper {
+    padding: 0 1vw;
 }
 
 #portrait-box {
@@ -265,8 +269,13 @@ body {
 /*--------------------------------*/
 
 #content {
-    background: orange;
+    /*background: orange;*/
     /*padding: 0 1em;*/
+}
+
+.content-wrapper {
+    /*background: green;*/
+    padding: 0 1vw;
 }
 
 /*--------------------------------*/

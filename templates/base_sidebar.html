@@ -2,26 +2,28 @@
 {% load staticfiles %}
 
 {% block sidebar %}
-<div id="portrait-box">
-    <img src="{% static 'img/dahuaxiyou.jpg' %}" alt="" id="portrait" class="pure-img">
-</div>
-<div id="search">
-    <div id="search-form" class="pure-form">
-        <form action="{% url 'search' %}" method="get">
-            <input name="q" type="text" placeholder="search" class="pure-input-rounded">
-        </form>
+<div class="sidebar-wrapper">
+    <div id="portrait-box">
+        <img src="{% static 'img/dahuaxiyou.jpg' %}" alt="" id="portrait" class="pure-img">
     </div>
-</div>
-<div id="tag-cloud">
-    <div id="tag-bar">
-        <a href="{% url 'tags' %}">Tag Cloud</a>
+    <div id="search">
+        <div id="search-form" class="pure-form">
+            <form action="{% url 'search' %}" method="get">
+                <input name="q" type="text" placeholder="search" class="pure-input-rounded">
+            </form>
+        </div>
     </div>
-    <ul>
-        {% for tag in tag_cloud %}
-        <li>
-            <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.font_size }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
-        </li>
-        {% empty %} No Tags lalala... {% endfor %}
-    </ul>
+    <div id="tag-cloud">
+        <div id="tag-bar">
+            <a href="{% url 'tags' %}">Tag Cloud</a>
+        </div>
+        <ul>
+            {% for tag in tag_cloud %}
+            <li>
+                <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.font_size }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
+            </li>
+            {% empty %} No Tags lalala... {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}

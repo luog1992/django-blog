@@ -1,34 +1,36 @@
 {% extends "base_sidebar.html" %} 
 
 {% block content %} 
-{% if blog_editor.errors %}
-<ul class="errorlist">Errors found!</ul>
-{% endif %}
-<div class="blog-editor-wrapper pure-g">
-    <div class="blog-toolbar pure-u-md-1-24">
-        <a href="{% url 'blog_detail' id=blog.id %}">
-            <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        </a>
-    </div>
-    <div class="blog-editor pure-u-md-23-24">
-        <form action="{% url 'blog_edit' id=blog.id %}" class="blog-editor" autocomplete="off" method="post">
-            {% csrf_token %}
-            <div class="blog-title-edit">
-                {{ blog_editor.title.errors }}
-                {{ blog_editor.title }}
-                <a href="{% url 'blog_del' id=blog.id %}">Delete</a>
-                <button type="reset" class="blog-editor-undo">Undo</button>
-                <button type="submit" class="blog-editor-save">Save</button>
-            </div>
-            <div class="blog-meta-edit">
-                <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
-                <i class="fa fa-tags" aria-hidden="true"></i>{{ blog_editor.tags }}
-            </div>
-            <div class="blog-content-edit">
-                {{ blog_editor.content.errors }}
-                {{ blog_editor.content }}
-            </div>
-        </form>
+<div class="content-wrapper">
+    {% if blog_editor.errors %}
+    <ul class="errorlist">Errors found!</ul>
+    {% endif %}
+    <div class="blog-editor-wrapper pure-g">
+        <div class="blog-toolbar pure-u-md-1-24">
+            <a href="{% url 'blog_detail' id=blog.id %}">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="blog-editor pure-u-md-23-24">
+            <form action="{% url 'blog_edit' id=blog.id %}" class="blog-editor" autocomplete="off" method="post">
+                {% csrf_token %}
+                <div class="blog-title-edit">
+                    {{ blog_editor.title.errors }}
+                    {{ blog_editor.title }}
+                    <a href="{% url 'blog_del' id=blog.id %}">Delete</a>
+                    <button type="reset" class="blog-editor-undo">Undo</button>
+                    <button type="submit" class="blog-editor-save">Save</button>
+                </div>
+                <div class="blog-meta-edit">
+                    <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}
+                    <i class="fa fa-tags" aria-hidden="true"></i>{{ blog_editor.tags }}
+                </div>
+                <div class="blog-content-edit">
+                    {{ blog_editor.content.errors }}
+                    {{ blog_editor.content }}
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

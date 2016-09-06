@@ -2,10 +2,13 @@
 
 {% block sidebar %}
 <div class="category-sidebar" style="background:{{ category.color }}">
-    <p><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</p>
+    <p>
+        {{ category.name }}
+        <a href="{% url 'category_add_blog' catid=category.id %}"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
+    </p>
     <ul class="category-blogs">
         {% for blog in category.get_valid_blogs %}
-        <li class="category-blog"><a href="{% url 'blog_detail' id=blog.id %}">
+        <li class="category-blog"><a href="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}">
         {{ forloop.counter }}. {{ blog.title }}</a></li>
         {% endfor %}
     </ul>
@@ -13,12 +16,12 @@
 {% endblock %}
 {% block content %}
 <div class="category-editor">
-    <form class="blog-editor" action="{% url 'blog_edit' id=blog.id %}" autocomplete="off" method="post">
+    <form class="blog-editor" action="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}" autocomplete="off" method="post">
         {% csrf_token %}
         <div class="blog-title-edit">
             {{ blog_editor.title.errors }}
             {{ blog_editor.title }}
-            <a href="{% url 'blog_del' id=blog.id %}">Delete</a>
+            <a href="{% url 'category_del_blog' catid=category.id blogid=blog.id %}">Delete</a>
             <button type="reset" class="blog-editor-undo">Undo</button>
             <button type="submit" class="blog-editor-save">Save</button>
         </div>
