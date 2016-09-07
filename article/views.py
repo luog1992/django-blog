@@ -67,7 +67,7 @@ def del_blog(id=0):
 
 def blogs(request):
     blogs = Blog.objects.filter(trash=False)
-    tag_cloud = Tag.objects.all().order_by('color')
+    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
 
@@ -77,7 +77,7 @@ def blog_detail(request, id=0):
         blog = Blog.objects.get(id=id)
     except Blog.DoesNotExist:
         raise Http404
-    tag_cloud = Tag.objects.all().order_by('color')
+    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_detail.html', {'blog': blog, 'tag_cloud': tag_cloud})
 
 
@@ -107,7 +107,7 @@ def blog_edit(request, id=0):
         })
         cxt.update({'blog': blog, 'blog_editor': blog_editor})
 
-    tag_cloud = Tag.objects.all().order_by('color')
+    tag_cloud = Tag.objects.get_valid_tags()
     cxt.update({'tag_cloud': tag_cloud})
     return render_to_response('blog_edit.html', cxt)
 
@@ -124,7 +124,7 @@ def tag_blogs(request, name):
         raise Http404
 
     blogs = tag.blogs.filter(trash=False)
-    tag_cloud = Tag.objects.all().order_by('color')
+    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
 
@@ -139,7 +139,7 @@ def tags(request):
                 tag_cat_val.append(tag)
         tag_cats.append(tag_cat_val)
 
-    tag_cloud = Tag.objects.all().order_by('color')
+    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('tag_list.html', {'tag_cats': tag_cats, 'tag_cloud': tag_cloud})
 
 

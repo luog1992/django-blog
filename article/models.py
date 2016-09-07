@@ -3,10 +3,16 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 
+class TagManager(models.Manager):
+    def get_valid_tags(self):
+        return [tag for tag in self.all() if tag.blog_nums()>0]
+
+
 class Tag(models.Model):
     name = models.CharField(verbose_name='Tag', max_length=20, unique=True)
     color = models.CharField(verbose_name='Color',
                              max_length=20, default='#99CC99')
+    objects = TagManager()
 
     def blog_nums(self):
         return self.blogs.filter(trash=False).count()
@@ -18,7 +24,7 @@ class Tag(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ['color']
 
 
 class Category(models.Model):
@@ -53,10 +59,6 @@ class Collection(models.Model):
         ordering = ['name']
 
 
-class BlogManager(models.Manager):
-    pass
-
-
 class Blog(models.Model):
     default_content = '@sum<br><br>Summary your blog here...<br><br>@endsum'
     title = models.CharField(verbose_name='Title',
@@ -89,4 +91,4 @@ class Blog(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-date_time']
+        ordering = ['category', 'title']
