@@ -15,6 +15,8 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('article.views',
 	url(r'^request/$', 'request'),
+	url(r'^datatable$', 'datatable'),
+
 	url(r'^search/$', 'search', name='search'),
 	url(r'^home/$', 'blogs', name='home'),
 	url(r'^blogs/$', 'blogs', name='blogs'),

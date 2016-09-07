@@ -22,16 +22,4 @@ class Constant(object):
 
 
 class Tools(object):
-
-    @classmethod
-    def get_summary(cls, content):
-        patt_sum = re.compile(r'@sum(.*?)@endsum', re.S)
-        summary = patt_sum.findall(content)
-        if summary:
-            summary = re.findall(r'>(.+?)<', summary[0])
-            if summary:
-                return summary[0]
-            else:
-                return content[:300] + '...'
-        else:
-            return content[:300] + '...'
+    pass

@@ -42,7 +42,7 @@ def save_blog(blog, blog_editor):
     blog.title = data['title']
     blog.category = Category.objects.get(name=data['category'])
     blog.content = data['content']
-    blog.summary = Tools.get_summary(data['content'])
+    blog.update_summary()
     tags_raw = list(set(filter(lambda item: item != '', [tag.strip(
         ' ,;').lower() for tag in (data['tags']).split('|') if tag])))
     if tags_raw:
@@ -50,8 +50,7 @@ def save_blog(blog, blog_editor):
         tags_new = list(set(tags_raw) - set(tags_all))
         if tags_new:
             for tag in tags_new:
-                new_tag = Tag(
-                    name=tag, color=random.choice(Constant.TAGCOLORS))
+                new_tag = Tag(name=tag, color=random.choice(Constant.TAGCOLORS))
                 new_tag.save()
         blog.tags.clear()
         for tag_name in tags_raw:
@@ -234,3 +233,7 @@ def request(request):
     print '........ REMOTE_ADDR', request.META['REMOTE_ADDR']
     # for key in request.META:
     # print '........', key, request.META[key]
+
+
+def datatable(request):
+    return render_to_response('datatable.html')
