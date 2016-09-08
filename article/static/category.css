@@ -11,6 +11,26 @@
 	padding: 0.5vw;
 }
 
+.category-toolbar {
+	padding: 0.8vw;
+}
+
+.category-toolbar input {
+	width: 85%;
+}
+
+.category-toolbar button,
+.category-toolbar a {
+	border: transparent;
+	background: transparent;
+	font-size: 0.8vw;
+	/*float: right;*/
+}
+
+.category-toolbar a{
+	font-size: 1vw;
+}
+
 .category p {
 	/*background: yellow;*/
 	border-bottom: 1.5px solid white;

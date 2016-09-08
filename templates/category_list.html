@@ -3,6 +3,14 @@
 {% block content %}
 <div class="content-wrapper">
     <div class="pure-g category-box">
+        <div class="pure-u-7-24 category category-toolbar">
+            <form method="get" action="{% url 'category' %}">
+                {% csrf_token %}
+                <input type="text" placeholder="search">
+                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <a href="{% url 'category_add' %}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+            </form>
+        </div>
         {% for category in categories %}
         <div class="pure-u-7-24 category" style="background: {{ category.color }}">
             <p>

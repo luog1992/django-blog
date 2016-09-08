@@ -157,9 +157,18 @@ def tag_edit(request, id):
     return render_to_response('tag_edit.html', cxt)
 
 
-def categories(request):
-    categories = Category.objects.all()
+def categories(request, name=''):
+    if name:
+        categories = Category.objects.filter(name__icontains=name)
+    else:
+        categories = Category.objects.all()
     return render_to_response('category_list.html', {'categories': categories})
+
+
+def category_add(request):
+    category = Category(name='Untitle')
+    category.save()
+    return redirect('/category/%s/modify/' % category.id)
 
 
 def category_modify(request, id=0):
