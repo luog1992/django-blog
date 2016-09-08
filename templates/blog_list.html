@@ -1,7 +1,12 @@
-{% extends "base_sidebar.html" %}
-
-{% load custom_markdown %} 
-{% block content %} 
+{% extends "base_sidebar.html" %} {% load custom_markdown %} {% block content %}
+<div class="toolbar">
+    <form class="form-search">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+        </div>
+    </form>
+</div>
 <div class="content-wrapper">
     {% for blog in blogs %}
     <div class="blog pure-g">
@@ -39,7 +44,6 @@
         </div>
     </div>
     {% empty %}
-    <h3>煞笔，一个字都没有看什么看</h3>
-    {% endfor %}
+    <h3>煞笔，一个字都没有看什么看</h3> {% endfor %}
 </div>
 {% endblock %}
