@@ -9,9 +9,15 @@ import random
 import re
 
 
-def search(request):
-    if 'q' in request.GET:
-        print request.GET['q']
+def search(request, flag=None):
+    if flag:
+        if 'q' in request.GET:
+            if flag=='category':
+                q = request.GET['q']
+                categories = Category.objects.filter(name__icontains=q)
+                return render_to_response('category_list.html', {'categories': categories})
+    else:
+        return Http404
 
 
 def get_new_blog(catid=0, colid=0):
@@ -157,11 +163,8 @@ def tag_edit(request, id):
     return render_to_response('tag_edit.html', cxt)
 
 
-def categories(request, name=''):
-    if name:
-        categories = Category.objects.filter(name__icontains=name)
-    else:
-        categories = Category.objects.all()
+def categories(request):
+    categories = Category.objects.all()
     return render_to_response('category_list.html', {'categories': categories})
 
 

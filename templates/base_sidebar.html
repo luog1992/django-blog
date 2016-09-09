@@ -8,7 +8,7 @@
     </div>
     <div id="search">
         <div id="search-form" class="pure-form">
-            <form action="{% url 'search' %}" method="get">
+            <form action="{% url 'search' flag='all' %}" method="get">
                 <input name="q" type="text" placeholder="search" class="pure-input-rounded">
             </form>
         </div>
