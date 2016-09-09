@@ -4,7 +4,7 @@
 <div class="content-wrapper">
     <div class="pure-g category-box">
         <div class="pure-u-7-24 category category-toolbar">
-            <form method="get" action="{% url 'search' flag='category' %}">
+            <form method="get" action="{% url 'search' flag='categories' %}">
                 {% csrf_token %}
                 <input type="text" name="q" placeholder="search">
                 <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>

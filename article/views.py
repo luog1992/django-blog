@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category, Collection
-from forms import BlogEditor
+from forms import BlogEditor, CategoryForm
 from utils import Constant, Tools
 import random
 import re
@@ -12,7 +12,7 @@ import re
 def search(request, flag=None):
     if flag:
         if 'q' in request.GET:
-            if flag=='category':
+            if flag=='categories':
                 q = request.GET['q']
                 categories = Category.objects.filter(name__icontains=q)
                 return render_to_response('category_list.html', {'categories': categories})
@@ -169,7 +169,8 @@ def categories(request):
 
 
 def category_add(request):
-    category = Category(name='Untitle')
+    untitle_cat_num = Category.objects.filter(name__icontains='untitle').count()
+    category = Category(name='Untitle%s' % untitle_cat_num)
     category.save()
     return redirect('/category/%s/modify/' % category.id)
 
@@ -179,12 +180,25 @@ def category_modify(request, id=0):
     cxt = {}
     cxt.update(csrf(request))
     if request.method == 'POST':
-        Category.objects.filter(id=id).update(
-            name = request.POST.get('name'),
-            color = '#' + request.POST.get('color')[-6:],
-        )
-    category = Category.objects.get(id=id)
-    cxt.update({'category': category})
+        category_form = CategoryForm(request.POST)
+        if category_form.is_valid():
+            data = category_form.cleaned_data
+            category_name = data['name']
+            if Category.objects.filter(name=category_name)>0:
+                category_form.add_error('name', 'This category name has been used')
+            else:
+                Category.objects.filter(id=id).update(
+                    name = request.POST.get('name'),
+                    color = '#' + request.POST.get('color')[-6:],
+                )
+    else:
+        category = Category.objects.get(id=id)
+        category_form = CategoryForm(initial={
+            'name': category.name,
+            'color': category.color
+        })
+
+    cxt.update({'category_form': category_form})
     return render_to_response('category_modify.html', cxt)
 
 

@@ -30,6 +30,7 @@ class Tag(models.Model):
 class Category(models.Model):
     name = models.CharField(verbose_name='Category', max_length=20, unique=True)
     color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
+    public = models.BooleanField(verbose_name='Public', default=True)
 
     def blog_nums(self):
         return self.blogs.filter(trash=False).count()

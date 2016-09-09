@@ -2,24 +2,16 @@
 
 {% block content %}
 <div class="content-wrapper">
-	<form method="post" action="{% url 'category_modify' id=category.id %}" class="pure-form pure-form-aligned">
+	<form method="post" action="" class="pure-form pure-form-aligned">
 		{% csrf_token %}
-		<div class="pure-control-group">
-		    <label for="name">Category Name</label>
-		    <input name="name" type="text" value="{{ category.name }}">
-	    </div>
-		<div class="pure-control-group">
-	    	<label for="color">Category Color</label>
-	    	<input id="category-picker" name="color" type="text" value="{{ category.color }}">
-	    </div>
-	    <div class="pure-controls">
-    		<button type="submit" class="pure-button">Submit</button>
-    		<button type="reset" class="pure-button">Reset</button>
-    	</div>
+        {{ category_form.as_p }}
+        <button type="submit">Save</button>
+        <button type="reset">Reset</button>
+        <a href="">Delete</a>
 	</form>
 </div>
 <script>
-$('#category-picker').colpick({
+$('#id_color').colpick({
     layout: 'hex',
     submit: 0,
     colorScheme: 'dark',

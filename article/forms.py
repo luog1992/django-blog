@@ -23,6 +23,12 @@ class BlogEditor(forms.Form):
         return content
 
 
+class CategoryForm(forms.Form):
+    name = forms.CharField(label='Category Name', max_length=20)
+    color = forms.CharField(label='Category Color', max_length=20)
+    public = forms.BooleanField(label='Public Category')
+
+
 class TestForm(forms.Form):
     subject = forms.CharField(max_length=50, required=True)
     email = forms.EmailField(required=True)
