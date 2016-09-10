@@ -32,7 +32,6 @@ urlpatterns += patterns('article.views',
 	url(r'^tag/(?P<name>\w{1,20})/blogs/', 'tag_blogs', name='tag_blogs'),
 
 	url(r'^categories/$', 'categories', name='categories'),
-	# url(r'^category/(?P<name>\w{1,20})/$', 'categories', name='category'),
 	url(r'^category/add$', 'category_add', name='category_add'),
 	url(r'^category/(?P<id>\d{1,3})/modify/$', 'category_modify', name='category_modify'),
 	url(r'^category/(?P<id>\d{1,3})/delelte$', 'category_del', name='category_del'),

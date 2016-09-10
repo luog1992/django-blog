@@ -22,6 +22,8 @@ def search(request, flag=None):
         return Http404
 
 
+
+
 def get_new_blog(catid=0, colid=0):
     cxt = {}
     cxt.update(csrf(request))
@@ -73,6 +75,7 @@ def del_blog(id=0):
     id = int(id)
     Blog.objects.filter(id=id).update(trash=True)
 
+# -----------------------------------------------------------------------------------------
 
 def blogs(request):
     blogs = Blog.objects.filter(trash=False)
@@ -153,8 +156,8 @@ def tags(request):
 
 
 def tag_add(request):
-    untitle_tag_num = Tag.objects.filter(name__icontains='untitle').count()
-    tag = Tag(name='Untitle%s' % untitle_tag_num)
+    untitle = Tag.objects.get_untitle()
+    tag = Tag(name=untitle)
     tag.save()
     return redirect('/tag/%s/edit/' % tag.id)
 
@@ -205,8 +208,8 @@ def categories(request):
 
 
 def category_add(request, id=0):
-    untitle_cat_num = Category.objects.filter(name__icontains='untitle').count()
-    category = Category(name='Untitle%s' % untitle_cat_num)
+    untitle = Category.objects.get_untitle()
+    category = Category(name=untitle)
     category.save()
     return redirect('/category/%s/modify/' % category.id)
 

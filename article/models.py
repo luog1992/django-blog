@@ -3,9 +3,27 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 
+# class NewNameManager(models.Manager):
+def get_untitle(aManager):
+    patt = re.compile(r'untitle(\d{1,3})', re.I)
+    nums = patt.findall(
+        ','.join([cat.name for cat in aManager.filter(name__icontains='untitle')]))
+    if nums:
+        nums = map(int, nums)
+        nums.sort()
+        result = 'Untitle' + str(nums[-1] + 1)
+    else:
+        result = 'Untitle1'
+    return result
+
+
 class TagManager(models.Manager):
+
     def get_valid_tags(self):
-        return [tag for tag in self.all() if tag.blog_nums()>0]
+        return [tag for tag in self.all() if tag.blog_nums() > 0]
+
+    def get_untitle(self):
+        return get_untitle(self)
 
 
 class Tag(models.Model):
@@ -26,11 +44,18 @@ class Tag(models.Model):
         ordering = ['color']
 
 
+class CategoryManager(models.Manager):
+
+    def get_untitle(self):
+        return get_untitle(self)
+
+
 class Category(models.Model):
     name = models.CharField(verbose_name='Category', max_length=20, unique=True)
     color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
     public = models.BooleanField(verbose_name='Public', default=True)
     valid = models.BooleanField(verbose_name='Valid', default=True)
+    objects = CategoryManager()
 
     def blog_nums(self):
         return self.blogs.filter(trash=False).count()
@@ -60,14 +85,18 @@ class Collection(models.Model):
 
 class Blog(models.Model):
     default_content = '@sum<br><br>Summary your blog here...<br><br>@endsum'
-    title = models.CharField(verbose_name='Title', max_length=100, null=False, default='Untitle')
+    title = models.CharField(verbose_name='Title',
+                             max_length=100, null=False, default='Untitle')
     public = models.BooleanField(verbose_name='Public', default=True)
     trash = models.BooleanField(verbose_name='Trash', default=False)
-    date_time = models.DateField(verbose_name='Creation Date', auto_now_add=True)
-    category = models.ForeignKey(Category, related_name='blogs', default=None, null=False)
+    date_time = models.DateField(
+        verbose_name='Creation Date', auto_now_add=True)
+    category = models.ForeignKey(
+        Category, related_name='blogs', default=None, null=False)
     collections = models.ManyToManyField(Collection, related_name='blogs')
     tags = models.ManyToManyField(Tag, related_name='blogs')
-    summary = models.TextField(verbose_name='Summary', max_length=1000, blank=True, null=True)
+    summary = models.TextField(
+        verbose_name='Summary', max_length=1000, blank=True, null=True)
     content = models.TextField(verbose_name='Content', default=default_content)
 
     def update_summary(self):

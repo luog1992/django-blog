@@ -2,13 +2,15 @@
 
 {% block content %}
 <div class="content-wrapper">
-    <form method="post" action="" class="pure-form pure-form-aligned">
-        {% csrf_token %}
-        {{ tag_form.as_p }}
-        <button type="submit" class="save-btn">Save</button>
-        <button type="reset" class="reset-btn">Reset</button>
-        <a href="{% url 'tag_del' id=tag.id %}" class="delete-btn">Delete</a>
-    </form>
+    <div class="tag-form">
+        <form method="post" action="" class="pure-form pure-form-aligned pure-u-1-3">
+            {% csrf_token %}
+            {{ tag_form.as_p }}
+            <button type="submit" class="save-btn">Save</button>
+            <button type="reset" class="reset-btn">Reset</button>
+            <a href="{% url 'tag_del' id=tag.id %}" class="delete-btn">Delete</a>
+        </form>
+    </div>
 </div>
 <script>
 $('#id_color').colpick({

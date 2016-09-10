@@ -4,31 +4,16 @@
 	padding: 0.5vw 0 0 0.5vw;
 }
 
+.category-toolbar form{
+	/*background: green;*/
+	margin: 0.3vw 0;
+}
+
 .category {
-	/*background: white;*/
+	/*background: gray;*/
   	box-shadow: 1px 2px 3px #7E7E7E;
 	margin: 1vw;
 	padding: 0.5vw;
-}
-
-.category-toolbar {
-	padding: 0.8vw;
-}
-
-.category-toolbar input {
-	width: 85%;
-}
-
-.category-toolbar button,
-.category-toolbar a {
-	border: transparent;
-	background: transparent;
-	font-size: 0.8vw;
-	/*float: right;*/
-}
-
-.category-toolbar a {
-	font-size: 1vw;
 }
 
 .category p {

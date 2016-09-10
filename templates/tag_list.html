@@ -2,12 +2,16 @@
 
 {% block content %}
 <div class="content-wrapper">
-    <div class="tag-form">
+    <div class="tag-toolbar">
         <form method="get" action="{% url 'search' flag='tags' %}">
             {% csrf_token %}
-            <input type="text" name="q" placeholder="search">
-            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-            <a href="{% url 'tag_add' %}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+            <div class="input-group pure-u-1-4">
+                <input type="text" name="q" class="form-control" placeholder="search for...">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <a href="{% url 'tag_add' %}" class="btn btn-default"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                </div>
+            </div>
         </form>
     </div>
     <div class="pure-g tag-box">
