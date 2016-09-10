@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category, Collection
-from forms import BlogEditor, CategoryForm
+from forms import BlogEditor, CategoryForm, TagForm
 from utils import Constant, Tools
 import random
 import re
@@ -12,10 +12,12 @@ import re
 def search(request, flag=None):
     if flag:
         if 'q' in request.GET:
-            if flag=='categories':
-                q = request.GET['q']
-                categories = Category.objects.filter(name__icontains=q)
+            q = request.GET['q']
+            if flag == 'categories':
+                categories = Category.objects.filter(name__icontains=q, valid=True)
                 return render_to_response('category_list.html', {'categories': categories})
+            if flag == 'tags':
+                return redirect('/tags/')
     else:
         return Http404
 
@@ -56,7 +58,8 @@ def save_blog(blog, blog_editor):
         tags_new = list(set(tags_raw) - set(tags_all))
         if tags_new:
             for tag in tags_new:
-                new_tag = Tag(name=tag, color=random.choice(Constant.TAGCOLORS))
+                new_tag = Tag(
+                    name=tag, color=random.choice(Constant.TAGCOLORS))
                 new_tag.save()
         blog.tags.clear()
         for tag_name in tags_raw:
@@ -149,56 +152,105 @@ def tags(request):
     return render_to_response('tag_list.html', {'tag_cats': tag_cats, 'tag_cloud': tag_cloud})
 
 
+def tag_add(request):
+    untitle_tag_num = Tag.objects.filter(name__icontains='untitle').count()
+    tag = Tag(name='Untitle%s' % untitle_tag_num)
+    tag.save()
+    return redirect('/tag/%s/edit/' % tag.id)
+
+
+def tag_del(request, id):
+    Tag.objects.get(id=int(id)).delete()
+    return redirect('/tags/')
+
+
 def tag_edit(request, id):
     id = int(id)
     cxt = {}
     cxt.update(csrf(request))
-    if request.method == 'POST':
-        Tag.objects.filter(id=id).update(
-            name = request.POST.get('name'),
-            color = '#' + request.POST.get('color')[-6:],
-        )
     tag = Tag.objects.get(id=id)
-    cxt.update({'tag': tag})
+    initial = {
+        'name': tag.name,
+        'color': tag.color,
+    }
+
+    if request.method == 'POST':
+        tag_form = TagForm(request.POST, initial=initial)
+        if tag_form.is_valid():
+            data = tag_form.cleaned_data
+            tag_name = data['name'].lower()
+            if tag_form.has_changed():
+                if 'name' in tag_form.changed_data:
+                    if Tag.objects.filter(name=tag_name):
+                        tag_form.add_error('name', 'Duplicated Tag Name')
+                    else:
+                        Tag.objects.filter(id=id).update(
+                            name=tag_name,
+                            color=data['color'][-6:]
+                        )
+                else:
+                    Tag.objects.filter(id=id).update(
+                        color='#' + data['color'][-6:]
+                    )
+    else:
+        tag_form = TagForm(initial=initial)
+
+    cxt.update({'tag_form': tag_form, 'tag': tag})
     return render_to_response('tag_edit.html', cxt)
 
 
 def categories(request):
-    categories = Category.objects.all()
+    categories = Category.objects.filter(valid=True)
     return render_to_response('category_list.html', {'categories': categories})
 
 
-def category_add(request):
+def category_add(request, id=0):
     untitle_cat_num = Category.objects.filter(name__icontains='untitle').count()
     category = Category(name='Untitle%s' % untitle_cat_num)
     category.save()
     return redirect('/category/%s/modify/' % category.id)
 
 
+def category_del(request, id=0):
+    Category.objects.filter(id=int(id)).update(valid=False)
+    return redirect('/categories/')
+
+
 def category_modify(request, id=0):
     id = int(id)
     cxt = {}
     cxt.update(csrf(request))
+    category = Category.objects.get(id=id)
+    initial = {
+        'name': category.name,
+        'color': category.color,
+        'public': category.public
+    }
+
     if request.method == 'POST':
-        category_form = CategoryForm(request.POST)
+        category_form = CategoryForm(request.POST, initial=initial)
         if category_form.is_valid():
             data = category_form.cleaned_data
             category_name = data['name']
-            if Category.objects.filter(name=category_name)>0:
-                category_form.add_error('name', 'This category name has been used')
-            else:
-                Category.objects.filter(id=id).update(
-                    name = request.POST.get('name'),
-                    color = '#' + request.POST.get('color')[-6:],
-                )
+            if category_form.has_changed():
+                if 'name' in category_form.changed_data:
+                    if Category.objects.filter(name=category_name):
+                        category_form.add_error('name', 'Duplicated Category Name')
+                    else:
+                        Category.objects.filter(id=id).update(
+                            name=data['name'],
+                            color='#' + data['color'][-6:],
+                            public=data['public']
+                        )
+                else:
+                    Category.objects.filter(id=id).update(
+                        color='#' + data['color'][-6:],
+                        public=data['public']
+                    )
     else:
-        category = Category.objects.get(id=id)
-        category_form = CategoryForm(initial={
-            'name': category.name,
-            'color': category.color
-        })
+        category_form = CategoryForm(initial=initial)
 
-    cxt.update({'category_form': category_form})
+    cxt.update({'category_form': category_form, 'category': category})
     return render_to_response('category_modify.html', cxt)
 
 

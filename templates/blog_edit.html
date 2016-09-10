@@ -14,12 +14,16 @@
         <div class="blog-editor pure-u-md-23-24">
             <form action="{% url 'blog_edit' id=blog.id %}" class="blog-editor" autocomplete="off" method="post">
                 {% csrf_token %}
-                <div class="blog-title-edit">
-                    {{ blog_editor.title.errors }}
-                    {{ blog_editor.title }}
-                    <a href="{% url 'blog_del' id=blog.id %}">Delete</a>
-                    <button type="reset" class="blog-editor-undo">Undo</button>
-                    <button type="submit" class="blog-editor-save">Save</button>
+                <div class="blog-title-edit pure-g">
+                    <div class="blog-editor-title pure-u-md-16-24">
+                        {{ blog_editor.title.errors }}
+                        {{ blog_editor.title }}
+                    </div>
+                    <div class="blog-editor-btns pure-u-md-7-24">
+                        <button type="submit" class="save-btn">Save</button>
+                        <button type="reset" class="reset-btn">Reset</button>
+                        <a href="{% url 'blog_del' id=blog.id %}" class="delete-btn">Delete</a>
+                    </div>
                 </div>
                 <div class="blog-meta-edit">
                     <i class="fa fa-folder-open" aria-hidden="true"></i>{{ blog_editor.category }}

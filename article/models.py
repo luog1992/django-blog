@@ -10,8 +10,7 @@ class TagManager(models.Manager):
 
 class Tag(models.Model):
     name = models.CharField(verbose_name='Tag', max_length=20, unique=True)
-    color = models.CharField(verbose_name='Color',
-                             max_length=20, default='#99CC99')
+    color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
     objects = TagManager()
 
     def blog_nums(self):
@@ -31,6 +30,7 @@ class Category(models.Model):
     name = models.CharField(verbose_name='Category', max_length=20, unique=True)
     color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
     public = models.BooleanField(verbose_name='Public', default=True)
+    valid = models.BooleanField(verbose_name='Valid', default=True)
 
     def blog_nums(self):
         return self.blogs.filter(trash=False).count()

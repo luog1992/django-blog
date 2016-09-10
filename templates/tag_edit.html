@@ -2,24 +2,16 @@
 
 {% block content %}
 <div class="content-wrapper">
-    <form method="post" action="{% url 'tag_edit' id=tag.id %}" class="pure-form pure-form-aligned">
+    <form method="post" action="" class="pure-form pure-form-aligned">
         {% csrf_token %}
-        <div class="pure-control-group">
-            <label for="name">Tag Name</label>
-            <input type="text" name="name" value="{{ tag.name }}" required>
-        </div>
-        <div class="pure-control-group">
-            <label for="color">Tag Color</label>
-            <input type="text" name="color" id="tag-picker" value="{{ tag.color }}" required>
-        </div>
-        <div class="pure-controls">
-            <button type="submit" class="pure-button">Submit</button>
-            <button type="reset" class="pure-button">Reset</button>
-        </div>
+        {{ tag_form.as_p }}
+        <button type="submit" class="save-btn">Save</button>
+        <button type="reset" class="reset-btn">Reset</button>
+        <a href="{% url 'tag_del' id=tag.id %}" class="delete-btn">Delete</a>
     </form>
 </div>
 <script>
-$('#tag-picker').colpick({
+$('#id_color').colpick({
     layout: 'hex',
     submit: 0,
     colorScheme: 'dark',

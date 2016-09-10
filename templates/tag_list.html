@@ -2,6 +2,14 @@
 
 {% block content %}
 <div class="content-wrapper">
+    <div class="tag-form">
+        <form method="get" action="{% url 'search' flag='tags' %}">
+            {% csrf_token %}
+            <input type="text" name="q" placeholder="search">
+            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <a href="{% url 'tag_add' %}"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+        </form>
+    </div>
     <div class="pure-g tag-box">
         {% for tag_cat in tag_cats %}
         <div class="pure-u-3-24 tag-cat">

@@ -18,10 +18,10 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'color')
+    list_display = ('name', 'public', 'valid', 'color')
     search_fields = ('name', 'color')
-    ordering = ('name', 'color')
-    fields = ('name', 'color')
+    ordering = ('-valid', 'name', 'public', 'color')
+    fields = ('name', 'public', 'valid', 'color')
 
 class CollectionAdmin(admin.ModelAdmin):
     list_display = ('name', 'color')

@@ -17,7 +17,7 @@
 	/*background: #CBCBCB;*/
 	/*background: transparent;*/
 	border: transparent;
-	width: 60%;
+	width: 100%;
 	height: 2vw;
 	font-size: 1.5vw;
     font-family: Helvetica, Arial, Sans-serif;
@@ -25,45 +25,11 @@
     font-weight: 600;
 }
 
-.blog-title-edit a,
-.blog-editor-save,
-.blog-editor-undo {
+.blog-editor-btns {
+	/*background: yellow;*/
 	float: right;
-	height: 1.5vw;
-	width: 4vw;
-	color: white;
-	font-weight: 600;
-	border: transparent;
-	border-radius: 0.2vw;
-	margin-left: 0.5vw;
-	margin-top: 0.25vw;
-}
-
-.blog-title-edit a {
-	background: #F78282;
-	padding: 0.25vw;
-	text-align: center;
-	text-decoration: none;
-}
-
-.blog-title-edit a:hover {
-	background: #E84343
-}
-
-.blog-editor-save {
-	background: #A2BD62;
-}
-
-.blog-editor-save:hover {
-	background: #88CA2D;
-}
-
-.blog-editor-undo {
-	background: #E9CA47;
-}
-
-.blog-editor-undo:hover {
-	background: #F3A558;
+	text-align: right;
+	/*height: 100%;*/
 }
 
 .blog-meta-edit {

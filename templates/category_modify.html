@@ -2,13 +2,15 @@
 
 {% block content %}
 <div class="content-wrapper">
-	<form method="post" action="" class="pure-form pure-form-aligned">
-		{% csrf_token %}
-        {{ category_form.as_p }}
-        <button type="submit">Save</button>
-        <button type="reset">Reset</button>
-        <a href="">Delete</a>
-	</form>
+    <div class="category-form">
+    	<form method="post" action="" class="pure-form pure-form-aligned">
+    		{% csrf_token %}
+            {{ category_form.as_p }}
+            <button type="submit" class="save-btn">Save</button>
+            <button type="reset" class="reset-btn">Reset</button>
+            <a href="{% url 'category_del' id=category.id %}" class="delete-btn">Delete</a>
+    	</form>
+    </div>
 </div>
 <script>
 $('#id_color').colpick({
