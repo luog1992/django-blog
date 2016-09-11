@@ -8,8 +8,15 @@
     </p>
     <ul class="category-blogs">
         {% for blog in category.get_valid_blogs %}
-        <li class="category-blog"><a href="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}">
-        {{ forloop.counter }}. {{ blog.title }}</a></li>
+        <li class="category-blog">
+            {% ifequal blog.title blog_editor.title.value %}
+            <a href="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}" style="color:#7197FE;">
+            {% else %}
+            <a href="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}">
+            {% endifequal %}
+            {{ forloop.counter }}. {{ blog.title }}
+            </a>
+        </li>
         {% endfor %}
     </ul>
 </div>

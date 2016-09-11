@@ -215,7 +215,9 @@ def category_add(request, id=0):
 
 
 def category_del(request, id=0):
-    Category.objects.filter(id=int(id)).update(valid=False)
+    id = int(id)
+    name_old = Category.objects.get(id=id).name
+    Category.objects.filter(id=int(id)).update(name=name_old+'_Old', valid=False)
     return redirect('/categories/')
 
 
@@ -287,8 +289,7 @@ def category_edit_blog(request, catid=0, blogid=0):
             'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
             'content': blog.content
         })
-        cxt.update({'category': category, 'blog': blog,
-                    'blog_editor': blog_editor})
+        cxt.update({'category': category, 'blog': blog, 'blog_editor': blog_editor})
         return render_to_response('category_edit.html', cxt)
 
 
