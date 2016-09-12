@@ -49,6 +49,9 @@ class CategoryManager(models.Manager):
     def get_untitle(self):
         return get_untitle(self)
 
+    def get_valid_categories(self):
+        return self.filter(valid=True).all()
+
 
 class Category(models.Model):
     name = models.CharField(verbose_name='Category', max_length=20, unique=True)
