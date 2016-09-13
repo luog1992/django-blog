@@ -14,14 +14,13 @@ def search(request, flag=None):
         if 'q' in request.GET:
             q = request.GET['q']
             if flag == 'categories':
-                categories = Category.objects.filter(name__icontains=q, valid=True)
+                categories = Category.objects.filter(
+                    name__icontains=q, valid=True)
                 return render_to_response('category_list.html', {'categories': categories})
             if flag == 'tags':
                 return redirect('/tags/')
     else:
         return Http404
-
-
 
 
 def get_new_blog(catid=0, colid=0):
@@ -60,8 +59,7 @@ def save_blog(blog, blog_editor):
         tags_new = list(set(tags_raw) - set(tags_all))
         if tags_new:
             for tag in tags_new:
-                new_tag = Tag(
-                    name=tag, color=random.choice(Constant.TAGCOLORS))
+                new_tag = Tag(name=tag, color=random.choice(Constant.TAGCOLORS))
                 new_tag.save()
         blog.tags.clear()
         for tag_name in tags_raw:
@@ -73,12 +71,13 @@ def save_blog(blog, blog_editor):
 
 def del_blog(id=0):
     id = int(id)
-    Blog.objects.filter(id=id).update(trash=True)
+    Blog.objects.filter(id=id).update(valid=False)
 
 # -----------------------------------------------------------------------------------------
 
+
 def blogs(request):
-    blogs = Blog.objects.filter(trash=False)
+    blogs = Blog.objects.filter(valid=True)
     tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
@@ -135,7 +134,7 @@ def tag_blogs(request, name):
     except:
         raise Http404
 
-    blogs = tag.blogs.filter(trash=False)
+    blogs = tag.blogs.filter(valid=True)
     tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
@@ -217,7 +216,8 @@ def category_add(request, id=0):
 def category_del(request, id=0):
     id = int(id)
     name_old = Category.objects.get(id=id).name
-    Category.objects.filter(id=int(id)).update(name=name_old+'_Old', valid=False)
+    Category.objects.filter(id=int(id)).update(
+        name=name_old + '_Old', valid=False)
     return redirect('/categories/')
 
 
@@ -240,7 +240,8 @@ def category_modify(request, id=0):
             if category_form.has_changed():
                 if 'name' in category_form.changed_data:
                     if Category.objects.filter(name=category_name):
-                        category_form.add_error('name', 'Duplicated Category Name')
+                        category_form.add_error(
+                            'name', 'Duplicated Category Name')
                     else:
                         Category.objects.filter(id=id).update(
                             name=data['name'],
@@ -289,7 +290,8 @@ def category_edit_blog(request, catid=0, blogid=0):
             'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
             'content': blog.content
         })
-        cxt.update({'category': category, 'blog': blog, 'blog_editor': blog_editor})
+        cxt.update({'category': category, 'blog': blog,
+                    'blog_editor': blog_editor})
         return render_to_response('category_edit.html', cxt)
 
 

@@ -6,8 +6,7 @@ from django.core.urlresolvers import reverse
 # class NewNameManager(models.Manager):
 def get_untitle(aManager):
     patt = re.compile(r'untitle(\d{1,3})', re.I)
-    nums = patt.findall(
-        ','.join([cat.name for cat in aManager.filter(name__icontains='untitle')]))
+    nums = patt.findall(','.join([cat.name for cat in aManager.filter(name__icontains='untitle')]))
     if nums:
         nums = map(int, nums)
         nums.sort()
@@ -32,7 +31,7 @@ class Tag(models.Model):
     objects = TagManager()
 
     def blog_nums(self):
-        return self.blogs.filter(trash=False).count()
+        return self.blogs.filter(valid=True).count()
 
     def font_size(self):
         return 0.6 + (self.blogs.count()) / 5.0
@@ -61,10 +60,10 @@ class Category(models.Model):
     objects = CategoryManager()
 
     def blog_nums(self):
-        return self.blogs.filter(trash=False).count()
+        return self.blogs.filter(valid=True).count()
 
     def get_valid_blogs(self):
-        return self.blogs.filter(trash=False).order_by('title')
+        return self.blogs.filter(valid=True).order_by('title')
 
     def __unicode__(self):
         return self.name
@@ -74,10 +73,8 @@ class Category(models.Model):
 
 
 class Collection(models.Model):
-    name = models.CharField(verbose_name='Collection',
-                            max_length=100, unique=True)
-    color = models.CharField(verbose_name='Color',
-                             max_length=20, default='#99CC99')
+    name = models.CharField(verbose_name='Collection',max_length=100, unique=True)
+    color = models.CharField(verbose_name='Color',max_length=20, default='#99CC99')
 
     def __unicode__(self):
         return self.name
@@ -87,19 +84,15 @@ class Collection(models.Model):
 
 
 class Blog(models.Model):
-    default_content = '@sum<br><br>Summary your blog here...<br><br>@endsum'
-    title = models.CharField(verbose_name='Title',
-                             max_length=100, null=False, default='Untitle')
+    default_content = '@sum<br>Summary your blog here...<br>@endsum'
+    title = models.CharField(verbose_name='Title', max_length=100, null=False, default='Untitle')
     public = models.BooleanField(verbose_name='Public', default=True)
-    trash = models.BooleanField(verbose_name='Trash', default=False)
-    date_time = models.DateField(
-        verbose_name='Creation Date', auto_now_add=True)
-    category = models.ForeignKey(
-        Category, related_name='blogs', default=None, null=False)
+    valid = models.BooleanField(verbose_name='Valid', default=True)
+    date_time = models.DateField(verbose_name='Creation Date', auto_now_add=True)
+    category = models.ForeignKey(Category, related_name='blogs', default=None, null=False)
     collections = models.ManyToManyField(Collection, related_name='blogs')
     tags = models.ManyToManyField(Tag, related_name='blogs')
-    summary = models.TextField(
-        verbose_name='Summary', max_length=1000, blank=True, null=True)
+    summary = models.TextField(verbose_name='Summary', max_length=1000, blank=True, null=True)
     content = models.TextField(verbose_name='Content', default=default_content)
 
     def update_summary(self):
