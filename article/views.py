@@ -4,9 +4,19 @@ from django.template.context_processors import csrf
 from django.http import Http404
 from article.models import Blog, Tag, Category, Collection
 from forms import BlogEditor, CategoryForm, TagForm
-from utils import Constant, Tools
-import random
+
 import re
+from functools import wraps
+
+
+valid_tags = Tag.objects.get_valid_tags()
+def tag_cloud(tags):
+    def outer_wrapper(func):
+        @wraps(func)
+        def inner_wrapper(*args, **kwargs):
+            return func(tag_cloud=tags, *args, **kwargs)
+        return inner_wrapper
+    return outer_wrapper
 
 
 def search(request, flag=None):
@@ -23,81 +33,28 @@ def search(request, flag=None):
         return Http404
 
 
-def get_new_blog(catid=0, colid=0):
-    cxt = {}
-    cxt.update(csrf(request))
-    if catid:
-        category = Category.objects.get(id=catid)
-    else:
-        try:
-            category = Category.objects.get(name='Default')
-        except Category.DoesNotExist:
-            category = Category(name='Default')
-            category.save()
-            category = Category.objects.get(name='Default')
-
-    blog = Blog(category=category)
-
-    if colid:
-        collection = Collection.objects.get(id=colid)
-        blog.collections.add(collection)
-
-    blog.save()
-    return blog
-
-
-def save_blog(blog, blog_editor):
-    data = blog_editor.cleaned_data
-    blog.title = data['title']
-    blog.category = Category.objects.get(name=data['category'])
-    blog.content = data['content']
-    blog.update_summary()
-    tags_raw = list(set(filter(lambda item: item != '', [tag.strip(
-        ' ,;').lower() for tag in (data['tags']).split('|') if tag])))
-    if tags_raw:
-        tags_all = [tag.name for tag in Tag.objects.all()]
-        tags_new = list(set(tags_raw) - set(tags_all))
-        if tags_new:
-            for tag in tags_new:
-                new_tag = Tag(name=tag, color=random.choice(Constant.TAGCOLORS))
-                new_tag.save()
-        blog.tags.clear()
-        for tag_name in tags_raw:
-            blog.tags.add(Tag.objects.get(name=tag_name))
-    else:
-        blog.tags.clear()
-    blog.save()
-
-
-def del_blog(id=0):
-    id = int(id)
-    Blog.objects.filter(id=id).update(valid=False)
-
-# -----------------------------------------------------------------------------------------
-
-
-def blogs(request):
+@tag_cloud(valid_tags)
+def blogs(request, tag_cloud=None):
     blogs = Blog.objects.filter(valid=True)
-    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
 
-def blog_detail(request, id=0):
-    id = int(id)
+@tag_cloud(valid_tags)
+def blog_detail(request, id=0, tag_cloud=None):
     try:
-        blog = Blog.objects.get(id=id)
+        blog = Blog.objects.get(id=int(id))
     except Blog.DoesNotExist:
         raise Http404
-    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_detail.html', {'blog': blog, 'tag_cloud': tag_cloud})
 
 
-def blog_add(request):
-    blog = get_new_blog()
+def blog_add(request, tag_cloud=None):
+    blog = Blog.objects.get_new_blog()
     return redirect('/blog/%s/edit/' % blog.id)
 
 
-def blog_edit(request, id=0):
+@tag_cloud(valid_tags)
+def blog_edit(request, id=0, tag_cloud=None):
     id = int(id)
     cxt = {}
     cxt.update(csrf(request))
@@ -106,7 +63,8 @@ def blog_edit(request, id=0):
         blog = Blog.objects.get(id=id)
         cxt.update({'blog': blog, 'blog_editor': blog_editor})
         if blog_editor.is_valid():
-            save_blog(blog, blog_editor)
+            data = blog_editor.cleaned_data
+            Blog.objects.save_blog(blog, data)
             return redirect('/blog/%s/edit/' % blog.id)
     else:
         blog = Blog.objects.get(id=id)
@@ -118,28 +76,28 @@ def blog_edit(request, id=0):
         })
         cxt.update({'blog': blog, 'blog_editor': blog_editor})
 
-    tag_cloud = Tag.objects.get_valid_tags()
     cxt.update({'tag_cloud': tag_cloud})
     return render_to_response('blog_edit.html', cxt)
 
 
 def blog_del(request, id=0):
-    del_blog(id)
+    Blog.objects.del_blog(id)
     return redirect('/home/')
 
 
-def tag_blogs(request, name):
+@tag_cloud(valid_tags)
+def tag_blogs(request, name, tag_cloud=None):
     try:
         tag = Tag.objects.filter(name=name)[0]
     except:
         raise Http404
 
     blogs = tag.blogs.filter(valid=True)
-    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
 
 
-def tags(request):
+@tag_cloud(valid_tags)
+def tags(request, tag_cloud=None):
     tags = Tag.objects.all()
     tag_cat_keys = list(set([tag.name[0] for tag in tags]))
     tag_cats = []
@@ -150,7 +108,6 @@ def tags(request):
                 tag_cat_val.append(tag)
         tag_cats.append(tag_cat_val)
 
-    tag_cloud = Tag.objects.get_valid_tags()
     return render_to_response('tag_list.html', {'tag_cats': tag_cats, 'tag_cloud': tag_cloud})
 
 
@@ -166,7 +123,8 @@ def tag_del(request, id):
     return redirect('/tags/')
 
 
-def tag_edit(request, id):
+@tag_cloud(valid_tags)
+def tag_edit(request, id, tag_cloud=None):
     id = int(id)
     cxt = {}
     cxt.update(csrf(request))
@@ -197,13 +155,14 @@ def tag_edit(request, id):
     else:
         tag_form = TagForm(initial=initial)
 
-    cxt.update({'tag_form': tag_form, 'tag': tag})
+    cxt.update({'tag_form': tag_form, 'tag': tag, 'tag_cloud': tag_cloud})
     return render_to_response('tag_edit.html', cxt)
 
 
-def categories(request):
+@tag_cloud(valid_tags)
+def categories(request, tag_cloud=None):
     categories = Category.objects.filter(valid=True)
-    return render_to_response('category_list.html', {'categories': categories})
+    return render_to_response('category_list.html', {'categories': categories, 'tag_cloud': tag_cloud})
 
 
 def category_add(request, id=0):
@@ -221,7 +180,8 @@ def category_del(request, id=0):
     return redirect('/categories/')
 
 
-def category_modify(request, id=0):
+@tag_cloud(valid_tags)
+def category_modify(request, id=0, tag_cloud=None):
     id = int(id)
     cxt = {}
     cxt.update(csrf(request))
@@ -256,7 +216,7 @@ def category_modify(request, id=0):
     else:
         category_form = CategoryForm(initial=initial)
 
-    cxt.update({'category_form': category_form, 'category': category})
+    cxt.update({'category_form': category_form, 'category': category, 'tag_cloud': tag_cloud})
     return render_to_response('category_modify.html', cxt)
 
 
@@ -270,7 +230,8 @@ def category_edit_blog(request, catid=0, blogid=0):
         blog = Blog.objects.get(id=blogid)
         cxt.update({'blog': blog, 'blog_editor': blog_editor})
         if blog_editor.is_valid():
-            save_blog(blog, blog_editor)
+            data = blog_editor.cleaned_data
+            Blog.objects.save_blog(blog, data)
             return redirect('/category/%s/edit/%s' % (catid, blogid))
     else:
         category = Category.objects.get(id=catid)
@@ -282,7 +243,7 @@ def category_edit_blog(request, catid=0, blogid=0):
             if blogs:
                 blog = blogs[0]
             else:
-                blog = get_new_blog(catid=catid)
+                blog = Blog.objects.get_new_blog(catid=catid)
 
         blog_editor = BlogEditor(initial={
             'title': blog.title,
@@ -296,12 +257,12 @@ def category_edit_blog(request, catid=0, blogid=0):
 
 
 def category_del_blog(request, catid=0, blogid=0):
-    del_blog(blogid)
+    Blog.objects.del_blog(blogid)
     return redirect('/category/%s/edit/0' % catid)
 
 
 def category_add_blog(request, catid=0):
-    blog = get_new_blog(catid=catid)
+    blog = Blog.objects.get_new_blog(catid=int(catid))
     return redirect('/category/%s/edit/%s' % (catid, blog.id))
 
 

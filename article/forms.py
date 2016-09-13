@@ -9,6 +9,7 @@ categories = ((category.name, category.name)
               for category in Category.objects.get_valid_categories())
 
 def color_checker(color):
+    color = color.strip('#')
     patt = re.compile(r'\w{6}', re.I)
     findall = patt.findall(color[:6])
     return findall
