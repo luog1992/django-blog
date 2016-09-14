@@ -4,15 +4,15 @@
 <div class="category-sidebar" style="background:{{ category.color }}">
     <p>
         {{ category.name }}
-        <a href="{% url 'category_add_blog' catid=category.id %}"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
+        <a href="{% url 'cat_add_blog' catid=category.id %}"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
     </p>
     <ul class="category-blogs">
         {% for blog in category.get_valid_blogs %}
         <li class="category-blog">
             {% ifequal blog.title blog_editor.title.value %}
-            <a href="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}" style="color:#7197FE;">
+            <a href="{% url 'cat_edit_blog' catid=category.id blogid=blog.id %}" style="color:#7197FE;">
             {% else %}
-            <a href="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}">
+            <a href="{% url 'cat_edit_blog' catid=category.id blogid=blog.id %}">
             {% endifequal %}
             {{ forloop.counter }}. {{ blog.title }}
             </a>
@@ -23,7 +23,7 @@
 {% endblock %}
 {% block content %}
 <div class="category-editor">
-    <form class="blog-editor" action="{% url 'category_edit_blog' catid=category.id blogid=blog.id %}" autocomplete="off" method="post">
+    <form class="blog-editor" action="{% url 'cat_edit_blog' catid=category.id blogid=blog.id %}" autocomplete="off" method="post">
         {% csrf_token %}
         <div class="blog-title-edit pure-g">
             <div class="blog-editor-title pure-u-md-16-24">
@@ -33,7 +33,7 @@
             <div class="blog-editor-btns pure-u-md-7-24">
                 <button type="submit" class="save-btn">Save</button>
                 <button type="reset" class="reset-btn">Reset</button>
-                <a href="{% url 'category_del_blog' catid=category.id blogid=blog.id %}" class="delete-btn">Delete</a>
+                <a href="{% url 'cat_del_blog' catid=category.id blogid=blog.id %}" class="delete-btn">Delete</a>
             </div>
         </div>
         <div class="blog-meta-edit">

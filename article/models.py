@@ -1,4 +1,5 @@
 import re
+import math
 import random
 from django.db import models
 from django.core.urlresolvers import reverse
@@ -35,11 +36,14 @@ class Tag(models.Model):
                              max_length=20, default='#99CC99')
     objects = TagManager()
 
+    def valid_blogs(self):
+        return self.blogs.filter(valid=True)
+
     def blog_nums(self):
-        return self.blogs.filter(valid=True).count()
+        return self.valid_blogs().count()
 
     def font_size(self):
-        return 0.6 + (self.blogs.count()) / 5.0
+        return 0.8 + (math.log10(self.blogs.count()))/10
 
     def __unicode__(self):
         return self.name

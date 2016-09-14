@@ -16,7 +16,7 @@
         {% for category in categories %}
         <div class="pure-u-7-24 category" style="background: {{ category.color }}">
             <p>
-                <a href="{% url 'category_edit_blog' catid=category.id blogid=0 %}">
+                <a href="{% url 'cat_edit_blog' catid=category.id blogid=0 %}">
                 {{ category.name }} ({{ category.blog_nums }})</a>
                 <a href="{% url 'category_modify' id=category.id %}"><i class="fa fa-cog" aria-hidden="true"></i></a>
             </p>

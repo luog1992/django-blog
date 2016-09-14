@@ -286,11 +286,9 @@ body {
 /*--------------------------------*/
 
 ul.errorlist {
-    /*the ul list of django form*/
     background: #FFE58F;
-    border-radius: 3px;
     list-style: none;
-    padding: 0.5vw;
+    padding: 0.2vw;
 }
 
 /*--------------------------------*/

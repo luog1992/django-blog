@@ -1,6 +1,5 @@
 # encoding: utf-8
 import re
-
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from models import Category
 from django import forms
@@ -25,8 +24,6 @@ class BlogEditor(forms.Form):
         print '....clean_content is called'
         content = self.cleaned_data['content']
         if len(content) <= 4:
-                # because of the summernote editor, the min length of content
-                # would be 4 when it's blank
             raise forms.ValidationError('蠢货，多写几个字啊')
         return content
 
@@ -43,7 +40,6 @@ class CategoryForm(forms.Form):
         return color
 
 
-
 class TagForm(forms.Form):
     name = forms.CharField(label='Tag Name', max_length=20)
     color = forms.CharField(label='Tag Color', max_length=20)
@@ -55,7 +51,6 @@ class TagForm(forms.Form):
         return color
 
 
-class TestForm(forms.Form):
-    subject = forms.CharField(max_length=50, required=True)
-    email = forms.EmailField(required=True)
-    message = forms.CharField(max_length=1000, required=True)
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=20)
+    password = forms.CharField(max_length=32, widget=forms.PasswordInput)

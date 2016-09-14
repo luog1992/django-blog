@@ -2,9 +2,6 @@
 
 {% block content %} 
 <div class="content-wrapper">
-    {% if blog_editor.errors %}
-    <ul class="errorlist">Errors found!</ul>
-    {% endif %}
     <div class="blog-editor-wrapper pure-g">
         <div class="blog-toolbar pure-u-md-1-24">
             <a href="{% url 'blog_detail' id=blog.id %}">
@@ -12,7 +9,7 @@
             </a>
         </div>
         <div class="blog-editor pure-u-md-23-24">
-            <form action="{% url 'blog_edit' id=blog.id %}" class="blog-editor" autocomplete="off" method="post">
+            <form action="{% url 'blog_edit_splitter' id=blog.id %}" class="blog-editor" autocomplete="off" method="post">
                 {% csrf_token %}
                 <div class="blog-title-edit pure-g">
                     <div class="blog-editor-title pure-u-md-16-24">

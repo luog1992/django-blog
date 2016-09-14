@@ -1,0 +1,15 @@
+<div class="login">
+	<form action="{% url 'login' %}" method='post' class="pure-form pure-form-stacked pure-u-1-3">
+		{% csrf_token %}
+        <div class="pure-control-group">
+            <label for="id_username">{{ login_form.username.label }}</label>
+            <input type="text" id="id_username" name="username" placeholder="username">
+        </div>
+        <div class="pure-control-group">
+            <label for="id_password">{{ login_form.password.label }}</label>
+            <input type="text" id="id_password" name="password">
+        </div>
+        <button type="submit" class="save-btn">Login</button>
+        <button type="reset" class="reset-btn">Reset</button>
+	</form>
+</div>
