@@ -12,8 +12,10 @@ from forms import BlogEditor, CategoryForm, TagForm, LoginForm
 def tag_cloud():
     def outer_wrapper(func):
         def inner_wrapper(*args, **kwargs):
+            cxt = {}
             tags = Tag.objects.get_valid_tags()
-            return func(tag_cloud=tags, *args, **kwargs)
+            cxt.update({'tag_cloud': tags})
+            return func(cxt=cxt, *args, **kwargs)
         return inner_wrapper
     return outer_wrapper
 
@@ -51,18 +53,20 @@ def search(request, flag=None):
 
 
 @tag_cloud()
-def blogs(request, tag_cloud=None):
+def blogs(request, cxt={}):
     blogs = Blog.objects.filter(valid=True)
-    return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
+    cxt.update({'blogs': blogs})
+    return render_to_response('blog_list.html', cxt)
 
 
 @tag_cloud()
-def blog_detail(request, id='0', tag_cloud=None):
+def blog_detail(request, id='0', cxt={}):
     try:
         blog = Blog.objects.get(id=int(id))
     except Blog.DoesNotExist:
         raise Http404
-    return render_to_response('blog_detail.html', {'blog': blog, 'tag_cloud': tag_cloud})
+    cxt.update({'blog': blog})
+    return render_to_response('blog_detail.html', cxt)
 
 
 def blog_add(request):
@@ -71,9 +75,8 @@ def blog_add(request):
 
 
 @tag_cloud()
-def blog_edit_get(request, tag_cloud=None, *args, **kwargs):
+def blog_edit_get(request, cxt={}, *args, **kwargs):
     assert request.method == 'GET'
-    cxt = {}
     cxt.update(csrf(request))
     id = int(kwargs['id'])
     blog = Blog.objects.get(id=id)
@@ -84,21 +87,18 @@ def blog_edit_get(request, tag_cloud=None, *args, **kwargs):
         'content': blog.content
     }
     blog_editor = BlogEditor(initial=initial)
-    cxt.update({'blog': blog, 'blog_editor': blog_editor,
-                'tag_cloud': tag_cloud})
+    cxt.update({'blog': blog, 'blog_editor': blog_editor})
     return render_to_response('blog_edit.html', cxt)
 
 
 @tag_cloud()
-def blog_edit_post(request, tag_cloud=None, *args, **kwargs):
+def blog_edit_post(request, cxt={}, *args, **kwargs):
     assert request.method == 'POST'
-    cxt = {}
     cxt.update(csrf(request))
     id = int(kwargs['id'])
     blog = Blog.objects.get(id=id)
     blog_editor = BlogEditor(request.POST)
-    cxt.update({'blog': blog, 'blog_editor': blog_editor,
-                'tag_cloud': tag_cloud})
+    cxt.update({'blog': blog, 'blog_editor': blog_editor})
     if blog_editor.is_valid():
         data = blog_editor.cleaned_data
         Blog.objects.save_blog(blog, data)
@@ -113,17 +113,18 @@ def blog_del(request, id='0'):
 
 
 @tag_cloud()
-def tag_blogs(request, name, tag_cloud=None):
+def tag_blogs(request, name, cxt={}):
     try:
         tag = Tag.objects.get(name=name)
     except:
         raise Http404
     blogs = tag.valid_blogs()
-    return render_to_response('blog_list.html', {'blogs': blogs, 'tag_cloud': tag_cloud})
+    cxt.update({'blogs': blogs})
+    return render_to_response('blog_list.html', cxt)
 
 
 @tag_cloud()
-def tags(request, tag_cloud=None):
+def tags(request, cxt={}):
     tags = Tag.objects.all()
     tag_cat_keys = list(set([tag.name[0] for tag in tags]))
     tag_cats = []
@@ -133,8 +134,8 @@ def tags(request, tag_cloud=None):
             if tag.name[0] == tag_cat_key:
                 tag_cat_val.append(tag)
         tag_cats.append(tag_cat_val)
-
-    return render_to_response('tag_list.html', {'tag_cats': tag_cats, 'tag_cloud': tag_cloud})
+    cxt.update({'tag_cats': tag_cats})
+    return render_to_response('tag_list.html', cxt)
 
 
 def tag_add(request):
@@ -150,9 +151,8 @@ def tag_del(request, id='0'):
 
 
 @tag_cloud()
-def tag_edit_get(request, id='0', tag_cloud=None):
+def tag_edit_get(request, id='0', cxt={}):
     assert request.method == 'GET'
-    cxt = {}
     cxt.update(csrf(request))
     tag = Tag.objects.get(id=int(id))
     initial = {
@@ -160,14 +160,13 @@ def tag_edit_get(request, id='0', tag_cloud=None):
         'color': tag.color
     }
     tag_form = TagForm(initial=initial)
-    cxt.update({'tag_form': tag_form, 'tag': tag, 'tag_cloud': tag_cloud})
+    cxt.update({'tag_form': tag_form, 'tag': tag})
     return render_to_response('tag_edit.html', cxt)
 
 
 @tag_cloud()
-def tag_edit_post(request, id='0', tag_cloud=None):
+def tag_edit_post(request, id='0', cxt={}):
     assert request.method == 'POST'
-    cxt = {}
     cxt.update(csrf(request))
     tag = Tag.objects.get(id=int(id))
     initial = {
@@ -175,7 +174,7 @@ def tag_edit_post(request, id='0', tag_cloud=None):
         'color': tag.color
     }
     tag_form = TagForm(request.POST, initial=initial)
-    cxt.update({'tag_form': tag_form, 'tag': tag, 'tag_cloud': tag_cloud})
+    cxt.update({'tag_form': tag_form, 'tag': tag})
     if tag_form.is_valid():
         data = tag_form.cleaned_data
         tag_name = data['name'].lower()
@@ -195,9 +194,10 @@ def tag_edit_post(request, id='0', tag_cloud=None):
 
 
 @tag_cloud()
-def categories(request, tag_cloud=None):
+def categories(request, cxt={}):
     categories = Category.objects.filter(valid=True)
-    return render_to_response('category_list.html', {'categories': categories, 'tag_cloud': tag_cloud})
+    cxt.update({'categories': categories})
+    return render_to_response('category_list.html', cxt)
 
 
 def category_add(request):
@@ -215,9 +215,8 @@ def category_del(request, id='0'):
 
 
 @tag_cloud()
-def cat_modify_get(request, id='0', tag_cloud=None):
+def cat_modify_get(request, id='0', cxt={}):
     assert request.method == 'GET'
-    cxt = {}
     cxt.update(csrf(request))
     category = Category.objects.get(id=int(id))
     initial = {
@@ -226,15 +225,13 @@ def cat_modify_get(request, id='0', tag_cloud=None):
         'public': category.public
     }
     category_form = CategoryForm(initial=initial)
-    cxt.update({'category_form': category_form,
-                'category': category, 'tag_cloud': tag_cloud})
+    cxt.update({'category_form': category_form, 'category': category})
     return render_to_response('category_modify.html', cxt)
 
 
 @tag_cloud()
-def cat_modify_post(request, id='0', tag_cloud=None):
+def cat_modify_post(request, id='0', cxt={}):
     assert request.method == 'POST'
-    cxt = {}
     cxt.update(csrf(request))
     category = Category.objects.get(id=int(id))
     initial = {
@@ -243,8 +240,7 @@ def cat_modify_post(request, id='0', tag_cloud=None):
         'public': category.public
     }
     category_form = CategoryForm(request.POST, initial=initial)
-    cxt.update({'category_form': category_form,
-                'category': category, 'tag_cloud': tag_cloud})
+    cxt.update({'category_form': category_form, 'category': category})
     if category_form.is_valid():
         data = category_form.cleaned_data
         category_name = data['name']
@@ -287,7 +283,8 @@ def cat_edit_blog_get(request, catid='0', blogid='0'):
         'tags': ' | '.join([tag.name for tag in blog.tags.all()]),
         'content': blog.content
     })
-    cxt.update({'category': category, 'blog': blog, 'blog_editor': blog_editor})
+    cxt.update({'category': category, 'blog': blog,
+                'blog_editor': blog_editor})
     return render_to_response('category_edit.html', cxt)
 
 

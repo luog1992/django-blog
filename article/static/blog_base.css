@@ -278,7 +278,7 @@ body {
 }
 
 .content-wrapper {
-    /*background: green;*/
+    background: green;
     padding: 0 1vw;
     /*margin: 0;*/
 }
@@ -292,6 +292,19 @@ ul.errorlist {
 }
 
 /*--------------------------------*/
+
+#login {
+    background: white;
+    box-shadow: 1px 2px 3px #7E7E7E;
+    padding: 2vw 0vw 2vw 4vw;
+}
+
+#login div {
+    padding-left: 5vw;
+}
+
+/*--------------------------------*/
+
 .delete-btn,
 .save-btn,
 .reset-btn {
