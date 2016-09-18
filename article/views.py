@@ -1,9 +1,11 @@
 import re
 
-from django.shortcuts import render_to_response
-from django.shortcuts import redirect
-from django.template.context_processors import csrf
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.shortcuts import redirect
+from django.shortcuts import render_to_response
+from django.template.context_processors import csrf
 
 from article.models import Blog, Tag, Category, Collection
 from forms import BlogEditor, CategoryForm, TagForm, LoginForm
@@ -20,14 +22,6 @@ def tag_cloud():
     return outer_wrapper
 
 
-def login(request):
-    cxt = {}
-    cxt.update(csrf(request))
-    login_form = LoginForm()
-    cxt.update({'login_form': login_form})
-    return render_to_response('registration/login.html', cxt)
-
-
 def request_splitter(request, *args, **kwargs):
     get_view = kwargs.pop('GET', None)
     post_view = kwargs.pop('POST', None)
@@ -36,6 +30,34 @@ def request_splitter(request, *args, **kwargs):
     elif request.method == 'POST' and post_view:
         return post_view(request, *args, **kwargs)
     raise Http404
+
+
+def login(request):
+    cxt = {}
+    cxt.update(csrf(request))
+    login_form = LoginForm()
+    cxt.update({'login_form': login_form})
+
+    if request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid:
+            data = login_form.cleaned_data
+            
+        # username = request.POST.get('username', '')
+        # password = request.POST.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+            if user and user.is_active:
+                auth.login(request, user)
+                return redirect('/home/')
+            else:
+                return redirect('/login/')
+    else:
+        return render_to_response('registration/login.html', cxt)
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/home/')
 
 
 def search(request, flag=None):
@@ -75,6 +97,7 @@ def blog_add(request):
 
 
 @tag_cloud()
+@login_required
 def blog_edit_get(request, cxt={}, *args, **kwargs):
     assert request.method == 'GET'
     cxt.update(csrf(request))

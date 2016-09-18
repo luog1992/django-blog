@@ -17,7 +17,7 @@ urlpatterns += patterns('article.views',
 	url(r'^test/datatable$', 'datatable'),
 
 	url(r'^login/$', 'login', name='login'),
-	url(r'^logout/$', logout, name='logout'),
+	url(r'^logout/$', 'logout', name='logout'),
 
 	url(r'^search/(?P<flag>\w{1,20})/$', 'search', name='search'),
 	url(r'^home/$', 'blogs', name='home'),

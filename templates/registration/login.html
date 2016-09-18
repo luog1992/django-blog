@@ -4,10 +4,7 @@
         <form action="{% url 'login' %}" method='post' class="pure-form pure-form-aligned">
             {% csrf_token %}
             {{ login_form.as_p }}
-            <div>
-                <button type="submit" class="save-btn">Login</button>
-                <button type="reset" class="reset-btn">Reset</button>
-            </div>
+            <button type="submit" class="save-btn">Login</button>
         </form>
     </div>
 </div>
