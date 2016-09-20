@@ -35,24 +35,22 @@ def request_splitter(request, *args, **kwargs):
 def login(request):
     cxt = {}
     cxt.update(csrf(request))
-    login_form = LoginForm()
-    cxt.update({'login_form': login_form})
-
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
-        if login_form.is_valid:
+        if login_form.is_valid():
             data = login_form.cleaned_data
-            
-        # username = request.POST.get('username', '')
-        # password = request.POST.get('password', '')
-        user = auth.authenticate(username=username, password=password)
+            username = data['username']
+            password = data['password']
+            user = auth.authenticate(username=username, password=password)
             if user and user.is_active:
                 auth.login(request, user)
                 return redirect('/home/')
             else:
                 return redirect('/login/')
     else:
-        return render_to_response('registration/login.html', cxt)
+        login_form = LoginForm()
+    cxt.update({'login_form': login_form})
+    return render_to_response('registration/login.html', cxt)
 
 
 def logout(request):
