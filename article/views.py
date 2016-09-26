@@ -37,6 +37,7 @@ def login(request):
     cxt.update(csrf(request))
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
+        next_page = request.POST.get('next', '/home/')
         if login_form.is_valid():
             data = login_form.cleaned_data
             username = data['username']
@@ -44,12 +45,13 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user and user.is_active:
                 auth.login(request, user)
-                return redirect('/home/')
+                return redirect('%s' % next_page)
             else:
-                return redirect('/login/')
+                login_form.add_error('username', 'Invalid user or password')
     else:
         login_form = LoginForm()
-    cxt.update({'login_form': login_form})
+        next_page = request.GET.get('next', '/home/')
+    cxt.update({'login_form': login_form, 'next': next_page})
     return render_to_response('registration/login.html', cxt)
 
 
