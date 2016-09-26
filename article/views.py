@@ -40,12 +40,11 @@ def login(request):
 
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
-        if login_form.is_valid:
+        if login_form.is_valid():
             data = login_form.cleaned_data
-            
-        # username = request.POST.get('username', '')
-        # password = request.POST.get('password', '')
-        user = auth.authenticate(username=username, password=password)
+            username = data['username']
+            password = data['password']
+            user = auth.authenticate(username=username, password=password)
             if user and user.is_active:
                 auth.login(request, user)
                 return redirect('/home/')

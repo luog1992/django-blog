@@ -190,7 +190,7 @@ body {
 
 #main {
     /*background: #6C6C6C;*/
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     margin-top: 8%;
 }
@@ -278,7 +278,7 @@ body {
 }
 
 .content-wrapper {
-    background: green;
+    /*background: green;*/
     padding: 0 1vw;
     /*margin: 0;*/
 }
