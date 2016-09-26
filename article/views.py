@@ -35,9 +35,6 @@ def request_splitter(request, *args, **kwargs):
 def login(request):
     cxt = {}
     cxt.update(csrf(request))
-    login_form = LoginForm()
-    cxt.update({'login_form': login_form})
-
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -51,7 +48,9 @@ def login(request):
             else:
                 return redirect('/login/')
     else:
-        return render_to_response('registration/login.html', cxt)
+        login_form = LoginForm()
+    cxt.update({'login_form': login_form})
+    return render_to_response('registration/login.html', cxt)
 
 
 def logout(request):
