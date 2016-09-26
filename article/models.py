@@ -32,8 +32,7 @@ class TagManager(models.Manager):
 
 class Tag(models.Model):
     name = models.CharField(verbose_name='Tag', max_length=20, unique=True)
-    color = models.CharField(verbose_name='Color',
-                             max_length=20, default='#99CC99')
+    color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
     objects = TagManager()
 
     def valid_blogs(self):
@@ -62,10 +61,8 @@ class CategoryManager(models.Manager):
 
 
 class Category(models.Model):
-    name = models.CharField(verbose_name='Category',
-                            max_length=20, unique=True)
-    color = models.CharField(verbose_name='Color',
-                             max_length=20, default='#99CC99')
+    name = models.CharField(verbose_name='Category', max_length=20, unique=True)
+    color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
     public = models.BooleanField(verbose_name='Public', default=True)
     valid = models.BooleanField(verbose_name='Valid', default=True)
     objects = CategoryManager()
@@ -84,10 +81,8 @@ class Category(models.Model):
 
 
 class Collection(models.Model):
-    name = models.CharField(verbose_name='Collection',
-                            max_length=100, unique=True)
-    color = models.CharField(verbose_name='Color',
-                             max_length=20, default='#99CC99')
+    name = models.CharField(verbose_name='Collection', max_length=100, unique=True)
+    color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
 
     def __unicode__(self):
         return self.name
@@ -145,18 +140,14 @@ class BlogManager(models.Manager):
 
 class Blog(models.Model):
     default_content = '@sum<br>Summary your blog here...<br>@endsum'
-    title = models.CharField(verbose_name='Title',
-                             max_length=100, null=False, default='Untitle')
+    title = models.CharField(verbose_name='Title', max_length=100, null=False, default='Untitle')
     public = models.BooleanField(verbose_name='Public', default=True)
     valid = models.BooleanField(verbose_name='Valid', default=True)
-    date_time = models.DateField(
-        verbose_name='Creation Date', auto_now_add=True)
-    category = models.ForeignKey(
-        Category, related_name='blogs', default=None, null=False)
+    date_time = models.DateField( verbose_name='Creation Date', auto_now_add=True)
+    category = models.ForeignKey( Category, related_name='blogs', default=None, null=False)
     collections = models.ManyToManyField(Collection, related_name='blogs')
     tags = models.ManyToManyField(Tag, related_name='blogs')
-    summary = models.TextField(
-        verbose_name='Summary', max_length=1000, blank=True, null=True)
+    summary = models.TextField( verbose_name='Summary', max_length=1000, blank=True, null=True)
     content = models.TextField(verbose_name='Content', default=default_content)
     objects = BlogManager()
 
