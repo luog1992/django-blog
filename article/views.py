@@ -3,10 +3,11 @@ import re
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response
 from django.template.context_processors import csrf
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from article.models import Blog, Tag, Category, Collection
 from forms import BlogEditor, CategoryForm, TagForm, LoginForm
@@ -77,7 +78,31 @@ def search(request, flag=None):
 
 @tag_cloud()
 def blogs(request, cxt={}):
-    blogs = Blog.objects.filter(valid=True)
+    all_blogs = Blog.objects.filter(valid=True)
+    paginator = Paginator(all_blogs, 2)
+    page = request.GET.get('page')
+    try:
+        blogs = paginator.page(page)
+    except PageNotAnInteger:
+        blogs = paginator.page(1)
+    except EmptyPage:
+        blogs = paginator.paginator(paginator.num_pages)
+    cxt.update({'blogs': blogs})
+    return render_to_response('blog_list.html', cxt)
+
+
+@tag_cloud()
+def tag_blogs(request, name, cxt={}):
+    tag = get_object_or_404(Tag, name=name)
+    blogs = tag.valid_blogs()
+    cxt.update({'blogs': blogs})
+    return render_to_response('blog_list.html', cxt)
+
+
+@tag_cloud()
+def cat_blogs(request, name, cxt={}):
+    category = get_object_or_404(Category, name=name)
+    blogs = category.get_valid_blogs()
     cxt.update({'blogs': blogs})
     return render_to_response('blog_list.html', cxt)
 
@@ -136,22 +161,6 @@ def blog_edit_post(request, cxt={}, *args, **kwargs):
 def blog_del(request, id='0'):
     Blog.objects.del_blog(int(id))
     return redirect('/home/')
-
-
-@tag_cloud()
-def tag_blogs(request, name, cxt={}):
-    tag = get_object_or_404(Tag, name=name)
-    blogs = tag.valid_blogs()
-    cxt.update({'blogs': blogs})
-    return render_to_response('blog_list.html', cxt)
-
-
-@tag_cloud()
-def cat_blogs(request, name, cxt={}):
-    category = get_object_or_404(Category, name=name)
-    blogs = category.get_valid_blogs()
-    cxt.update({'blogs': blogs})
-    return render_to_response('blog_list.html', cxt)
 
 
 @tag_cloud()

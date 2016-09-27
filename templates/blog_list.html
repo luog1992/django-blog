@@ -28,7 +28,7 @@
                 </ul>
             </div>
             <div class="blog-content">
-                {{ blog.summary|custom_markdown }}
+                {{ blog.content|custom_markdown|truncatewords:75 }}
             </div>
             <div class="blog-footer">
                 <a href="{% url 'blog_detail' id=blog.id %}"><i class="fa fa-bookmark-o" aria-hidden="true"></i>Read More</a>
@@ -36,6 +36,13 @@
         </div>
     </div>
     {% empty %}
-    <h3>煞笔，一个字都没有看什么看</h3> {% endfor %}
+    <h3>煞笔，一个字都没有看什么看</h3> 
+    {% endfor %}
+    {% if blogs.has_previous %}
+        <a href="?page={{ blogs.previous_page_number }}"><i class="fa fa-angle-left" aria-hidden="true"></i> Previous</a>
+    {% endif %}
+    {% if blogs.has_next %}
+        <a href="?page={{ blogs.next_page_number }}">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+    {% endif %}
 </div>
 {% endblock %}

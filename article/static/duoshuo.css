@@ -88,8 +88,8 @@
 #ds-reset .ds-replybox a.ds-avatar,
 #ds-reset .ds-replybox .ds-avatar img {
     padding: 0;
-    width: 30px !important;
-    height: 30px !important;
+    width: 35px !important;
+    height: 35px !important;
     border-radius: 5px;
 }
 
@@ -189,4 +189,8 @@
 
 #ds-thread #ds-reset .ds-post-button {
 	background: #4182EC;
+}
+
+#ds-thread #ds-reset .ds-replybox .ds-avatar {
+    margin: 0;
 }
