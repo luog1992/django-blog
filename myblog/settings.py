@@ -14,12 +14,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
-
 INSTALLED_APPS = (
-    # use bootstrap_admin to beautify the admin platform.
     'django_admin_bootstrapped',
     'django_summernote',
+    'duoshuo',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,6 +29,9 @@ INSTALLED_APPS = (
     'article',
 )
 
+DUOSHUO_SECRET = 'e041c01fb314345b3776e232487cfe51'
+DUOSHUO_SHORT_NAME = 'xianyuu'
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -41,7 +42,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
-
 
 ROOT_URLCONF = 'myblog.urls'
 
@@ -66,15 +66,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myblog.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 DATABASES = {
     'default': {

@@ -261,12 +261,11 @@ body {
 #tag-cloud li {
     /*background: yellow;*/
     display: inline;
-    margin: 0.2vw;
+    margin: 0.2vw 0.1vw;
 }
 
 #tag-cloud li a:hover,
 #tag-cloud li a:focus {
-    margin: 0 0.1vw;
     text-decoration: underline;
 }
 
@@ -288,7 +287,7 @@ body {
 ul.errorlist {
     background: #FFE58F;
     list-style: none;
-    padding: 0.2vw;
+    padding: 0.2vw 0.4vw;
 }
 
 /*--------------------------------*/

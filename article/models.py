@@ -61,7 +61,7 @@ class CategoryManager(models.Manager):
 
 
 class Category(models.Model):
-    name = models.CharField(verbose_name='Category', max_length=20, unique=True)
+    name = models.CharField(verbose_name='Category', max_length=50, unique=True)
     color = models.CharField(verbose_name='Color', max_length=20, default='#99CC99')
     public = models.BooleanField(verbose_name='Public', default=True)
     valid = models.BooleanField(verbose_name='Valid', default=True)

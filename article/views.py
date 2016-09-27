@@ -3,6 +3,7 @@ import re
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template.context_processors import csrf
@@ -87,7 +88,7 @@ def blog_detail(request, id='0', cxt={}):
         blog = Blog.objects.get(id=int(id))
     except Blog.DoesNotExist:
         raise Http404
-    cxt.update({'blog': blog})
+    cxt.update({'blog': blog, 'user': request.user})
     return render_to_response('blog_detail.html', cxt)
 
 
@@ -115,6 +116,7 @@ def blog_edit_get(request, cxt={}, *args, **kwargs):
 
 
 @tag_cloud()
+@login_required
 def blog_edit_post(request, cxt={}, *args, **kwargs):
     assert request.method == 'POST'
     cxt.update(csrf(request))
@@ -130,6 +132,7 @@ def blog_edit_post(request, cxt={}, *args, **kwargs):
         return render_to_response('blog_edit.html', cxt)
 
 
+@login_required
 def blog_del(request, id='0'):
     Blog.objects.del_blog(int(id))
     return redirect('/home/')
@@ -137,11 +140,16 @@ def blog_del(request, id='0'):
 
 @tag_cloud()
 def tag_blogs(request, name, cxt={}):
-    try:
-        tag = Tag.objects.get(name=name)
-    except:
-        raise Http404
+    tag = get_object_or_404(Tag, name=name)
     blogs = tag.valid_blogs()
+    cxt.update({'blogs': blogs})
+    return render_to_response('blog_list.html', cxt)
+
+
+@tag_cloud()
+def cat_blogs(request, name, cxt={}):
+    category = get_object_or_404(Category, name=name)
+    blogs = category.get_valid_blogs()
     cxt.update({'blogs': blogs})
     return render_to_response('blog_list.html', cxt)
 
@@ -157,10 +165,11 @@ def tags(request, cxt={}):
             if tag.name[0] == tag_cat_key:
                 tag_cat_val.append(tag)
         tag_cats.append(tag_cat_val)
-    cxt.update({'tag_cats': tag_cats})
+    cxt.update({'tag_cats': tag_cats, 'user': request.user})
     return render_to_response('tag_list.html', cxt)
 
 
+@login_required
 def tag_add(request):
     untitle = Tag.objects.get_untitle()
     tag = Tag(name=untitle)
@@ -168,12 +177,14 @@ def tag_add(request):
     return redirect('/tag/%s/edit/' % tag.id)
 
 
+@login_required
 def tag_del(request, id='0'):
     Tag.objects.get(id=int(id)).delete()
     return redirect('/tags/')
 
 
 @tag_cloud()
+@login_required
 def tag_edit_get(request, id='0', cxt={}):
     assert request.method == 'GET'
     cxt.update(csrf(request))
@@ -188,6 +199,7 @@ def tag_edit_get(request, id='0', cxt={}):
 
 
 @tag_cloud()
+@login_required
 def tag_edit_post(request, id='0', cxt={}):
     assert request.method == 'POST'
     cxt.update(csrf(request))
@@ -219,10 +231,11 @@ def tag_edit_post(request, id='0', cxt={}):
 @tag_cloud()
 def categories(request, cxt={}):
     categories = Category.objects.filter(valid=True)
-    cxt.update({'categories': categories})
+    cxt.update({'categories': categories, 'user': request.user})
     return render_to_response('category_list.html', cxt)
 
 
+@login_required
 def category_add(request):
     untitle = Category.objects.get_untitle()
     category = Category(name=untitle)
@@ -230,6 +243,7 @@ def category_add(request):
     return redirect('/category/%s/modify/' % category.id)
 
 
+@login_required
 def category_del(request, id='0'):
     name_old = Category.objects.get(id=int(id)).name
     Category.objects.filter(id=int(id)).update(
@@ -238,6 +252,7 @@ def category_del(request, id='0'):
 
 
 @tag_cloud()
+@login_required
 def cat_modify_get(request, id='0', cxt={}):
     assert request.method == 'GET'
     cxt.update(csrf(request))
@@ -253,6 +268,7 @@ def cat_modify_get(request, id='0', cxt={}):
 
 
 @tag_cloud()
+@login_required
 def cat_modify_post(request, id='0', cxt={}):
     assert request.method == 'POST'
     cxt.update(csrf(request))
@@ -284,6 +300,7 @@ def cat_modify_post(request, id='0', cxt={}):
     return render_to_response('category_modify.html', cxt)
 
 
+@login_required
 def cat_edit_blog_get(request, catid='0', blogid='0'):
     assert request.method == 'GET'
     cxt = {}
@@ -311,6 +328,7 @@ def cat_edit_blog_get(request, catid='0', blogid='0'):
     return render_to_response('category_edit.html', cxt)
 
 
+@login_required
 def cat_edit_blog_post(request, catid='0', blogid='0'):
     assert request.method == 'POST'
     blog = Blog.objects.get(id=int(blogid))
@@ -321,11 +339,13 @@ def cat_edit_blog_post(request, catid='0', blogid='0'):
     return redirect('/category/%s/edit/%s' % (catid, blogid))
 
 
+@login_required
 def cat_del_blog(request, catid='0', blogid='0'):
     Blog.objects.del_blog(int(blogid))
     return redirect('/category/%s/edit/0' % catid)
 
 
+@login_required
 def cat_add_blog(request, catid='0'):
     blog = Blog.objects.get_new_blog(catid=int(catid))
     return redirect('/category/%s/edit/%s' % (catid, blog.id))

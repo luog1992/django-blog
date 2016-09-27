@@ -1,8 +1,10 @@
-{% extends "base_sidebar.html" %} {% load custom_markdown %} {% block content %}
+{% extends "base_sidebar.html" %} {% load custom_markdown %} {% load duoshuo_tags %} {% block content %}
 <div class="content-wrapper">
     <div class="blog pure-g">
         <div class="blog-toolbar pure-u-md-1-24">
-            <a href="{% url 'blog_edit_splitter' id=blog.id %}">
+            {% if user.is_authenticated %}<a href="{% url 'blog_edit_splitter' id=blog.id %}">
+            {% else %}<a>
+            {% endif %}
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             </a>
         </div>
@@ -35,6 +37,8 @@
             <div class="blog-footer">
                 <a href="{% url 'blogs' %}"><i class="fa fa-bookmark-o" aria-hidden="true"></i>Go Back</a>
             </div>
+            <!-- 多说评论框 start -->
+            {% duoshuo_comments %}
         </div>
     </div>
 </div>
