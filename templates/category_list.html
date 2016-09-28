@@ -20,7 +20,7 @@
                 {% if user.is_authenticated %}
                 <a href="{% url 'cat_edit_blog' catid=category.id blogid=0 %}">
                 {% else %}
-                <a href="{% url 'cat_blogs' name=category.name %}">
+                <a href="{% url 'filter_blogs' filter='category' name=category.name %}">
                 {% endif %}
                 {{ category.name }} ({{ category.blog_nums }})</a>
                 {% if user.is_authenticated %}

@@ -20,7 +20,7 @@
         <ul>
             {% for tag in tag_cloud %}
             <li>
-                <a href="{% url 'tag_blogs' name=tag.name %}" style="font-size:{{ tag.font_size }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
+                <a href="{% url 'filter_blogs' filter='tag' name=tag.name %}" style="font-size:{{ tag.font_size }}vw; color:{{ tag.color }}">{{ tag.name }}</a>
             </li>
             {% empty %} No Tags lalala... {% endfor %}
         </ul>

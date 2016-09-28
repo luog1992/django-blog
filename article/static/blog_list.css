@@ -9,6 +9,17 @@
     margin-bottom: 3em;
 }
 
+.blog-last {
+    margin-bottom: 1em;
+}
+
+.blog-previous,
+.blog-next {
+    background: white;
+    color: #4182EC;
+    padding: 0.5em 1em;
+}
+
 .blog:before,
 .blog:after {
     z-index: -1;

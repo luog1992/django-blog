@@ -13,15 +13,13 @@ from article.models import Blog, Tag, Category, Collection
 from forms import BlogEditor, CategoryForm, TagForm, LoginForm
 
 
-def tag_cloud():
-    def outer_wrapper(func):
-        def inner_wrapper(*args, **kwargs):
-            cxt = {}
-            tags = Tag.objects.get_valid_tags()
-            cxt.update({'tag_cloud': tags})
-            return func(cxt=cxt, *args, **kwargs)
-        return inner_wrapper
-    return outer_wrapper
+
+def tag_cloud(func):
+    def wrapper(*args, **kwargs):
+        tags = Tag.objects.get_valid_tags()
+        cxt={'tag_cloud': tags}
+        return func(cxt=cxt, *args, **kwargs)
+    return wrapper
 
 
 def request_splitter(request, *args, **kwargs):
@@ -76,9 +74,18 @@ def search(request, flag=None):
         return Http404
 
 
-@tag_cloud()
-def blogs(request, cxt={}):
-    all_blogs = Blog.objects.filter(valid=True)
+@tag_cloud
+def blogs(request, filter, name, cxt={}):
+    if filter=='blog':
+        all_blogs = Blog.objects.filter(valid=True)
+    elif filter=='tag':
+        tag = get_object_or_404(Tag, name=name)
+        all_blogs = tag.valid_blogs()
+    elif filter=='category':
+        category = get_object_or_404(Category, name=name)
+        all_blogs = category.get_valid_blogs()
+    else:
+        raise Http404
     paginator = Paginator(all_blogs, 2)
     page = request.GET.get('page')
     try:
@@ -91,23 +98,7 @@ def blogs(request, cxt={}):
     return render_to_response('blog_list.html', cxt)
 
 
-@tag_cloud()
-def tag_blogs(request, name, cxt={}):
-    tag = get_object_or_404(Tag, name=name)
-    blogs = tag.valid_blogs()
-    cxt.update({'blogs': blogs})
-    return render_to_response('blog_list.html', cxt)
-
-
-@tag_cloud()
-def cat_blogs(request, name, cxt={}):
-    category = get_object_or_404(Category, name=name)
-    blogs = category.get_valid_blogs()
-    cxt.update({'blogs': blogs})
-    return render_to_response('blog_list.html', cxt)
-
-
-@tag_cloud()
+@tag_cloud
 def blog_detail(request, id='0', cxt={}):
     try:
         blog = Blog.objects.get(id=int(id))
@@ -119,10 +110,10 @@ def blog_detail(request, id='0', cxt={}):
 
 def blog_add(request):
     blog = Blog.objects.get_new_blog()
-    return redirect('/blog/%s/edit/' % blog.id)
+    return redirect('/blog/%s/modify/' % blog.id)
 
 
-@tag_cloud()
+@tag_cloud
 @login_required
 def blog_edit_get(request, cxt={}, *args, **kwargs):
     assert request.method == 'GET'
@@ -140,7 +131,7 @@ def blog_edit_get(request, cxt={}, *args, **kwargs):
     return render_to_response('blog_edit.html', cxt)
 
 
-@tag_cloud()
+@tag_cloud
 @login_required
 def blog_edit_post(request, cxt={}, *args, **kwargs):
     assert request.method == 'POST'
@@ -163,7 +154,7 @@ def blog_del(request, id='0'):
     return redirect('/home/')
 
 
-@tag_cloud()
+@tag_cloud
 def tags(request, cxt={}):
     tags = Tag.objects.all()
     tag_cat_keys = list(set([tag.name[0] for tag in tags]))
@@ -183,7 +174,7 @@ def tag_add(request):
     untitle = Tag.objects.get_untitle()
     tag = Tag(name=untitle)
     tag.save()
-    return redirect('/tag/%s/edit/' % tag.id)
+    return redirect('/tag/%s/modify/' % tag.id)
 
 
 @login_required
@@ -192,7 +183,7 @@ def tag_del(request, id='0'):
     return redirect('/tags/')
 
 
-@tag_cloud()
+@tag_cloud
 @login_required
 def tag_edit_get(request, id='0', cxt={}):
     assert request.method == 'GET'
@@ -207,7 +198,7 @@ def tag_edit_get(request, id='0', cxt={}):
     return render_to_response('tag_edit.html', cxt)
 
 
-@tag_cloud()
+@tag_cloud
 @login_required
 def tag_edit_post(request, id='0', cxt={}):
     assert request.method == 'POST'
@@ -237,7 +228,7 @@ def tag_edit_post(request, id='0', cxt={}):
     return render_to_response('tag_edit.html', cxt)
 
 
-@tag_cloud()
+@tag_cloud
 def categories(request, cxt={}):
     categories = Category.objects.filter(valid=True)
     cxt.update({'categories': categories, 'user': request.user})
@@ -260,7 +251,7 @@ def category_del(request, id='0'):
     return redirect('/categories/')
 
 
-@tag_cloud()
+@tag_cloud
 @login_required
 def cat_modify_get(request, id='0', cxt={}):
     assert request.method == 'GET'
@@ -276,7 +267,7 @@ def cat_modify_get(request, id='0', cxt={}):
     return render_to_response('category_modify.html', cxt)
 
 
-@tag_cloud()
+@tag_cloud
 @login_required
 def cat_modify_post(request, id='0', cxt={}):
     assert request.method == 'POST'
@@ -315,7 +306,7 @@ def cat_edit_blog_get(request, catid='0', blogid='0'):
     cxt = {}
     cxt.update(csrf(request))
     category = Category.objects.get(id=int(catid))
-    blog_ids = [cat.id for cat in category.blogs.all()]
+    blog_ids = [blog.id for blog in category.blogs.all()]
     blogid = int(blogid)
     if blogid and blogid in blog_ids:
         blog = Blog.objects.get(id=blogid)

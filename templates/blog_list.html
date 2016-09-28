@@ -1,7 +1,10 @@
 {% extends "base_sidebar.html" %} {% load custom_markdown %} {% block content %}
 <div class="content-wrapper">
-    {% for blog in blogs %}
+    {% for blog in blogs %} {% if forloop.last %}
+    <div class="blog blog-last pure-g">
+    {% else %}
     <div class="blog pure-g">
+        {% endif %}
         <div class="blog-toolbar pure-u-md-1-24">
             <a href="{% url 'blog_detail' id=blog.id %}">
                 <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -36,13 +39,11 @@
         </div>
     </div>
     {% empty %}
-    <h3>煞笔，一个字都没有看什么看</h3> 
-    {% endfor %}
+    <h3>煞笔，一个字都没有看什么看</h3> {% endfor %}
+    <!-- paginator start -->
     {% if blogs.has_previous %}
-        <a href="?page={{ blogs.previous_page_number }}"><i class="fa fa-angle-left" aria-hidden="true"></i> Previous</a>
-    {% endif %}
-    {% if blogs.has_next %}
-        <a href="?page={{ blogs.next_page_number }}">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-    {% endif %}
+    <a href="?page={{ blogs.previous_page_number }}" class="blog-previous"><i class="fa fa-angle-left" aria-hidden="true"></i> Previous</a> {% endif %} {% if blogs.has_next %}
+    <a href="?page={{ blogs.next_page_number }}" class="blog-next">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a> {% endif %}
+    <!-- paginator end -->
 </div>
 {% endblock %}

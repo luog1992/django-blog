@@ -93,7 +93,9 @@ class Collection(models.Model):
 
 class BlogManager(models.Manager):
 
-    def get_new_blog(self, catid=0, colid=0):
+    def get_new_blog(self, catid='0', colid='0'):
+        catid = int(catid)
+        colid = int(colid)
         if catid:
             category = Category.objects.get(id=catid)
         else:
