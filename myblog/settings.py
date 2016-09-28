@@ -14,9 +14,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# celery settings
+BROKER_URL = 'django://'
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
+
 INSTALLED_APPS = (
     'django_admin_bootstrapped',
     'django_summernote',
+    # celery related app
+    'kombu.transport.django',
+    'djcelery',
     'duoshuo',
 
     'django.contrib.admin',
