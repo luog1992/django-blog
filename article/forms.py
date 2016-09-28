@@ -21,7 +21,6 @@ class BlogEditor(forms.Form):
     content = forms.CharField(widget=SummernoteWidget(), required=True)
 
     def clean_content(self):
-        print '....clean_content is called'
         content = self.cleaned_data['content']
         if len(content) <= 4:
             raise forms.ValidationError('蠢货，多写几个字啊')
