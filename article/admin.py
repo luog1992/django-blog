@@ -1,4 +1,7 @@
 from django.contrib import admin
+# because we used django as the broker, so the queue is stored in django database. So we can review the queue in django admin
+from kombu.transport.django import models as kombu_models
+
 from article.models import Blog, Tag, Category, Collection
 
 
@@ -34,3 +37,4 @@ admin.site.register(Blog, BlogAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Collection, CollectionAdmin)
+admin.site.register(kombu_models.Message)

@@ -13,8 +13,9 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('article.views',
-	url(r'^test/request/$', 'request'),
-	url(r'^test/datatable$', 'datatable'),
+	url(r'^test/request/$', 'test_request'),
+	url(r'^test/datatable$', 'test_datatable'),
+	url(r'^test/celery$', 'test_celery'),
 
 	url(r'^login/$', 'login', name='login'),
 	url(r'^logout/$', 'logout', name='logout'),

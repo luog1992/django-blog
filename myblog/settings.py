@@ -1,5 +1,6 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -17,7 +18,12 @@ ALLOWED_HOSTS = []
 # celery settings
 BROKER_URL = 'django://'
 CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
-CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
+# CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT=['json']
+CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERY_ENABLE_UTC = True
 
 INSTALLED_APPS = (
     'django_admin_bootstrapped',
@@ -25,6 +31,7 @@ INSTALLED_APPS = (
     # celery related app
     'kombu.transport.django',
     'djcelery',
+    # duoshuo comments
     'duoshuo',
 
     'django.contrib.admin',
@@ -37,6 +44,17 @@ INSTALLED_APPS = (
     'article',
 )
 
+# celery periodic task: get_celery_result
+CELERYBEAT_SCHEDULE = {
+    # due task name, customized, no need to equal with celery app name
+    'get_celery_result': {
+        # the func will be executed at the tasks module
+        'task': 'article.tasks.get_celery_result',
+        'schedule': datetime.timedelta(seconds=10),
+    }
+}
+
+# DuoSHuo Settings
 DUOSHUO_SECRET = 'e041c01fb314345b3776e232487cfe51'
 DUOSHUO_SHORT_NAME = 'xianyuu'
 

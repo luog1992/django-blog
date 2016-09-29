@@ -13,7 +13,6 @@ from article.models import Blog, Tag, Category, Collection
 from forms import BlogEditor, CategoryForm, TagForm, LoginForm
 
 
-
 def tag_cloud(func):
     def wrapper(*args, **kwargs):
         tags = Tag.objects.get_valid_tags()
@@ -351,7 +350,8 @@ def cat_add_blog(request, catid='0'):
     return redirect('/category/%s/edit/%s' % (catid, blog.id))
 
 
-def request(request):
+def test_request(request):
+    """test django request object"""
     info = request.COOKIES
     # print '.... request.GET', request.GET
     # print '.... request.POST', request.POST
@@ -364,8 +364,30 @@ def request(request):
     # print '........ REMOTE_ADDR', request.META['REMOTE_ADDR']
     # for key in request.META:
     # print '........', key, request.META[key]
-    return render_to_response('request.html', {'info': info})
+    return render_to_response('test_request.html', {'info': info})
 
 
-def datatable(request):
-    return render_to_response('datatable.html')
+def test_datatable(request):
+    """test jquery plugin datatable"""
+    return render_to_response('test_datatable.html')
+
+
+import time
+from tasks import add as celery_add
+def test_celery(request):
+    """test celery task"""
+    cxt = {}
+    cxt.update(csrf(request))
+    if request.method == 'POST':
+        x = request.POST.get('paramx')
+        y = request.POST.get('paramy')
+        cxt.update({'paramx': x, 'paramy': y})
+        result = celery_add.delay(x, y)
+        time.sleep(3)
+        print 'celery_result:', get_celery_result(result)
+
+    return render_to_response('test_celery.html', cxt)
+
+
+
+
