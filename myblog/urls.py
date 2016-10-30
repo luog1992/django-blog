@@ -52,7 +52,7 @@ urlpatterns += patterns('article.views',
 		{'GET': articleviews.cat_modify_get, 'POST': articleviews.cat_modify_post},
 		name='category_modify'
 	),
-	
+
 	url(r'^category/(?P<catid>\d{1,3})/add/$', 'cat_add_blog', name='cat_add_blog'),
 	url(r'^category/(?P<catid>\d{1,3})/delete/(?P<blogid>\d{1,3})/$', 'cat_del_blog', name='cat_del_blog'),
 	url(r'^category/(?P<catid>\d{1,3})/edit/(?P<blogid>\d{1,3})/$',

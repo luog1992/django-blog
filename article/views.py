@@ -16,7 +16,7 @@ from forms import BlogEditor, CategoryForm, TagForm, LoginForm
 def tag_cloud(func):
     def wrapper(*args, **kwargs):
         tags = Tag.objects.get_valid_tags()
-        cxt={'tag_cloud': tags}
+        cxt = {'tag_cloud': tags}
         return func(cxt=cxt, *args, **kwargs)
     return wrapper
 
@@ -75,12 +75,12 @@ def search(request, flag=None):
 
 @tag_cloud
 def blogs(request, filter, name, cxt={}):
-    if filter=='blog':
+    if filter == 'blog':
         all_blogs = Blog.objects.filter(valid=True)
-    elif filter=='tag':
+    elif filter == 'tag':
         tag = get_object_or_404(Tag, name=name)
         all_blogs = tag.valid_blogs()
-    elif filter=='category':
+    elif filter == 'category':
         category = get_object_or_404(Category, name=name)
         all_blogs = category.get_valid_blogs()
     else:
@@ -142,7 +142,7 @@ def blog_edit_post(request, cxt={}, *args, **kwargs):
     if blog_editor.is_valid():
         data = blog_editor.cleaned_data
         Blog.objects.save_blog(blog, data)
-        return redirect('/blog/%s/edit/' % blog.id)
+        return redirect('/blog/%s/modify/' % blog.id)
     else:
         return render_to_response('blog_edit.html', cxt)
 
@@ -374,6 +374,8 @@ def test_datatable(request):
 
 import time
 from tasks import add as celery_add
+
+
 def test_celery(request):
     """test celery task"""
     cxt = {}
@@ -384,10 +386,4 @@ def test_celery(request):
         cxt.update({'paramx': x, 'paramy': y})
         result = celery_add.delay(x, y)
         time.sleep(3)
-        print 'celery_result:', get_celery_result(result)
-
     return render_to_response('test_celery.html', cxt)
-
-
-
-

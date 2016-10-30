@@ -22,7 +22,6 @@ def get_untitle(aManager):
 
 
 class TagManager(models.Manager):
-
     def get_valid_tags(self):
         return [tag for tag in self.all() if tag.blog_nums() > 0]
 
@@ -42,7 +41,7 @@ class Tag(models.Model):
         return self.valid_blogs().count()
 
     def font_size(self):
-        return 0.8 + (math.log10(self.blogs.count()))/10
+        return 0.8 + (math.log10(self.blogs.count())) / 10
 
     def __unicode__(self):
         return self.name
@@ -52,7 +51,6 @@ class Tag(models.Model):
 
 
 class CategoryManager(models.Manager):
-
     def get_untitle(self):
         return get_untitle(self)
 
@@ -92,7 +90,6 @@ class Collection(models.Model):
 
 
 class BlogManager(models.Manager):
-
     def get_new_blog(self, catid='0', colid='0'):
         catid = int(catid)
         colid = int(colid)
@@ -105,7 +102,7 @@ class BlogManager(models.Manager):
                 category = Category(name='Default')
                 category.save()
                 category = Category.objects.get(name='Default')
-                
+
         blog = Blog(category=category)
         if colid:
             collection = Collection.objects.get(id=colid)
@@ -145,11 +142,11 @@ class Blog(models.Model):
     title = models.CharField(verbose_name='Title', max_length=100, null=False, default='Untitle')
     public = models.BooleanField(verbose_name='Public', default=True)
     valid = models.BooleanField(verbose_name='Valid', default=True)
-    date_time = models.DateField( verbose_name='Creation Date', auto_now_add=True)
-    category = models.ForeignKey( Category, related_name='blogs', default=None, null=False)
+    date_time = models.DateField(verbose_name='Creation Date', auto_now_add=True)
+    category = models.ForeignKey(Category, related_name='blogs', default=None, null=False)
     collections = models.ManyToManyField(Collection, related_name='blogs')
     tags = models.ManyToManyField(Tag, related_name='blogs')
-    summary = models.TextField( verbose_name='Summary', max_length=1000, blank=True, null=True)
+    summary = models.TextField(verbose_name='Summary', max_length=1000, blank=True, null=True)
     content = models.TextField(verbose_name='Content', default=default_content)
     objects = BlogManager()
 

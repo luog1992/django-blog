@@ -16,21 +16,31 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # celery settings
+import djcelery
+djcelery.setup_loader()
 BROKER_URL = 'django://'
-CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 # CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_ACCEPT_CONTENT=['json']
+CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERY_ENABLE_UTC = True
+# celery periodic task: get_celery_result
+CELERYBEAT_SCHEDULE = {
+    'get_celery_result': {
+        # the func will be executed at the tasks module
+        'task': 'article.tasks.get_celery_result',
+        'schedule': datetime.timedelta(seconds=10),
+    }
+}
 
 INSTALLED_APPS = (
     'django_admin_bootstrapped',
     'django_summernote',
     # celery related app
-    'kombu.transport.django',
     'djcelery',
+    'kombu.transport.django',
     # duoshuo comments
     'duoshuo',
 
@@ -43,16 +53,6 @@ INSTALLED_APPS = (
 
     'article',
 )
-
-# celery periodic task: get_celery_result
-CELERYBEAT_SCHEDULE = {
-    # due task name, customized, no need to equal with celery app name
-    'get_celery_result': {
-        # the func will be executed at the tasks module
-        'task': 'article.tasks.get_celery_result',
-        'schedule': datetime.timedelta(seconds=10),
-    }
-}
 
 # DuoSHuo Settings
 DUOSHUO_SECRET = 'e041c01fb314345b3776e232487cfe51'
